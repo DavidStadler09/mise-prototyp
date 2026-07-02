@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mise · KI-Betriebspartner für kleine &amp; mittlere Unternehmen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --bg:#F3EFE6; --bg-2:#EDE7DB;
+  --surface:#FFFFFF; --surface-2:#FBF8F2; --surface-3:#F6F2EA;
+  --ink:#211E18; --ink-2:#5A544A; --ink-3:#938C7E; --ink-4:#B6AF9F;
+  --line:#E8E2D5; --line-2:#F0EBE0;
+  --primary:#211E18; --primary-ink:#FCFAF4;
+  --fin:#1C7A54; --fin-soft:#E3F0E8; --fin-deep:#155F41;
+  --sales:#2C66CE; --sales-soft:#E4ECFA;
+  --mkt:#C2466B; --mkt-soft:#FAE5EC;
+  --hr:#7A50C2; --hr-soft:#EEE7FA;
+  --warn:#B5722A; --warn-soft:#F6EAD6;
+  --accent:var(--fin); --accent-soft:var(--fin-soft);
+  --r-xs:8px; --r-sm:12px; --r:16px; --r-lg:22px; --r-xl:28px;
+  --sh-sm:0 1px 2px rgba(40,33,20,.05), 0 2px 6px rgba(40,33,20,.04);
+  --sh-md:0 6px 22px rgba(40,33,20,.07), 0 1px 3px rgba(40,33,20,.05);
+  --sh-lg:0 24px 60px rgba(40,33,20,.14), 0 4px 12px rgba(40,33,20,.06);
+  --font-d:'Fraunces',Georgia,serif;
+  --font-b:'Hanken Grotesk',-apple-system,system-ui,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;height:100%;}
+body{
+  font-family:var(--font-b); color:var(--ink); font-size:15px; line-height:1.45;
+  background:
+    radial-gradient(900px 600px at 88% -8%, rgba(28,122,84,.10), transparent 60%),
+    radial-gradient(800px 600px at -6% 108%, rgba(181,114,42,.08), transparent 55%),
+    var(--bg);
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+body::before{ /* subtle grain */
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-thumb{background:#d8d1c2;border-radius:20px;border:2px solid transparent;background-clip:content-box;}
+::-webkit-scrollbar-thumb:hover{background:#c7bfac;background-clip:content-box;}
+button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
+.num{font-variant-numeric:tabular-nums;}
+
+/* ===================== APP SHELL ===================== */
+.app{display:flex;height:100vh;overflow:hidden;}
+
+/* ---------- Sidebar ---------- */
+.sidebar{
+  width:262px;flex:none;display:flex;flex-direction:column;gap:2px;
+  padding:18px 14px 16px;background:rgba(251,248,242,.72);
+  backdrop-filter:blur(8px);border-right:1px solid var(--line);overflow-y:auto;
+}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 8px 18px;}
+.brand-mark{
+  width:38px;height:38px;flex:none;border-radius:11px;
+  background:linear-gradient(140deg,#2b2620,#15120d);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-d);font-weight:600;font-size:21px;
+  box-shadow:0 4px 14px rgba(33,30,24,.28), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.brand-name{font-family:var(--font-d);font-size:23px;font-weight:600;letter-spacing:-.01em;line-height:1;}
+.brand-sub{font-size:11px;color:var(--ink-3);letter-spacing:.14em;text-transform:uppercase;margin-top:3px;}
+.nav-label{font-size:10.5px;letter-spacing:.18em;color:var(--ink-4);text-transform:uppercase;padding:14px 10px 6px;font-weight:600;}
+
+.nav-item{
+  position:relative;display:flex;align-items:center;gap:11px;padding:10px 11px;border-radius:11px;
+  cursor:pointer;color:var(--ink-2);font-weight:500;transition:background .15s,color .15s;
+}
+.nav-item:hover{background:rgba(0,0,0,.035);}
+.nav-item .ico{width:22px;height:22px;flex:none;display:flex;align-items:center;justify-content:center;color:var(--ink-3);}
+.nav-item.parent.active{color:var(--ink);font-weight:600;}
+.nav-item.parent.active .ico{color:var(--fin);}
+.nav-item .badge{margin-left:auto;font-size:11px;font-weight:600;background:#ECE6D9;color:var(--ink-2);border-radius:20px;padding:1px 8px;}
+.nav-item .lock{margin-left:auto;color:var(--ink-4);}
+.agent-dot{width:8px;height:8px;border-radius:50%;flex:none;}
+
+.subnav{display:flex;flex-direction:column;gap:1px;margin:3px 0 4px 26px;padding-left:13px;border-left:1.5px solid var(--line);}
+.subnav .nav-item{padding:7px 11px;font-size:14px;border-radius:9px;}
+.subnav .nav-item.active{background:var(--fin-soft);color:var(--fin-deep);font-weight:600;}
+.subnav .nav-item.active::before{content:"";position:absolute;left:-14.5px;top:50%;transform:translateY(-50%);width:2px;height:16px;background:var(--fin);border-radius:2px;}
+.subnav .nav-item .badge{background:#dfeee7;color:var(--fin-deep);}
+
+.locked-note{display:flex;justify-content:flex-end;padding:2px 6px 6px;}
+.pill-ghost{font-size:10.5px;color:var(--ink-3);background:transparent;border:1px dashed var(--line);border-radius:20px;padding:2px 9px;}
+.spacer{flex:1;}
+.side-foot{border-top:1px solid var(--line);margin-top:6px;padding-top:8px;}
+.user-row{display:flex;align-items:center;gap:10px;padding:8px 8px;border-radius:11px;cursor:pointer;transition:background .15s;}
+.user-row:hover{background:rgba(0,0,0,.035);}
+.avatar{width:34px;height:34px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:#fff;background:linear-gradient(140deg,#3b7d63,#1c5a40);}
+.user-row .nm{font-size:13.5px;font-weight:600;line-height:1.2;}
+.user-row .rl{font-size:11.5px;color:var(--ink-3);}
+
+/* ---------- Main ---------- */
+.main{flex:1;display:flex;flex-direction:column;min-width:0;}
+.topbar{
+  height:64px;flex:none;display:flex;align-items:center;gap:14px;padding:0 26px;
+  border-bottom:1px solid var(--line);background:rgba(243,239,230,.7);backdrop-filter:blur(8px);
+}
+.search{
+  display:flex;align-items:center;gap:9px;flex:1;max-width:380px;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 13px;
+  color:var(--ink-3);font-size:14px;transition:border-color .15s,box-shadow .15s;
+}
+.search:focus-within{border-color:var(--fin);box-shadow:0 0 0 3px var(--fin-soft);}
+.search input{border:none;outline:none;background:none;flex:1;font:inherit;color:var(--ink);}
+.search kbd{font-family:var(--font-b);font-size:11px;color:var(--ink-4);border:1px solid var(--line);border-radius:5px;padding:1px 5px;background:var(--surface-2);}
+.top-spacer{flex:1;}
+.icon-btn{position:relative;width:40px;height:40px;border-radius:11px;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-2);transition:background .15s,transform .1s;}
+.icon-btn:hover{background:var(--surface-2);}
+.icon-btn:active{transform:scale(.96);}
+.dot-badge{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;background:#c2462f;color:#fff;border-radius:20px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg);}
+.rest-switch{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 12px 6px 7px;cursor:pointer;transition:background .15s;}
+.rest-switch:hover{background:var(--surface-2);}
+.rest-logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(140deg,#caa86a,#a07c3e);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:600;font-size:14px;}
+.rest-name{font-weight:600;font-size:14px;line-height:1.1;}
+.rest-meta{font-size:11px;color:var(--ink-3);}
+
+.content{flex:1;overflow:auto;padding:34px 40px 60px;position:relative;}
+.screen{display:none;max-width:1180px;margin:0 auto;}
+.screen.is-active{display:block;}
+
+/* entrance animation */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+.screen.is-active .anim{animation:fadeUp .5s cubic-bezier(.2,.7,.3,1) both;animation-delay:var(--d,0s);}
+
+/* ---------- Page header ---------- */
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:26px;}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--fin-deep);background:var(--fin-soft);border-radius:20px;padding:4px 11px;margin-bottom:11px;}
+.eyebrow .agent-dot{background:var(--fin);}
+.h1{font-family:var(--font-d);font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1;}
+.sub{color:var(--ink-3);margin-top:7px;font-size:14.5px;}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:11px 17px;font-weight:600;font-size:14px;transition:transform .1s,box-shadow .15s,background .15s;white-space:nowrap;}
+.btn:active{transform:translateY(1px);}
+.btn-primary{background:var(--primary);color:var(--primary-ink);box-shadow:0 6px 16px rgba(33,30,24,.2);}
+.btn-primary:hover{background:#332e25;}
+.btn-ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line);}
+.btn-ghost:hover{background:var(--surface-2);}
+.btn-accent{background:var(--fin);color:#fff;box-shadow:0 6px 16px rgba(28,122,84,.28);}
+.btn-accent:hover{background:var(--fin-deep);}
+
+/* ---------- Cards & grids ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-sm);}
+.grid{display:grid;gap:16px;}
+.kpis{grid-template-columns:repeat(4,1fr);margin-bottom:16px;}
+.kpi{padding:18px 19px;position:relative;overflow:hidden;transition:transform .18s,box-shadow .18s;}
+.kpi:hover{transform:translateY(-3px);box-shadow:var(--sh-md);}
+.kpi .lab{font-size:13px;color:var(--ink-3);display:flex;align-items:center;gap:7px;}
+.kpi .val{font-family:var(--font-d);font-size:34px;font-weight:600;letter-spacing:-.02em;margin-top:8px;line-height:1;}
+.kpi .delta{font-size:12.5px;margin-top:8px;display:inline-flex;align-items:center;gap:4px;font-weight:600;}
+.delta.up{color:var(--fin);} .delta.warn{color:var(--warn);} .delta.flat{color:var(--ink-3);}
+.kpi .ring{position:absolute;right:-24px;top:-24px;width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 30% 30%, var(--fin-soft), transparent 70%);opacity:.6;}
+
+.section-title{font-weight:700;font-size:16px;display:flex;align-items:center;gap:9px;}
+.seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px;}
+.seg span{font-size:12.5px;color:var(--ink-3);padding:4px 11px;border-radius:8px;cursor:pointer;font-weight:600;}
+.seg span.on{background:var(--surface);color:var(--ink);box-shadow:var(--sh-sm);}
+
+/* chart */
+.chartwrap{padding:22px 22px 14px;}
+.chart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.legend{display:flex;gap:16px;font-size:12.5px;color:var(--ink-3);margin-top:6px;}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:3px;vertical-align:middle;margin-right:6px;}
+@keyframes draw{to{stroke-dashoffset:0;}}
+.area-line{stroke-dasharray:1400;stroke-dashoffset:1400;}
+.screen.is-active .area-line{animation:draw 1.6s ease forwards .25s;}
+
+/* donut */
+.donut{width:78px;height:78px;border-radius:50%;flex:none;
+  background:conic-gradient(var(--fin) 0 46%, #c7b9a0 46% 73%, #e6ddcd 73% 100%);
+  -webkit-mask:radial-gradient(circle 22px at 50% 50%, transparent 99%, #000 100%);
+          mask:radial-gradient(circle 22px at 50% 50%, transparent 99%, #000 100%);}
+.dleg{display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--ink-2);}
+.dleg div{display:flex;align-items:center;gap:7px;}
+.dleg b{margin-left:auto;color:var(--ink);font-variant-numeric:tabular-nums;}
+.sw{width:9px;height:9px;border-radius:3px;}
+
+/* recent list */
+.list-card{padding:20px 22px;}
+.recent-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line-2);}
+.recent-row:last-child{border-bottom:none;}
+.merch{width:36px;height:36px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#6b6356;background:var(--surface-3);border:1px solid var(--line);}
+.recent-row .mn{font-size:14.5px;font-weight:500;}
+.recent-row .md{font-size:12px;color:var(--ink-3);}
+.recent-row .ma{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums;}
+.tick{margin-left:9px;color:var(--fin);}
+
+/* agent insight banner */
+.insight{display:flex;align-items:center;gap:15px;padding:16px 20px;border-radius:var(--r-lg);
+  background:linear-gradient(100deg,#1f2a24,#16201b);color:#f3efe6;box-shadow:var(--sh-md);position:relative;overflow:hidden;}
+.insight::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(63,160,116,.4),transparent 70%);}
+.insight .ai{width:40px;height:40px;flex:none;border-radius:11px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:600;}
+.insight .t{font-weight:600;}
+.insight .d{font-size:13px;opacity:.78;margin-top:2px;}
+.insight .cta{margin-left:auto;background:rgba(255,255,255,.12);color:#fff;border-radius:10px;padding:9px 14px;font-weight:600;font-size:13px;white-space:nowrap;}
+.insight .cta:hover{background:rgba(255,255,255,.2);}
+
+/* ---------- Tabs / filters / table ---------- */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;}
+.tab{position:relative;padding:10px 15px;cursor:pointer;color:var(--ink-3);font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;}
+.tab .cnt{font-size:11.5px;background:#ECE6D9;color:var(--ink-2);border-radius:18px;padding:1px 8px;}
+.tab.on{color:var(--ink);}
+.tab.on .cnt{background:var(--fin-soft);color:var(--fin-deep);}
+.tab.on::after{content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:2.5px;background:var(--fin);border-radius:3px;}
+.filters{display:flex;gap:9px;margin-bottom:16px;flex-wrap:wrap;}
+.fchip{display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13.5px;color:var(--ink-2);cursor:pointer;transition:background .15s;}
+.fchip:hover{background:var(--surface-2);}
+
+.table{overflow:hidden;}
+.thead,.trow{display:grid;grid-template-columns:48px 1.7fr 1fr .9fr 1fr 1.05fr;gap:12px;align-items:center;}
+.thead{padding:13px 20px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;font-weight:600;}
+.trow{padding:13px 20px;border-bottom:1px solid var(--line-2);cursor:pointer;transition:background .12s;}
+.trow:last-child{border-bottom:none;}
+.trow:hover{background:var(--surface-2);}
+.tprev{width:42px;height:34px;border-radius:8px;background:var(--surface-3);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-4);}
+.tname{font-weight:600;font-size:14.5px;}
+.tsub{font-size:12px;color:var(--ink-3);}
+.muted{color:var(--ink-2);font-size:14px;}
+.chan{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink-2);}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;border-radius:20px;padding:3px 10px;}
+.chip.neu{background:#1f1c17;color:#f3efe6;}
+.chip.pruef{background:var(--warn-soft);color:var(--warn);}
+.chip.ver{background:var(--fin-soft);color:var(--fin-deep);}
+.chip.esk{background:#f7e0db;color:#b0432c;}
+.chip.sent{background:var(--sales-soft);color:var(--sales);}
+.chip.draft{background:var(--surface-3);color:var(--ink-2);}
+.pflicht{display:grid;grid-template-columns:1fr 1fr;gap:7px 14px;margin-top:14px;}
+.pflicht .p{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2);}
+.pflicht .p svg{color:var(--fin);flex:none;}
+.einv{display:flex;align-items:center;gap:9px;margin-top:13px;background:var(--fin-soft);border:1px solid #cfe6da;border-radius:10px;padding:9px 13px;font-size:13px;color:var(--fin-deep);font-weight:600;}
+.ar-row{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line-2);}
+.ar-row:last-child{border-bottom:none;}
+.ar-row .arn{font-size:14.5px;font-weight:600;}
+.ar-row .ard{font-size:12px;color:var(--ink-3);}
+.ar-row .ara{font-weight:600;font-variant-numeric:tabular-nums;margin-left:auto;text-align:right;}
+/* payment run */
+.conn-chip{display:inline-flex;align-items:center;gap:8px;background:var(--fin-soft);color:var(--fin-deep);border:1px solid #cfe6da;border-radius:20px;padding:5px 12px;font-size:13px;font-weight:600;}
+.conn-chip .pulse{background:var(--fin);}
+.pay-head,.pay-row{display:grid;grid-template-columns:28px 1.7fr 1fr 1fr .8fr 1.1fr;gap:12px;align-items:center;}
+.pay-head{padding:12px 20px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;font-weight:600;}
+.pay-row{padding:13px 20px;border-bottom:1px solid var(--line-2);}
+.pay-row:last-child{border-bottom:none;}
+.cbox{width:18px;height:18px;border-radius:5px;border:2px solid var(--fin);background:var(--fin);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;}
+.cbox.off{background:#fff;border-color:var(--line);color:transparent;}
+.guard{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line-2);font-size:13.5px;color:var(--ink-2);}
+.guard:last-child{border-bottom:none;}
+.guard .gi{color:var(--fin);flex:none;margin-top:1px;}
+.runbox{padding:20px;}
+.runbox .ramt{font-family:var(--font-d);font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1;}
+/* SCA modal */
+.modal-bg{position:fixed;inset:0;background:rgba(20,17,12,.5);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:10001;}
+.modal-bg.show{display:flex;}
+.modal{background:var(--surface);border-radius:var(--r-xl);box-shadow:var(--sh-lg);width:380px;max-width:92vw;padding:28px;text-align:center;animation:fadeUp .3s ease;}
+.modal .mtag{font-size:12px;color:var(--ink-3);letter-spacing:.12em;text-transform:uppercase;font-weight:600;}
+.modal h3{font-family:var(--font-d);font-size:24px;font-weight:600;margin:6px 0 4px;}
+.modal p{color:var(--ink-2);font-size:14px;margin:0 0 6px;}
+.scan{width:88px;height:88px;border-radius:50%;background:var(--fin-soft);display:flex;align-items:center;justify-content:center;margin:16px auto;color:var(--fin);}
+.modal .btn{width:100%;justify-content:center;margin-top:8px;}
+/* generic data tables (parity screens) */
+.dgrid{display:grid;gap:12px;align-items:center;}
+.dt-head{padding:12px 20px;border-bottom:1px solid var(--line);font-size:11.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;font-weight:600;}
+.dt-row{padding:13px 20px;border-bottom:1px solid var(--line-2);}
+.dt-row:last-child{border-bottom:none;}
+.r{text-align:right;justify-self:end;}
+.pos{color:var(--fin-deep);font-weight:600;}
+.neg{color:var(--ink);font-weight:600;}
+.kz{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--line-2);font-size:14px;}
+.kz:last-child{border-bottom:none;}
+.kz .kzc{color:var(--ink-3);font-size:12px;margin-left:8px;margin-right:auto;}
+.kz.tot{border-top:2px solid var(--ink);border-bottom:none;font-weight:700;margin-top:6px;padding-top:10px;font-size:15px;}
+.chip.ok{background:var(--fin-soft);color:var(--fin-deep);}
+.chip.low{background:var(--warn-soft);color:var(--warn);}
+.chip .cdot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+
+/* ---------- Detail screen ---------- */
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--ink-3);cursor:pointer;font-size:14px;font-weight:600;margin-bottom:14px;transition:color .15s;}
+.back:hover{color:var(--ink);}
+.escal{display:flex;align-items:center;gap:14px;background:var(--warn-soft);border:1px solid #e7cfa6;border-radius:var(--r);padding:14px 18px;margin-bottom:18px;}
+.escal .ic{width:38px;height:38px;flex:none;border-radius:11px;background:#fff;border:1px solid #e7cfa6;display:flex;align-items:center;justify-content:center;color:var(--warn);}
+.escal .t{font-weight:700;color:#7d4f17;}
+.escal .d{font-size:13.5px;color:#8a6328;}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;}
+
+/* receipt mock */
+.receipt-card{padding:16px;}
+.rc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.rc-tools{display:flex;gap:4px;}
+.rc-tool{width:30px;height:30px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-3);}
+.receipt{background:#fffdf8;border:1px solid var(--line);border-radius:10px;padding:26px 26px 22px;font-size:13px;color:#3a352c;box-shadow:inset 0 0 0 1px #fff, var(--sh-sm);}
+.receipt .rco{font-family:var(--font-d);font-size:20px;font-weight:600;}
+.receipt .rmeta{color:#8b8474;font-size:11.5px;margin-top:2px;}
+.rrow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed #e6ddcb;}
+.rrow.tot{border-bottom:none;border-top:2px solid #2c2820;margin-top:6px;padding-top:10px;font-weight:700;font-size:15px;}
+.rsmall{font-size:11px;color:#a39b88;}
+.hl{background:#fdf0d8;border-radius:3px;padding:0 3px;}
+
+/* extracted fields */
+.fields-card{padding:20px;}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;}
+.field .fl{font-size:12px;color:var(--ink-3);}
+.field .fv{border-bottom:1.5px solid var(--line);padding:5px 0;font-weight:600;}
+.field.flag .fv{border-color:var(--warn);color:var(--warn);display:flex;align-items:center;justify-content:space-between;}
+.linehd{font-size:12px;color:var(--ink-3);margin:16px 0 4px;}
+.lpos{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line-2);font-size:13.5px;}
+.lpos:last-child{border-bottom:none;}
+.lpos .tax{color:var(--ink-3);font-size:12px;}
+.konto{padding:18px 20px;}
+.konto-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.acct{font-size:13px;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:4px 10px;}
+.conf{display:flex;align-items:center;gap:14px;}
+.bar{flex:1;height:10px;background:var(--surface-3);border-radius:20px;overflow:hidden;}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3ba174,var(--fin));border-radius:20px;transition:width 1.1s cubic-bezier(.2,.7,.3,1) .3s;}
+.screen.is-active .bar i{width:var(--w,90%);}
+.conf .pc{font-family:var(--font-d);font-size:22px;font-weight:600;color:var(--fin-deep);}
+.actions{display:flex;gap:12px;}
+.actions .btn{flex:1;justify-content:center;}
+
+/* ---------- Chat ---------- */
+.chat-head{display:flex;align-items:center;gap:13px;margin-bottom:18px;}
+.chat-av{width:46px;height:46px;border-radius:13px;background:linear-gradient(140deg,#2b8a61,#155f41);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:22px;font-weight:600;box-shadow:0 6px 16px rgba(28,122,84,.3);}
+.chat-name{font-family:var(--font-d);font-size:26px;font-weight:600;line-height:1;}
+.chat-status{font-size:12.5px;color:var(--ink-3);display:flex;align-items:center;gap:6px;margin-top:3px;}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--fin);box-shadow:0 0 0 0 rgba(28,122,84,.5);animation:pulse 2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(28,122,84,.45);}70%{box-shadow:0 0 0 7px rgba(28,122,84,0);}100%{box-shadow:0 0 0 0 rgba(28,122,84,0);}}
+.chat-layout{display:grid;grid-template-columns:1fr 290px;gap:18px;height:calc(100vh - 64px - 34px - 60px - 96px);min-height:420px;}
+.chat-col{display:flex;flex-direction:column;min-height:0;overflow:hidden;}
+.msgs{flex:1;overflow:auto;padding:22px;display:flex;flex-direction:column;gap:13px;}
+.msg{max-width:80%;padding:11px 15px;font-size:14.5px;line-height:1.5;border-radius:16px;animation:fadeUp .35s ease both;}
+.msg.bot{align-self:flex-start;background:var(--surface-2);border:1px solid var(--line);border-bottom-left-radius:5px;}
+.msg.me{align-self:flex-end;background:var(--primary);color:var(--primary-ink);border-bottom-right-radius:5px;}
+.msg b{font-weight:700;}
+.msg .mini{margin-top:9px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);}
+.mini-row{display:flex;justify-content:space-between;font-size:13px;padding:3px 0;}
+.mini-bar{height:7px;border-radius:6px;background:var(--surface-3);overflow:hidden;margin-top:4px;}
+.mini-bar i{display:block;height:100%;background:var(--fin);border-radius:6px;}
+.typing{align-self:flex-start;display:flex;gap:4px;padding:13px 16px;background:var(--surface-2);border:1px solid var(--line);border-radius:16px;border-bottom-left-radius:5px;}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--ink-4);animation:bounce 1.2s infinite;}
+.typing span:nth-child(2){animation-delay:.15s;} .typing span:nth-child(3){animation-delay:.3s;}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.5;}30%{transform:translateY(-5px);opacity:1;}}
+.chips{display:flex;gap:8px;padding:0 18px 12px;flex-wrap:wrap;}
+.qchip{font-size:13px;background:var(--surface-2);border:1px solid var(--line);border-radius:20px;padding:6px 13px;cursor:pointer;color:var(--ink-2);transition:background .15s,border-color .15s;}
+.qchip:hover{background:var(--fin-soft);border-color:var(--fin);color:var(--fin-deep);}
+.composer{display:flex;align-items:center;gap:10px;padding:14px 18px;border-top:1px solid var(--line);}
+.composer input{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px 15px;font:inherit;outline:none;transition:border-color .15s,box-shadow .15s;}
+.composer input:focus{border-color:var(--fin);box-shadow:0 0 0 3px var(--fin-soft);}
+.send{width:44px;height:44px;flex:none;border-radius:12px;background:var(--fin);color:#fff;display:flex;align-items:center;justify-content:center;transition:background .15s,transform .1s;}
+.send:hover{background:var(--fin-deep);} .send:active{transform:scale(.94);}
+.ctx{padding:18px;display:flex;flex-direction:column;gap:14px;}
+.ctx .ct{font-weight:700;}
+.ctx .cl{font-size:12px;color:var(--ink-3);}
+.ctx-item{display:flex;gap:10px;align-items:center;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px;}
+.ctx-item .merch{width:30px;height:30px;border-radius:7px;font-size:11px;}
+.ctx-stat{border-top:1px solid var(--line-2);padding-top:13px;}
+.ctx-stat .big{font-family:var(--font-d);font-size:30px;font-weight:600;line-height:1;}
+
+/* ---------- Autonomie ---------- */
+.modes{grid-template-columns:repeat(3,1fr);margin-bottom:24px;}
+.mode{padding:19px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;border:1.5px solid var(--line);}
+.mode:hover{transform:translateY(-2px);box-shadow:var(--sh-md);}
+.mode.on{border-color:var(--fin);box-shadow:0 0 0 3px var(--fin-soft);background:var(--surface);}
+.mode-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
+.mode .mt{font-weight:700;font-size:16px;}
+.radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;display:flex;align-items:center;justify-content:center;}
+.mode.on .radio{border-color:var(--fin);}
+.mode.on .radio::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--fin);}
+.mode .mdsc{font-size:13.5px;color:var(--ink-2);}
+.rec-badge{margin-top:11px;display:inline-block;font-size:11px;font-weight:600;color:var(--fin-deep);background:var(--fin-soft);border-radius:14px;padding:3px 10px;}
+.auto-grid{display:grid;grid-template-columns:1.7fr 1fr;gap:16px;align-items:start;}
+.cat-table{overflow:hidden;}
+.cat-table .ch{padding:16px 20px 8px;font-weight:700;}
+.cat-head,.cat-row{display:grid;grid-template-columns:1.4fr 1.3fr 1fr;gap:12px;align-items:center;}
+.cat-head{padding:8px 20px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;font-weight:600;}
+.cat-row{padding:13px 20px;border-bottom:1px solid var(--line-2);}
+.cat-row:last-child{border-bottom:none;}
+.lvl{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:13.5px;font-weight:600;cursor:pointer;transition:background .15s;}
+.lvl:hover{background:var(--surface-3);}
+.lvl[data-l="Autonom"]{color:var(--fin-deep);background:var(--fin-soft);border-color:#cfe6da;}
+.lvl[data-l="Assistiert"]{color:var(--ink-2);}
+.trust{padding:22px;display:flex;flex-direction:column;gap:13px;}
+.trust .big{font-family:var(--font-d);font-size:60px;font-weight:600;line-height:.9;color:var(--fin-deep);}
+
+/* ---------- Agent preview (Sales/Marketing/HR) ---------- */
+.preview-hero{display:flex;align-items:center;gap:18px;padding:26px 28px;border-radius:var(--r-xl);color:#fff;position:relative;overflow:hidden;margin-bottom:22px;box-shadow:var(--sh-md);}
+.preview-hero::after{content:"";position:absolute;right:-30px;bottom:-50px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 70%);}
+.ph-icon{width:58px;height:58px;flex:none;border-radius:16px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:26px;}
+.ph-soon{position:absolute;top:18px;right:22px;font-size:12px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 12px;backdrop-filter:blur(4px);}
+.ph-title{font-family:var(--font-d);font-size:32px;font-weight:600;line-height:1;}
+.ph-tag{opacity:.85;margin-top:6px;max-width:560px;}
+.feat-grid{grid-template-columns:repeat(3,1fr);margin-bottom:22px;}
+.feat{padding:20px;}
+.feat .fi{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:12px;}
+.feat .ft{font-weight:700;margin-bottom:5px;}
+.feat .fd{font-size:13.5px;color:var(--ink-2);line-height:1.5;}
+.preview-foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:22px 26px;border-radius:var(--r-lg);background:var(--surface);border:1px dashed var(--line);}
+.pf-t{font-weight:700;font-size:16px;} .pf-d{font-size:13.5px;color:var(--ink-3);margin-top:3px;}
+
+/* ---------- Settings ---------- */
+.set-grid{grid-template-columns:1fr 1fr;}
+.set-card{padding:22px;}
+.set-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line-2);}
+.set-row:last-child{border-bottom:none;}
+.set-row .sl{font-weight:600;} .set-row .sd{font-size:12.5px;color:var(--ink-3);}
+.toggle{width:42px;height:24px;border-radius:20px;background:#d9d2c4;position:relative;flex:none;cursor:pointer;transition:background .2s;}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:var(--sh-sm);transition:transform .2s;}
+.toggle.on{background:var(--fin);} .toggle.on::after{transform:translateX(18px);}
+.conn{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line-2);}
+.conn:last-child{border-bottom:none;}
+.conn .ci{width:36px;height:36px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--ink-2);}
+.conn .cs{margin-left:auto;font-size:12px;font-weight:600;color:var(--fin-deep);background:var(--fin-soft);border-radius:14px;padding:3px 10px;}
+.conn .cs.off{color:var(--ink-3);background:var(--surface-2);}
+
+/* ---------- Mobile view ---------- */
+.mob-wrap{display:flex;flex-direction:column;align-items:center;gap:18px;padding-top:6px;}
+.phone{width:340px;flex:none;background:#1c1916;border-radius:42px;padding:11px;box-shadow:var(--sh-lg);}
+.phone-in{background:var(--bg);border-radius:33px;overflow:hidden;}
+.notch{height:26px;display:flex;align-items:center;justify-content:center;}
+.notch::after{content:"";width:110px;height:7px;border-radius:10px;background:#000;}
+.mtop{display:flex;align-items:center;gap:10px;padding:6px 18px 12px;}
+.mtop .rest-logo{width:28px;height:28px;font-size:13px;}
+.mbody{padding:0 16px 12px;max-height:520px;overflow:auto;}
+.mob-h{font-family:var(--font-d);font-size:26px;font-weight:600;line-height:1;}
+.mkpi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
+.mkpi .card{padding:13px;border-radius:14px;}
+.mkpi .lab{font-size:11.5px;color:var(--ink-3);}
+.mkpi .val{font-family:var(--font-d);font-size:25px;font-weight:600;line-height:1.1;margin-top:3px;}
+.mtab{display:flex;justify-content:space-around;padding:11px 0 15px;border-top:1px solid var(--line);background:var(--surface-2);}
+.mtab div{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;color:var(--ink-4);}
+.mtab div.on{color:var(--fin);}
+
+/* ---------- Cockpit / Betriebsleiter ---------- */
+.cockpit-item{color:var(--ink);font-weight:600;}
+.cockpit-item .ico{color:#a9863f;}
+.cockpit-item.active{background:linear-gradient(120deg,#23201a,#15120d);color:#f3efe6;box-shadow:0 8px 20px rgba(33,30,24,.25);}
+.cockpit-item.active .ico{color:#e8c88a;}
+.cockpit-item .badge.live{background:var(--warn-soft);color:var(--warn);}
+.cockpit-item.active .badge.live{background:rgba(255,255,255,.16);color:#f3efe6;}
+.briefing{display:flex;gap:18px;align-items:flex-start;padding:22px 24px;border-radius:var(--r-xl);background:linear-gradient(120deg,#23201a,#14110c);color:#f3efe6;box-shadow:var(--sh-lg);position:relative;overflow:hidden;margin-bottom:18px;}
+.briefing::after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(232,200,138,.16),transparent 70%);}
+.briefing .bi{width:46px;height:46px;flex:none;border-radius:13px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:22px;color:#e8c88a;}
+.briefing .bt{font-family:var(--font-d);font-size:21px;font-weight:600;line-height:1.15;}
+.briefing .bd{opacity:.84;margin-top:6px;font-size:14.5px;max-width:700px;line-height:1.55;}
+.briefing .bd b{color:#f0d6a0;font-weight:600;}
+.briefing .bacts{display:flex;gap:9px;margin-top:15px;flex-wrap:wrap;}
+.briefing .bact{background:rgba(255,255,255,.12);color:#fff;border-radius:10px;padding:8px 13px;font-size:13px;font-weight:600;transition:background .15s;}
+.briefing .bact:hover{background:rgba(255,255,255,.2);}
+.briefing .bact.solid{background:#e8c88a;color:#2a2113;}
+.briefing .bact.solid:hover{background:#f0d6a0;}
+.cols2{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;}
+.feed-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line-2);}
+.feed-item:last-child{border-bottom:none;}
+.feed-dot{width:30px;height:30px;flex:none;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;font-weight:700;}
+.feed-item .ft{font-size:14px;font-weight:500;}
+.feed-item .fm{font-size:12px;color:var(--ink-3);margin-top:1px;}
+.feed-item .ftime{margin-left:auto;font-size:11.5px;color:var(--ink-4);white-space:nowrap;padding-left:10px;}
+.rec-item{display:flex;gap:13px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line-2);}
+.rec-item:last-child{border-bottom:none;}
+.rec-item .ri{width:34px;height:34px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;}
+.rec-item .rt{font-size:14px;font-weight:600;}
+.rec-item .rd{font-size:12.5px;color:var(--ink-3);margin-top:1px;}
+.conf-mini{font-size:11.5px;color:var(--fin-deep);background:var(--fin-soft);border-radius:12px;padding:2px 9px;font-weight:600;white-space:nowrap;}
+.rec-acts{margin-left:auto;display:flex;gap:8px;}
+.btn-sm{padding:7px 13px;border-radius:10px;font-size:13px;font-weight:600;}
+.askbar{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:6px 6px 6px 15px;transition:border-color .15s,box-shadow .15s;}
+.askbar:focus-within{border-color:#bf9b50;box-shadow:0 0 0 3px #efe7d6;}
+.askbar input{flex:1;border:none;outline:none;background:none;font:inherit;color:var(--ink);padding:9px 0;}
+.askanswer:empty{display:none;}
+.askanswer{margin-top:14px;}
+/* tri-column compare */
+.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.tri-col{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r);padding:16px;}
+.tri-col.flagcol{border-color:var(--warn);box-shadow:0 0 0 3px var(--warn-soft);background:#fffdf8;}
+.tri-col .tch{font-size:11.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;font-weight:600;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
+.tri-col .tch .ok{color:var(--fin);} .tri-col .tch .warn{color:var(--warn);}
+.tri-row{display:flex;justify-content:space-between;font-size:13.5px;padding:7px 0;border-bottom:1px dashed var(--line-2);}
+.tri-row:last-child{border-bottom:none;}
+.tri-row.bad{color:var(--warn);font-weight:700;}
+.match-ok{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line-2);font-size:14px;}
+.match-ok:last-child{border-bottom:none;}
+.match-ok .tick{color:var(--fin);margin:0;}
+/* supplier table */
+.sup-head,.sup-row{display:grid;grid-template-columns:1.6fr 1fr .9fr .7fr 1.2fr;gap:12px;align-items:center;}
+.sup-head{padding:13px 20px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;font-weight:600;}
+.sup-row{padding:14px 20px;border-bottom:1px solid var(--line-2);}
+.sup-row:last-child{border-bottom:none;}
+.spark{width:72px;height:26px;display:block;}
+.trend-up{color:var(--warn);font-weight:700;} .trend-flat{color:var(--ink-3);font-weight:600;} .trend-down{color:var(--fin);font-weight:700;}
+.alt{font-size:12.5px;color:var(--fin-deep);background:var(--fin-soft);border-radius:8px;padding:4px 9px;display:inline-block;}
+.stable{font-size:12.5px;color:var(--ink-3);}
+/* liquidity */
+.flowcol{display:flex;flex-direction:column;}
+.flow-row{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line-2);}
+.flow-row:last-child{border-bottom:none;}
+.flow-row .fa{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums;}
+.flow-row .fa.in{color:var(--fin);} .flow-row .fa.out{color:var(--ink);}
+.flow-ic{width:30px;height:30px;flex:none;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--surface-3);border:1px solid var(--line);}
+
+@media (max-width:1080px){
+  .cols2,.tri{grid-template-columns:1fr;}
+  .kpis{grid-template-columns:repeat(2,1fr);}
+  .feat-grid,.modes{grid-template-columns:1fr;}
+  .detail-grid,.auto-grid,.chat-layout,.set-grid{grid-template-columns:1fr;}
+  .chat-layout{height:auto;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-name">Mise</div>
+        <div class="brand-sub">Betriebs-OS</div>
+      </div>
+    </div>
+
+    <div class="nav-label">Cockpit</div>
+    <div class="nav-item cockpit-item active" data-nav="cockpit">
+      <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.3L20 9l-4.4 3.6L17 19l-5-3-5 3 1.4-6.4L4 9l5.8-.7z"/></svg></span>
+      <span>Betriebsleiter</span>
+      <span class="badge live">3</span>
+    </div>
+
+    <div class="nav-label">Agenten</div>
+
+    <div class="nav-item parent" data-nav="dashboard">
+      <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9 20v-6h6v6"/></svg></span>
+      <span>Finanzen</span>
+    </div>
+
+    <div class="subnav" id="fin-sub">
+      <div class="nav-item" data-nav="dashboard"><span>Dashboard</span></div>
+      <div class="nav-item" data-nav="belege"><span>Belegeingang</span><span class="badge">12</span></div>
+      <div class="nav-item" data-nav="rechnungspruefung"><span>Rechnungsprüfung</span><span class="badge">2</span></div>
+      <div class="nav-item" data-nav="ausgangsrechnungen"><span>Ausgangsrechnungen</span></div>
+      <div class="nav-item" data-nav="angebote"><span>Angebote</span></div>
+      <div class="nav-item" data-nav="kassenbuch"><span>Kassenbuch</span></div>
+      <div class="nav-item" data-nav="zahlungslauf"><span>Zahlungslauf</span></div>
+      <div class="nav-item" data-nav="liquiditaet"><span>Liquidität</span></div>
+      <div class="nav-item" data-nav="ustva"><span>USt-Voranmeldung</span></div>
+      <div class="nav-item" data-nav="auswertungen"><span>Auswertungen</span></div>
+      <div class="nav-item" data-nav="kontakte"><span>Kontakte</span></div>
+      <div class="nav-item" data-nav="inventar"><span>Inventar</span></div>
+      <div class="nav-item" data-nav="lieferanten"><span>Lieferanten</span></div>
+      <div class="nav-item" data-nav="chat"><span>Agent-Chat</span></div>
+      <div class="nav-item" data-nav="autonomie"><span>Autonomie</span></div>
+    </div>
+
+    <div class="nav-item" data-nav="sales">
+      <span class="ico"><span class="agent-dot" style="background:var(--sales)"></span></span>
+      <span>Sales</span>
+      <span class="lock"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+    </div>
+    <div class="nav-item" data-nav="marketing">
+      <span class="ico"><span class="agent-dot" style="background:var(--mkt)"></span></span>
+      <span>Marketing</span>
+      <span class="lock"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+    </div>
+    <div class="nav-item" data-nav="hr">
+      <span class="ico"><span class="agent-dot" style="background:var(--hr)"></span></span>
+      <span>HR &amp; Personal</span>
+      <span class="lock"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+    </div>
+    <div class="locked-note"><span class="pill-ghost">3 Agenten bald verfügbar</span></div>
+
+    <div class="spacer"></div>
+
+    <div class="side-foot">
+      <div class="nav-item" data-nav="settings"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.17V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 8 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15H4.5a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 6 9.4l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 11 4.6V4.5a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 2.82 1.17l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 11h.1a2 2 0 0 1 0 4h-.1z"/></svg></span><span>Einstellungen</span></div>
+      <div class="nav-item" data-nav="mobil"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span><span>Mobil-Ansicht</span></div>
+      <div class="user-row">
+        <div class="avatar">DK</div>
+        <div>
+          <div class="nm">David Krause</div>
+          <div class="rl">Inhaber · Bistro Sonneneck</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <div class="main">
+    <header class="topbar">
+      <label class="search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+        <input placeholder="Belege, Lieferanten, Beträge durchsuchen…">
+        <kbd>⌘K</kbd>
+      </label>
+      <div class="top-spacer"></div>
+      <button class="icon-btn" title="Benachrichtigungen">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.5 21a2 2 0 0 1-3 0"/></svg>
+        <span class="dot-badge">2</span>
+      </button>
+      <div class="rest-switch">
+        <div class="rest-logo">S</div>
+        <div>
+          <div class="rest-name">Bistro Sonneneck</div>
+          <div class="rest-meta">Berlin-Kreuzberg</div>
+        </div>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7c7a72" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </header>
+
+    <main class="content" id="content">
+
+      <!-- ============ COCKPIT / BETRIEBSLEITER ============ -->
+      <section class="screen is-active" data-screen="cockpit">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow" style="background:#efe7d6;color:#8a6e2f;"><span class="agent-dot" style="background:#bf9b50;"></span>Betriebsleiter · koordiniert alle Agenten</div>
+            <div class="h1">Guten Morgen, David</div>
+            <div class="sub">Sonntag, 21. Juni 2026 · 3 Hinweise für dich · alle Systeme synchron</div>
+          </div>
+          <button class="btn btn-primary" data-nav="chat">Mit Agent sprechen</button>
+        </div>
+
+        <div class="briefing anim" style="--d:.05s">
+          <div class="bi">✦</div>
+          <div style="flex:1;">
+            <div class="bt">Dein Tagesbriefing</div>
+            <div class="bd">Für morgen erwarte ich rund <b>20 % weniger Betrieb</b> (Feiertag + Regen). Ich habe die Personalplanung angepasst und den Einkauf zurückgenommen. Wichtiger noch: am <b>10.07.</b> treffen Umsatzsteuer und Miete am selben Tag zusammen — die Liquidität wird kurz knapp. Ich habe einen Vorschlag, der das ohne Skonto-Verlust glättet.</div>
+            <div class="bacts">
+              <button class="bact solid" data-nav="liquiditaet">Liquiditäts-Vorschlag ansehen</button>
+              <button class="bact" data-nav="hr">Personalplanung</button>
+              <button class="bact" data-nav="marketing">Aktion freigeben</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid kpis anim" style="--d:.09s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Umsatz heute</div><div class="val num">€ 1.860</div><div class="delta up">▲ +12 % vs. Schnitt</div></div>
+          <div class="card kpi"><div class="lab">Liquidität · Runway</div><div class="val num">2,4 Mon.</div><div class="delta warn">Engpass am 10.07.</div></div>
+          <div class="card kpi"><div class="lab">Offene Aufgaben</div><div class="val num">5</div><div class="delta flat">über alle Agenten</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Zeit gespart / Monat</div><div class="val num">≈ 31 Std.</div><div class="delta up">durch Automatik</div></div>
+        </div>
+
+        <div class="cols2">
+          <div class="card list-card anim" style="--d:.13s">
+            <div class="section-title" style="margin-bottom:6px;">Was deine Agenten heute erledigt haben</div>
+            <div class="feed-item"><div class="feed-dot" style="background:var(--fin);">€</div><div><div class="ft">6 Belege automatisch verbucht</div><div class="fm">Finanz-Agent · € 1.140 · 2 zur Prüfung eskaliert</div></div><div class="ftime">08:12</div></div>
+            <div class="feed-item"><div class="feed-dot" style="background:var(--fin);">€</div><div><div class="ft">Überzahlung erkannt &amp; gestoppt</div><div class="fm">Finanz-Agent · Rechnung mit 2 Einheiten zu viel</div></div><div class="ftime">08:14</div></div>
+            <div class="feed-item"><div class="feed-dot" style="background:var(--sales);">↗</div><div><div class="ft">3 Anfragen beantwortet, 1 Angebot entworfen</div><div class="fm">Sales-Agent · wartet auf deine Freigabe</div></div><div class="ftime">09:03</div></div>
+            <div class="feed-item"><div class="feed-dot" style="background:var(--mkt);">◷</div><div><div class="ft">Aktion für morgen vorbereitet</div><div class="fm">Marketing-Agent · Entwurf liegt bereit</div></div><div class="ftime">09:20</div></div>
+            <div class="feed-item"><div class="feed-dot" style="background:var(--hr);">☺</div><div><div class="ft">Schichtplan an Auslastung angepasst</div><div class="fm">HR-Agent · Personal für morgen Mittag reduziert</div></div><div class="ftime">09:24</div></div>
+          </div>
+
+          <div class="card list-card anim" style="--d:.17s">
+            <div class="section-title" style="margin-bottom:6px;">Empfehlungen &amp; Freigaben</div>
+            <div class="rec-item"><div class="ri" style="background:var(--fin-soft);color:var(--fin);">€</div><div style="flex:1;"><div class="rt">Lieferantenzahlung 5 Tage schieben</div><div class="rd">Entschärft den Engpass am 10.07. · Skonto bleibt</div></div><span class="conf-mini">94 %</span><div class="rec-acts"><button class="btn btn-accent btn-sm" onclick="toast('Freigegeben ✓ Zahlung neu terminiert.')">Freigeben</button></div></div>
+            <div class="rec-item"><div class="ri" style="background:var(--warn-soft);color:var(--warn);">!</div><div style="flex:1;"><div class="rt">Reklamation an Lieferant senden</div><div class="rd">€ 38 Überberechnung · Entwurf bereit</div></div><span class="conf-mini" style="background:var(--warn-soft);color:var(--warn);">88 %</span><div class="rec-acts"><button class="btn btn-ghost btn-sm" data-nav="rechnungspruefung">Ansehen</button></div></div>
+            <div class="rec-item"><div class="ri" style="background:var(--mkt-soft);color:var(--mkt);">◷</div><div style="flex:1;"><div class="rt">Aktion für morgen freigeben</div><div class="rd">Entwurf vom Marketing-Agent</div></div><span class="conf-mini">91 %</span><div class="rec-acts"><button class="btn btn-ghost btn-sm" data-nav="marketing">Ansehen</button></div></div>
+          </div>
+        </div>
+
+        <div class="card anim" style="--d:.21s; padding:18px 20px; margin-top:16px;">
+          <div class="section-title" style="margin-bottom:12px;">Frag deinen Betrieb</div>
+          <div class="askbar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a9863f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.3L20 9l-4.4 3.6L17 19l-5-3-5 3 1.4-6.4L4 9l5.8-.7z"/></svg>
+            <input id="ask-input" placeholder="z. B. „Wie ist meine Liquidität nächsten Monat?“" autocomplete="off">
+            <button class="send" id="ask-send" style="width:40px;height:40px;border-radius:11px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg></button>
+          </div>
+          <div class="chips" style="padding:12px 0 0;">
+            <div class="qchip ask-chip">Wie ist meine Liquidität nächsten Monat?</div>
+            <div class="qchip ask-chip">Welche Ausgaben sind ungewöhnlich?</div>
+            <div class="qchip ask-chip">Wie steht Personal zu Umsatz?</div>
+          </div>
+          <div class="askanswer" id="ask-answer"></div>
+        </div>
+      </section>
+
+      <!-- ============ DASHBOARD ============ -->
+      <section class="screen" data-screen="dashboard">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent · aktiv</div>
+            <div class="h1">Finanzen</div>
+            <div class="sub">Übersicht · Juni 2026 · zuletzt synchronisiert vor 4 Min.</div>
+          </div>
+          <button class="btn btn-primary">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Belege hinzufügen
+          </button>
+        </div>
+
+        <div class="insight anim" style="--d:.06s; margin-bottom:18px;">
+          <div class="ai">✦</div>
+          <div>
+            <div class="t">Guten Morgen, David. Heute habe ich 8 Belege erfasst und 6 automatisch verbucht.</div>
+            <div class="d">2 Belege brauchen kurz deinen Blick · USt-Voranmeldung für Q2 ist vorbereitet.</div>
+          </div>
+          <button class="cta" data-nav="belege">2 prüfen →</button>
+        </div>
+
+        <div class="grid kpis">
+          <div class="card kpi anim" style="--d:.10s">
+            <div class="ring"></div>
+            <div class="lab">Offene Belege</div>
+            <div class="val num">12</div>
+            <div class="delta warn">▲ +3 seit gestern</div>
+          </div>
+          <div class="card kpi anim" style="--d:.14s">
+            <div class="ring"></div>
+            <div class="lab">Diesen Monat verbucht</div>
+            <div class="val num">€ 8.420</div>
+            <div class="delta up">86 Belege · 96 % autom.</div>
+          </div>
+          <div class="card kpi anim" style="--d:.18s">
+            <div class="ring"></div>
+            <div class="lab">USt-Vorschau</div>
+            <div class="val num">€ 1.240</div>
+            <div class="delta flat">fällig 10.07.</div>
+          </div>
+          <div class="card kpi anim" style="--d:.22s">
+            <div class="lab" style="margin-bottom:10px;">Ausgaben nach Kategorie</div>
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div class="donut"></div>
+              <div class="dleg">
+                <div><span class="sw" style="background:var(--fin)"></span>Wareneinkauf <b>46 %</b></div>
+                <div><span class="sw" style="background:#c7b9a0"></span>Personal <b>27 %</b></div>
+                <div><span class="sw" style="background:#e6ddcd"></span>Sonstiges <b>27 %</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid" style="grid-template-columns:1.55fr 1fr;">
+          <div class="card chartwrap anim" style="--d:.26s">
+            <div class="chart-head">
+              <div class="section-title">Umsatz &amp; Liquidität</div>
+              <div class="seg"><span class="on">30 Tage</span><span>12 Monate</span></div>
+            </div>
+            <svg viewBox="0 0 580 200" style="width:100%;height:200px;display:block;">
+              <defs>
+                <linearGradient id="ga" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#1C7A54" stop-opacity=".22"/>
+                  <stop offset="1" stop-color="#1C7A54" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <line x1="0" y1="160" x2="580" y2="160" stroke="#e8e2d5" stroke-width="1.5"/>
+              <line x1="0" y1="108" x2="580" y2="108" stroke="#efeae0" stroke-width="1.5" stroke-dasharray="3 7"/>
+              <line x1="0" y1="56" x2="580" y2="56" stroke="#efeae0" stroke-width="1.5" stroke-dasharray="3 7"/>
+              <path d="M0,128 L72,100 L145,112 L218,66 L290,84 L362,46 L435,62 L508,32 L580,48 L580,160 L0,160 Z" fill="url(#ga)"/>
+              <polyline class="area-line" points="0,128 72,100 145,112 218,66 290,84 362,46 435,62 508,32 580,48" fill="none" stroke="#1C7A54" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,148 72,140 145,144 218,128 290,136 362,120 435,130 508,112 580,124" fill="none" stroke="#c7b9a0" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round"/>
+              <circle cx="508" cy="32" r="4.5" fill="#1C7A54" stroke="#fff" stroke-width="2"/>
+            </svg>
+            <div class="legend"><span><i style="background:#1C7A54"></i>Umsatz</span><span><i style="background:#c7b9a0"></i>Liquiditätsprognose</span></div>
+          </div>
+
+          <div class="card list-card anim" style="--d:.30s">
+            <div class="section-title" style="margin-bottom:8px;">Zuletzt verbucht</div>
+            <div id="recent-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ BELEGEINGANG ============ -->
+      <section class="screen" data-screen="belege">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Belegeingang</div>
+            <div class="sub">Zentraler Posteingang — Foto, E-Mail, Kassensystem &amp; Lieferdienste laufen automatisch hier ein.</div>
+          </div>
+          <button class="btn btn-primary">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Belege hinzufügen
+          </button>
+        </div>
+
+        <div class="tabs anim" style="--d:.06s" id="belege-tabs">
+          <div class="tab on" data-status="neu">Neu <span class="cnt">5</span></div>
+          <div class="tab" data-status="pruef">In Prüfung <span class="cnt">3</span></div>
+          <div class="tab" data-status="ver">Verbucht <span class="cnt">86</span></div>
+          <div class="tab" data-status="esk">Eskaliert <span class="cnt">2</span></div>
+        </div>
+
+        <div class="filters anim" style="--d:.10s">
+          <div class="fchip">Zeitraum <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="fchip">Lieferant <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="fchip">Betrag <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="top-spacer"></div>
+          <div class="fchip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg> Suchen</div>
+        </div>
+
+        <div class="card table anim" style="--d:.14s">
+          <div class="thead"><div>Beleg</div><div>Lieferant</div><div>Datum</div><div>Betrag</div><div>Kanal</div><div>Status</div></div>
+          <div id="belege-rows"></div>
+        </div>
+      </section>
+
+      <!-- ============ BELEG-DETAIL ============ -->
+      <section class="screen" data-screen="detail">
+        <div class="back anim" style="--d:.02s" data-nav="belege">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> Zurück zum Belegeingang
+        </div>
+
+        <div class="escal anim" style="--d:.05s">
+          <div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
+          <div style="flex:1;">
+            <div class="t">Agent unsicher — kurz prüfen</div>
+            <div class="d">Beleg enthält gemischte USt-Sätze (7 % &amp; 19 %). Aufteilung wurde vorgeschlagen, bitte Kontierung bestätigen.</div>
+          </div>
+        </div>
+
+        <div class="detail-grid">
+          <div class="card receipt-card anim" style="--d:.08s">
+            <div class="rc-head">
+              <div class="section-title">Beleg-Vorschau</div>
+              <div class="rc-tools">
+                <div class="rc-tool">−</div><div class="rc-tool">+</div>
+                <div class="rc-tool"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg></div>
+              </div>
+            </div>
+            <div class="receipt">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <div>
+                  <div class="rco">METRO Großmarkt</div>
+                  <div class="rmeta">Berlin-Friedrichshain · USt-IdNr. DE811…</div>
+                </div>
+                <div style="text-align:right;" class="rmeta">Rechnung 0614<br>14.06.2026</div>
+              </div>
+              <div style="margin:16px 0 6px;" class="rsmall">POSITIONEN</div>
+              <div class="rrow"><span>Getränke (Großgebinde)</span><span>€ 96,00 <span class="rsmall">· 19%</span></span></div>
+              <div class="rrow"><span>Lebensmittel</span><span class="hl">€ 118,50 <span class="rsmall">· 7%</span></span></div>
+              <div class="rrow"><span>Verpackung &amp; Einweg</span><span>€ 34,00 <span class="rsmall">· 19%</span></span></div>
+              <div class="rrow tot"><span>Gesamt brutto</span><span>€ 248,50</span></div>
+              <div style="margin-top:14px;" class="rsmall">Zahlung: EC-Karte · Beleg-Nr. 0614 · Danke für Ihren Einkauf</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="card fields-card anim" style="--d:.12s">
+              <div class="section-title" style="margin-bottom:14px;">Vom Agent erkannt</div>
+              <div class="field-grid">
+                <div class="field"><div class="fl">Lieferant</div><div class="fv">Metro Großmarkt</div></div>
+                <div class="field"><div class="fl">Datum</div><div class="fv">14.06.2026</div></div>
+                <div class="field"><div class="fl">Betrag (brutto)</div><div class="fv">€ 248,50</div></div>
+                <div class="field flag"><div class="fl">USt-Sätze</div><div class="fv">7 % / 19 % <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg></div></div>
+              </div>
+              <div class="linehd">Einzelpositionen</div>
+              <div class="lpos"><span>Getränke (Großgebinde)</span><span>€ 96,00 <span class="tax">· 19 %</span></span></div>
+              <div class="lpos"><span>Lebensmittel</span><span>€ 118,50 <span class="tax">· 7 %</span></span></div>
+              <div class="lpos"><span>Verpackung &amp; Einweg</span><span>€ 34,00 <span class="tax">· 19 %</span></span></div>
+            </div>
+
+            <div class="card konto anim" style="--d:.16s">
+              <div class="konto-head">
+                <div class="section-title">Kontierungs-Vorschlag</div>
+                <div class="acct">SKR03 · 3400 Wareneinkauf</div>
+              </div>
+              <div class="conf">
+                <div class="bar"><i style="--w:92%"></i></div>
+                <div class="pc num">92 %</div>
+              </div>
+              <div class="sub" style="margin-top:8px;font-size:13px;">Hohe Übereinstimmung mit 24 früheren Metro-Belegen.</div>
+            </div>
+
+            <div class="actions anim" style="--d:.20s">
+              <button class="btn btn-accent" onclick="toast('Beleg verbucht ✓ Der Agent lernt aus deiner Bestätigung.')">Bestätigen &amp; buchen</button>
+              <button class="btn btn-ghost" onclick="toast('Korrekturmodus geöffnet.')">Korrigieren</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ AGENT-CHAT ============ -->
+      <section class="screen" data-screen="chat">
+        <div class="chat-head anim" style="--d:.02s">
+          <div class="chat-av">€</div>
+          <div>
+            <div class="chat-name">Finanz-Agent</div>
+            <div class="chat-status"><span class="pulse"></span>Aktiv · antwortet sofort · kennt alle deine Belege</div>
+          </div>
+        </div>
+
+        <div class="chat-layout anim" style="--d:.06s">
+          <div class="card chat-col">
+            <div class="msgs" id="msgs">
+              <div class="msg bot">Hallo David! Ich habe heute <b>8 neue Belege</b> erfasst und 6 davon automatisch verbucht. 2 brauchen noch deine Prüfung.</div>
+            </div>
+            <div class="chips" id="chips">
+              <div class="qchip">Wie waren meine Ausgaben letzten Monat?</div>
+              <div class="qchip">Was ist noch offen?</div>
+              <div class="qchip">Zeig mir die USt-Vorschau</div>
+            </div>
+            <div class="composer">
+              <input id="chat-input" placeholder="Frag den Finanz-Agent etwas…" autocomplete="off">
+              <button class="send" id="chat-send">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="card ctx">
+            <div class="ct">Kontext</div>
+            <div class="cl">Bezogene Belege</div>
+            <div class="ctx-item"><div class="merch">M</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Metro Großmarkt</div><div style="font-size:11px;color:var(--ink-3);">€ 248,50 · heute</div></div></div>
+            <div class="ctx-item"><div class="merch">S</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Stadtwerke</div><div style="font-size:11px;color:var(--ink-3);">€ 182,00 · gestern</div></div></div>
+            <div class="ctx-stat">
+              <div class="cl">Ausgaben Mai 2026</div>
+              <div class="big num">€ 9.310</div>
+            </div>
+            <div class="ctx-stat">
+              <div class="cl">Trefferquote Agent</div>
+              <div class="big num" style="color:var(--fin-deep);">96 %</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ AUTONOMIE ============ -->
+      <section class="screen" data-screen="autonomie">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Autonomie</div>
+            <div class="sub">Du bestimmst, wie viel der Agent selbst entscheidet. Mehr Vertrauen → mehr Automatik.</div>
+          </div>
+        </div>
+
+        <div class="grid modes anim" style="--d:.06s" id="modes">
+          <div class="card mode" data-mode="0">
+            <div class="mode-top"><div class="mt">Assistiert</div><div class="radio"></div></div>
+            <div class="mdsc">Der Agent schlägt vor — du bestätigst jeden Beleg manuell.</div>
+          </div>
+          <div class="card mode on" data-mode="1">
+            <div class="mode-top"><div class="mt">Halb-autonom</div><div class="radio"></div></div>
+            <div class="mdsc">Routine wird automatisch verbucht, Unsicheres wird dir vorgelegt.</div>
+            <span class="rec-badge">Empfohlen für dich</span>
+          </div>
+          <div class="card mode" data-mode="2">
+            <div class="mode-top"><div class="mt">Autonom + Stichprobe</div><div class="radio"></div></div>
+            <div class="mdsc">Alles automatisch — du prüfst nur zufällige Stichproben.</div>
+          </div>
+        </div>
+
+        <div class="auto-grid">
+          <div class="card cat-table anim" style="--d:.10s">
+            <div class="ch">Feineinstellung pro Belegtyp</div>
+            <div class="cat-head"><div>Kategorie</div><div>Autonomiegrad</div><div>Schwelle</div></div>
+            <div id="cat-rows"></div>
+          </div>
+          <div class="card trust anim" style="--d:.14s">
+            <div class="section-title">Trefferquote des Agenten</div>
+            <div style="display:flex;align-items:baseline;gap:9px;"><div class="big num">96%</div><div class="sub" style="margin:0;">letzte 30 Tage</div></div>
+            <div class="bar"><i style="--w:96%"></i></div>
+            <div class="sub" style="font-size:13px;margin:0;">1.180 von 1.228 Vorschlägen ohne Korrektur übernommen. Solide Vertrauensbasis für mehr Autonomie.</div>
+            <div style="border-top:1px solid var(--line-2);padding-top:13px;">
+              <div class="cl" style="font-size:12px;color:var(--ink-3);">Eingesparte Zeit / Monat</div>
+              <div class="big num" style="font-family:var(--font-d);font-size:34px;font-weight:600;">≈ 14 Std.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ RECHNUNGSPRÜFUNG (3-WEGE-ABGLEICH) ============ -->
+      <section class="screen" data-screen="rechnungspruefung">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Rechnungsprüfung</div>
+            <div class="sub">3-Wege-Abgleich: jede Rechnung automatisch gegen Bestellung &amp; Lieferschein geprüft — bevor du zahlst.</div>
+          </div>
+        </div>
+
+        <div class="escal anim" style="--d:.05s">
+          <div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
+          <div style="flex:1;">
+            <div class="t">Abweichung erkannt — Coca-Cola GmbH</div>
+            <div class="d">Die Rechnung enthält 2 Einheiten mehr als laut Lieferschein geliefert wurden. Differenz: € 38,00.</div>
+          </div>
+        </div>
+
+        <div class="card anim" style="--d:.08s; padding:20px; margin-bottom:16px;">
+          <div class="tri">
+            <div class="tri-col">
+              <div class="tch">Bestellung <span class="ok">✓</span></div>
+              <div class="tri-row"><span>Cola-Kisten</span><span>10 × € 19,00</span></div>
+              <div class="tri-row"><span>Bestellt am</span><span>09.06.2026</span></div>
+              <div class="tri-row" style="font-weight:700;"><span>Summe</span><span>€ 190,00</span></div>
+            </div>
+            <div class="tri-col">
+              <div class="tch">Lieferschein <span class="ok">✓</span></div>
+              <div class="tri-row"><span>Cola-Kisten</span><span>10 geliefert</span></div>
+              <div class="tri-row"><span>Geliefert am</span><span>11.06.2026</span></div>
+              <div class="tri-row" style="font-weight:700;"><span>Erwartet</span><span>€ 190,00</span></div>
+            </div>
+            <div class="tri-col flagcol">
+              <div class="tch">Rechnung <span class="warn">⚠ Abweichung</span></div>
+              <div class="tri-row bad"><span>Cola-Kisten</span><span>12 × € 19,00</span></div>
+              <div class="tri-row"><span>Datum</span><span>13.06.2026</span></div>
+              <div class="tri-row bad" style="font-weight:700;"><span>Berechnet</span><span>€ 228,00</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card konto anim" style="--d:.12s; margin-bottom:16px;">
+          <div class="konto-head">
+            <div class="section-title">Einschätzung des Agenten</div>
+            <div class="acct" style="color:var(--warn);background:var(--warn-soft);border-color:#e7cfa6;">+ € 38,00 zu viel</div>
+          </div>
+          <div class="conf">
+            <div class="bar"><i style="--w:88%;background:linear-gradient(90deg,#d39a4a,var(--warn));"></i></div>
+            <div class="pc num" style="color:var(--warn);">88 %</div>
+          </div>
+          <div class="sub" style="margin-top:8px;font-size:13px;">Wahrscheinlich ein Erfassungsfehler des Lieferanten. Ich habe eine Reklamation vorbereitet.</div>
+          <div class="actions" style="margin-top:16px;">
+            <button class="btn btn-accent" onclick="toast('Reklamations-Entwurf geöffnet ✓')">Reklamation entwerfen</button>
+            <button class="btn btn-ghost" onclick="toast('Korrigierter Betrag € 190,00 verbucht.')">Korrigiert buchen (€ 190)</button>
+          </div>
+        </div>
+
+        <div class="card list-card anim" style="--d:.16s">
+          <div class="section-title" style="margin-bottom:8px;">Heute geprüft &amp; in Ordnung</div>
+          <div class="match-ok"><div class="merch">M</div><div style="flex:1;"><div style="font-weight:600;">Metro Großmarkt</div><div class="md">Rechnung = Bestellung = Lieferschein</div></div><span class="tick">✓</span></div>
+          <div class="match-ok"><div class="merch">B</div><div style="flex:1;"><div style="font-weight:600;">Bäckerei Konrad</div><div class="md">Rechnung = Bestellung = Lieferschein</div></div><span class="tick">✓</span></div>
+          <div class="match-ok"><div class="merch">F</div><div style="flex:1;"><div style="font-weight:600;">Frische Fisch GmbH</div><div class="md">Rechnung = Bestellung = Lieferschein</div></div><span class="tick">✓</span></div>
+        </div>
+      </section>
+
+      <!-- ============ ZAHLUNGSLAUF ============ -->
+      <section class="screen" data-screen="zahlungslauf">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Zahlungslauf</div>
+            <div class="sub">Der Agent bündelt fällige Rechnungen, optimiert Skonto &amp; Termin und legt dir alles zur Freigabe vor. Auslösung per SCA — du bestätigst einmal in deiner Banking-App.</div>
+          </div>
+          <div class="conn-chip"><span class="pulse"></span>Geschäftskonto verbunden · PSD2</div>
+        </div>
+
+        <div class="grid" style="grid-template-columns:1.6fr 1fr; align-items:start;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="card runbox anim" style="--d:.06s">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+                <div>
+                  <div class="lab" style="color:var(--ink-3);font-size:13px;">Vorgeschlagener Zahlungslauf</div>
+                  <div class="ramt num">€ 1.392,39</div>
+                  <div class="sub" style="margin-top:6px;">7 Rechnungen · fällig in den nächsten 6 Tagen · Skonto gesichert: <b>€ 15,40</b></div>
+                  <div id="run-status" style="margin-top:8px;font-size:13.5px;color:var(--ink-3);">Bereit zur Freigabe</div>
+                </div>
+                <button class="btn btn-accent" id="run-btn" onclick="openSca()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                  Zahlungslauf freigeben (SCA)
+                </button>
+              </div>
+            </div>
+
+            <div class="card table anim" style="--d:.10s">
+              <div class="pay-head"><div></div><div>Lieferant</div><div>Betrag</div><div>Fällig</div><div>Skonto</div><div>Status</div></div>
+              <div class="pay-row"><div class="cbox">✓</div><div><div class="tname">Metro Großmarkt</div><div class="tsub">Rg 0614</div></div><div class="tname num">€ 190,00</div><div class="muted">24.06.</div><div class="muted">2 %</div><div><span class="chip ver"><span class="cdot"></span>geprüft</span></div></div>
+              <div class="pay-row"><div class="cbox">✓</div><div><div class="tname">Stadtwerke</div><div class="tsub">Strom &amp; Wasser</div></div><div class="tname num">€ 182,00</div><div class="muted">25.06.</div><div class="muted">—</div><div><span class="chip sent"><span class="cdot"></span>Auto-Limit</span></div></div>
+              <div class="pay-row"><div class="cbox">✓</div><div><div class="tname">Bäckerei Konrad</div><div class="tsub">Backwaren</div></div><div class="tname num">€ 64,20</div><div class="muted">23.06.</div><div class="muted">—</div><div><span class="chip ver"><span class="cdot"></span>geprüft</span></div></div>
+              <div class="pay-row"><div class="cbox">✓</div><div><div class="tname">Telekom</div><div class="tsub">Internet &amp; Telefon</div></div><div class="tname num">€ 79,99</div><div class="muted">26.06.</div><div class="muted">—</div><div><span class="chip sent"><span class="cdot"></span>Auto · wiederkehrend</span></div></div>
+              <div class="pay-row"><div class="cbox">✓</div><div><div class="tname">Weinhandel Veltlin</div><div class="tsub">Getränke</div></div><div class="tname num">€ 388,40</div><div class="muted">27.06.</div><div class="muted">3 %</div><div><span class="chip ver"><span class="cdot"></span>geprüft</span></div></div>
+              <div class="pay-row"><div class="cbox">✓</div><div><div class="tname">Coca-Cola GmbH</div><div class="tsub">Getränkelieferung</div></div><div class="tname num">€ 312,90</div><div class="muted">28.06.</div><div class="muted">—</div><div><span class="chip ver"><span class="cdot"></span>geprüft</span></div></div>
+              <div class="pay-row"><div class="cbox off">✓</div><div><div class="tname">Frische Fisch GmbH</div><div class="tsub">über Auto-Limit (€ 200)</div></div><div class="tname num">€ 174,90</div><div class="muted">24.06.</div><div class="muted">—</div><div><span class="chip esk"><span class="cdot"></span>deine Freigabe</span></div></div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="card list-card anim" style="--d:.14s">
+              <div class="section-title" style="margin-bottom:6px;">Schutzmechanismen</div>
+              <div class="guard"><span class="gi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div>Auto-Zahlung bis <b>€ 200</b> für Whitelist-Lieferanten</div></div>
+              <div class="guard"><span class="gi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div>Alles darüber: deine Freigabe per SCA</div></div>
+              <div class="guard"><span class="gi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div>Betrugs- &amp; Anomalieprüfung vor jeder Zahlung</div></div>
+              <div class="guard"><span class="gi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div>Lückenloser Audit-Trail jeder Aktion</div></div>
+            </div>
+            <div class="card list-card anim" style="--d:.18s">
+              <div class="section-title" style="margin-bottom:6px;">Nach der Freigabe</div>
+              <div class="sub" style="margin:0;font-size:13.5px;">Der Agent weist die Zahlungen an und gleicht jeden Bankabgang automatisch der passenden Rechnung zu — der Kreislauf von Beleg über Prüfung bis Zahlung schließt sich von selbst.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ AUSGANGSRECHNUNGEN ============ -->
+      <section class="screen" data-screen="ausgangsrechnungen">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Ausgangsrechnungen</div>
+            <div class="sub">Rechnungen an deine Kunden — der Agent erstellt sie aus dem Auftrag, prüft alle Pflichtangaben und erzeugt eine E-Rechnung. Du gibst frei.</div>
+          </div>
+          <button class="btn btn-primary">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Neue Rechnung
+          </button>
+        </div>
+
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Offene Forderungen</div><div class="val num">€ 4.310</div><div class="delta flat">6 Rechnungen</div></div>
+          <div class="card kpi"><div class="lab">Überfällig</div><div class="val num">€ 1.180</div><div class="delta warn">▲ 2 Rechnungen</div></div>
+          <div class="card kpi"><div class="lab">Diesen Monat bezahlt</div><div class="val num">€ 7.640</div><div class="delta up">14 Rechnungen</div></div>
+          <div class="card kpi"><div class="lab">Ø Zahlungsdauer</div><div class="val num">9 Tage</div><div class="delta up">▼ −2 vs. Vormonat</div></div>
+        </div>
+
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px; background:linear-gradient(100deg,#3a2c14,#2a2010);">
+          <div class="ai" style="color:#e8c88a;">!</div>
+          <div>
+            <div class="t">2 Rechnungen sind überfällig</div>
+            <div class="d">Ich habe für beide eine freundliche Zahlungserinnerung (Mahnstufe 1) vorbereitet — du musst sie nur freigeben.</div>
+          </div>
+          <button class="cta" onclick="toast('Zahlungserinnerungen gesendet ✓')">Erinnerungen senden →</button>
+        </div>
+
+        <div class="grid" style="grid-template-columns:1.15fr 1fr;">
+          <!-- Draft invoice -->
+          <div class="card receipt-card anim" style="--d:.14s">
+            <div class="rc-head">
+              <div class="section-title">Rechnungsentwurf · vom Agent erstellt</div>
+              <span class="conf-mini">aus Auftrag #2026-0142</span>
+            </div>
+            <div class="receipt">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <div>
+                  <div class="rco">RECHNUNG</div>
+                  <div class="rmeta">Bistro Sonneneck · Berlin · USt-IdNr. DE327…</div>
+                </div>
+                <div style="text-align:right;" class="rmeta">Nr. 2026-0142<br>Datum 21.06.2026<br>Leistung 18.06.2026</div>
+              </div>
+              <div style="margin:14px 0 4px;" class="rsmall">RECHNUNGSEMPFÄNGER</div>
+              <div style="font-weight:600;">Müller &amp; Partner GmbH</div>
+              <div class="rsmall">Friedrichstraße 12 · 10117 Berlin</div>
+              <div style="margin:16px 0 6px;" class="rsmall">LEISTUNGEN</div>
+              <div class="rrow"><span>Catering-Menü „Sommer" · 40 Pers.</span><span>€ 1.400,00 <span class="rsmall">· 7%</span></span></div>
+              <div class="rrow"><span>Getränkepauschale</span><span>€ 360,00 <span class="rsmall">· 19%</span></span></div>
+              <div class="rrow"><span>Service &amp; Personal</span><span>€ 240,00 <span class="rsmall">· 19%</span></span></div>
+              <div class="rrow"><span>Netto</span><span>€ 2.000,00</span></div>
+              <div class="rrow"><span>zzgl. USt 7 %</span><span>€ 98,00</span></div>
+              <div class="rrow"><span>zzgl. USt 19 %</span><span>€ 114,00</span></div>
+              <div class="rrow tot"><span>Gesamtbetrag</span><span>€ 2.212,00</span></div>
+              <div style="margin-top:14px;" class="rsmall">Zahlbar bis 05.07.2026 · IBAN DE12 1001 0010 0000 0000 00</div>
+            </div>
+
+            <div class="pflicht">
+              <div class="p"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Fortlaufende Rechnungsnummer</div>
+              <div class="p"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Steuernummer / USt-IdNr.</div>
+              <div class="p"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Leistungsdatum</div>
+              <div class="p"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>USt nach Sätzen aufgeschlüsselt</div>
+            </div>
+            <div class="einv">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              E-Rechnung (ZUGFeRD 2.3) eingebettet · konform zu EN 16931
+            </div>
+            <div class="actions" style="margin-top:14px;">
+              <button class="btn btn-accent" onclick="toast('Rechnung gesendet ✓ Zahlung wird automatisch überwacht.')">Prüfen &amp; senden</button>
+              <button class="btn btn-ghost" onclick="toast('Bearbeitungsmodus geöffnet.')">Bearbeiten</button>
+            </div>
+          </div>
+
+          <!-- List -->
+          <div class="card list-card anim" style="--d:.18s">
+            <div class="section-title" style="margin-bottom:8px;">Letzte Ausgangsrechnungen</div>
+            <div class="ar-row"><div class="merch">M</div><div style="flex:1;min-width:0;"><div class="arn">Müller &amp; Partner GmbH</div><div class="ard">2026-0142 · € 2.212,00</div></div><span class="chip draft"><span class="cdot"></span>Entwurf</span></div>
+            <div class="ar-row"><div class="merch">E</div><div style="flex:1;min-width:0;"><div class="arn">Eventhaus Lux</div><div class="ard">2026-0141 · € 1.180,00 · Mahnstufe 1</div></div><span class="chip esk"><span class="cdot"></span>Überfällig</span></div>
+            <div class="ar-row"><div class="merch">S</div><div style="flex:1;min-width:0;"><div class="arn">Stadtbüro Catering</div><div class="ard">2026-0140 · € 640,00</div></div><span class="chip sent"><span class="cdot"></span>Gesendet</span></div>
+            <div class="ar-row"><div class="merch">M</div><div style="flex:1;min-width:0;"><div class="arn">Müller &amp; Partner GmbH</div><div class="ard">2026-0139 · € 2.212,00</div></div><span class="chip ver"><span class="cdot"></span>Bezahlt</span></div>
+            <div class="ar-row"><div class="merch">P</div><div style="flex:1;min-width:0;"><div class="arn">Praxis Dr. Wendt</div><div class="ard">2026-0138 · € 420,00</div></div><span class="chip ver"><span class="cdot"></span>Bezahlt</span></div>
+            <div style="margin-top:14px;padding-top:13px;border-top:1px solid var(--line-2);">
+              <div class="cl" style="font-size:12px;color:var(--ink-3);">Wiederkehrend · automatisch</div>
+              <div class="ar-row" style="border:none;padding-top:8px;"><div class="merch" style="background:var(--fin-soft);color:var(--fin);border-color:#cfe6da;">↻</div><div style="flex:1;"><div class="arn">Müller &amp; Partner · monatlich</div><div class="ard">nächste Rechnung am 01.07. — wird automatisch erstellt</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ LIQUIDITÄT ============ -->
+      <section class="screen" data-screen="liquiditaet">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Liquidität</div>
+            <div class="sub">Cashflow-Prognose der nächsten 8 Wochen — der Agent warnt, bevor es eng wird.</div>
+          </div>
+        </div>
+
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="lab">Kontostand heute</div><div class="val num">€ 18.420</div><div class="delta flat">Geschäftskonto</div></div>
+          <div class="card kpi"><div class="lab">Prognose in 30 Tagen</div><div class="val num">€ 12.180</div><div class="delta warn">▼ −34 %</div></div>
+          <div class="card kpi"><div class="lab">Runway</div><div class="val num">2,4 Mon.</div><div class="delta flat">bei aktueller Rate</div></div>
+          <div class="card kpi"><div class="lab">Größte Ausgabe</div><div class="val num">€ 3.200</div><div class="delta flat">Miete · 10.07.</div></div>
+        </div>
+
+        <div class="card chartwrap anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="chart-head">
+            <div class="section-title">Kontostand-Prognose</div>
+            <div class="seg"><span class="on">8 Wochen</span><span>6 Monate</span></div>
+          </div>
+          <svg viewBox="0 0 580 200" style="width:100%;height:200px;display:block;">
+            <defs><linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1C7A54" stop-opacity=".20"/><stop offset="1" stop-color="#1C7A54" stop-opacity="0"/></linearGradient></defs>
+            <line x1="0" y1="160" x2="580" y2="160" stroke="#e8e2d5" stroke-width="1.5"/>
+            <line x1="0" y1="128" x2="580" y2="128" stroke="#d39a4a" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <text x="6" y="122" fill="#b5722a" font-size="11" font-family="Hanken Grotesk">Mindestreserve</text>
+            <path d="M0,72 L72,60 L145,54 L218,62 L290,82 L362,116 L435,92 L508,74 L580,60 L580,160 L0,160 Z" fill="url(#gl)"/>
+            <polyline class="area-line" points="0,72 72,60 145,54 218,62 290,82 362,116 435,92 508,74 580,60" fill="none" stroke="#1C7A54" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="362" cy="116" r="5" fill="#d39a4a" stroke="#fff" stroke-width="2"/>
+            <text x="338" y="138" fill="#b5722a" font-size="11" font-weight="600" font-family="Hanken Grotesk">10.07.</text>
+          </svg>
+          <div class="legend"><span><i style="background:#1C7A54"></i>Prognostizierter Kontostand</span><span><i style="background:#d39a4a"></i>Mindestreserve</span></div>
+        </div>
+
+        <div class="insight anim" style="--d:.14s; margin-bottom:16px; background:linear-gradient(100deg,#3a2c14,#2a2010);">
+          <div class="ai" style="color:#e8c88a;">!</div>
+          <div>
+            <div class="t">Engpass am 10.07. erkannt</div>
+            <div class="d">Umsatzsteuer (€ 1.240) und Miete (€ 3.200) fallen auf denselben Tag. Vorschlag: eine Lieferantenzahlung (€ 540) um 5 Tage schieben — Skonto bleibt erhalten, Reserve gewahrt.</div>
+          </div>
+          <button class="cta" onclick="toast('Freigegeben ✓ Zahlung neu terminiert.')">Vorschlag freigeben →</button>
+        </div>
+
+        <div class="grid" style="grid-template-columns:1fr 1fr;">
+          <div class="card list-card anim" style="--d:.18s">
+            <div class="section-title" style="margin-bottom:6px;">Anstehende Eingänge</div>
+            <div class="flowcol">
+              <div class="flow-row"><div class="flow-ic">＋</div><div><div style="font-weight:600;">Karteneinnahmen (prog.)</div><div class="md">nächste 14 Tage</div></div><div class="fa in num">+ € 9.800</div></div>
+              <div class="flow-row"><div class="flow-ic">＋</div><div><div style="font-weight:600;">Plattform-Auszahlung</div><div class="md">28.06.</div></div><div class="fa in num">+ € 1.420</div></div>
+              <div class="flow-row"><div class="flow-ic">＋</div><div><div style="font-weight:600;">Offene Kundenrechnung</div><div class="md">Catering · fällig 30.06.</div></div><div class="fa in num">+ € 880</div></div>
+            </div>
+          </div>
+          <div class="card list-card anim" style="--d:.22s">
+            <div class="section-title" style="margin-bottom:6px;">Anstehende Ausgaben</div>
+            <div class="flowcol">
+              <div class="flow-row"><div class="flow-ic">−</div><div><div style="font-weight:600;">Miete</div><div class="md">10.07.</div></div><div class="fa out num">− € 3.200</div></div>
+              <div class="flow-row"><div class="flow-ic">−</div><div><div style="font-weight:600;">Löhne</div><div class="md">30.06.</div></div><div class="fa out num">− € 6.100</div></div>
+              <div class="flow-row"><div class="flow-ic">−</div><div><div style="font-weight:600;">Umsatzsteuer</div><div class="md">10.07.</div></div><div class="fa out num">− € 1.240</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ LIEFERANTEN (PREISMONITORING) ============ -->
+      <section class="screen" data-screen="lieferanten">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Lieferanten</div>
+            <div class="sub">Preis-Monitoring: der Agent erkennt schleichende Preiserhöhungen und schlägt Alternativen vor.</div>
+          </div>
+        </div>
+
+        <div class="insight anim" style="--d:.05s; margin-bottom:18px;">
+          <div class="ai">✦</div>
+          <div>
+            <div class="t">2 Lieferanten sind teurer geworden</div>
+            <div class="d">Geschätztes Sparpotenzial bei Wechsel: rund € 240 pro Monat. Details in der Tabelle.</div>
+          </div>
+          <button class="cta" onclick="toast('Sparvorschläge geöffnet.')">Sparpotenzial nutzen →</button>
+        </div>
+
+        <div class="card table anim" style="--d:.09s">
+          <div class="sup-head"><div>Lieferant</div><div>Preis-Trend (3 Mon.)</div><div>Veränderung</div><div>Anteil</div><div>Empfehlung</div></div>
+          <div class="sup-row">
+            <div><div class="tname">Metro Großmarkt</div><div class="tsub">Wareneinkauf</div></div>
+            <div><svg class="spark" viewBox="0 0 72 26"><polyline points="0,16 18,15 36,16 54,14 72,15" fill="none" stroke="#9a978f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="trend-flat num">+1 %</div>
+            <div class="muted num">32 %</div>
+            <div><span class="stable">stabil</span></div>
+          </div>
+          <div class="sup-row">
+            <div><div class="tname">Weinhandel Veltlin</div><div class="tsub">Getränke</div></div>
+            <div><svg class="spark" viewBox="0 0 72 26"><polyline points="0,20 18,18 36,13 54,9 72,5" fill="none" stroke="#b5722a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="trend-up num">+12 %</div>
+            <div class="muted num">11 %</div>
+            <div><span class="alt">Alternative: Weinkontor Nord −9 %</span></div>
+          </div>
+          <div class="sup-row">
+            <div><div class="tname">Frische Fisch GmbH</div><div class="tsub">Wareneinkauf</div></div>
+            <div><svg class="spark" viewBox="0 0 72 26"><polyline points="0,18 18,17 36,15 54,12 72,9" fill="none" stroke="#b5722a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="trend-up num">+7 %</div>
+            <div class="muted num">8 %</div>
+            <div><span class="stable">beobachten</span></div>
+          </div>
+          <div class="sup-row">
+            <div><div class="tname">Stadtwerke</div><div class="tsub">Energie</div></div>
+            <div><svg class="spark" viewBox="0 0 72 26"><polyline points="0,15 18,16 36,14 54,15 72,14" fill="none" stroke="#9a978f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="trend-flat num">+2 %</div>
+            <div class="muted num">9 %</div>
+            <div><span class="stable">stabil</span></div>
+          </div>
+          <div class="sup-row">
+            <div><div class="tname">Coca-Cola GmbH</div><div class="tsub">Getränke</div></div>
+            <div><svg class="spark" viewBox="0 0 72 26"><polyline points="0,9 18,11 36,13 54,16 72,18" fill="none" stroke="#1C7A54" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="trend-down num">−3 %</div>
+            <div class="muted num">7 %</div>
+            <div><span class="stable">gut</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ANGEBOTE ============ -->
+      <section class="screen" data-screen="angebote">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Angebote</div>
+            <div class="sub">Vom Angebot zum Auftrag zur Rechnung — der Agent erstellt Angebote und wandelt angenommene automatisch in Rechnungen um.</div>
+          </div>
+          <button class="btn btn-primary"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neues Angebot</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Offene Angebote</div><div class="val num">€ 3.560</div><div class="delta flat">4 Angebote</div></div>
+          <div class="card kpi"><div class="lab">Angenommen (Juni)</div><div class="val num">€ 6.200</div><div class="delta up">5 Aufträge</div></div>
+          <div class="card kpi"><div class="lab">Annahmequote</div><div class="val num">62 %</div><div class="delta up">▲ +6 %</div></div>
+          <div class="card kpi"><div class="lab">Ø Angebotswert</div><div class="val num">€ 890</div><div class="delta flat">letzte 30 Tage</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">1 Angebot vom Sales-Agent wartet auf Freigabe</div><div class="d">Catering-Anfrage „Stadtfest" — Entwurf über € 4.200 liegt bereit.</div></div>
+          <button class="cta" onclick="toast('Angebot zur Prüfung geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div>Nr.</div><div>Kunde</div><div>Betrag</div><div>Datum</div><div>Status</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-A058</div><div class="tname">Müller &amp; Partner GmbH</div><div class="tname num">€ 2.380</div><div class="muted">20.06.</div><div><span class="chip sent"><span class="cdot"></span>Versendet</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-A057</div><div class="tname">Eventhaus Lux</div><div class="tname num">€ 1.180</div><div class="muted">19.06.</div><div><span class="chip ver"><span class="cdot"></span>Angenommen</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-A056</div><div class="tname">Stadtfest Orga</div><div class="tname num">€ 4.200</div><div class="muted">17.06.</div><div><span class="chip draft"><span class="cdot"></span>Entwurf</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-A055</div><div class="tname">Praxis Dr. Wendt</div><div class="tname num">€ 640</div><div class="muted">15.06.</div><div><span class="chip ver"><span class="cdot"></span>Angenommen</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-A054</div><div class="tname">Catering-Anfrage (Web)</div><div class="tname num">€ 1.980</div><div class="muted">14.06.</div><div><span class="chip esk"><span class="cdot"></span>Abgelehnt</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ KASSENBUCH ============ -->
+      <section class="screen" data-screen="kassenbuch">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Kassenbuch</div>
+            <div class="sub">Bareinnahmen und -ausgaben GoBD-konform — mit laufendem Kassenbestand und automatischem Tagesabschluss aus dem Kassensystem.</div>
+          </div>
+          <button class="btn btn-primary"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Barbuchung erfassen</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Kassenbestand</div><div class="val num">€ 1.284,50</div><div class="delta flat">aktuell</div></div>
+          <div class="card kpi"><div class="lab">Bareinnahmen heute</div><div class="val num">€ 980,00</div><div class="delta up">Tageslosung</div></div>
+          <div class="card kpi"><div class="lab">Barausgaben (Juni)</div><div class="val num">€ 612,40</div><div class="delta flat">18 Buchungen</div></div>
+          <div class="card kpi"><div class="lab">Letzter Abschluss</div><div class="val num" style="font-size:26px;">gestern</div><div class="delta flat">23:50 · Z-Bon</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Tageslosung automatisch übernommen</div><div class="d">Der Z-Bon vom Kassensystem ist verbucht. Tagesabschluss für heute ist bereit.</div></div>
+          <button class="cta" onclick="toast('Tagesabschluss erstellt ✓')">Tagesabschluss →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1fr 2fr 1fr 1fr 1fr;"><div>Datum</div><div>Beschreibung</div><div class="r">Einnahme</div><div class="r">Ausgabe</div><div class="r">Bestand</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 2fr 1fr 1fr 1fr;"><div class="muted">21.06.</div><div class="tname">Tageslosung (Z-Bon)</div><div class="r pos num">+ 980,00</div><div class="r muted">—</div><div class="r num">1.284,50</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 2fr 1fr 1fr 1fr;"><div class="muted">21.06.</div><div class="tname">Bareinkauf Getränkemarkt</div><div class="r muted">—</div><div class="r num">86,40</div><div class="r num">304,50</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 2fr 1fr 1fr 1fr;"><div class="muted">20.06.</div><div class="tname">Wechselgeld aufgefüllt</div><div class="r pos num">+ 100,00</div><div class="r muted">—</div><div class="r num">390,90</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 2fr 1fr 1fr 1fr;"><div class="muted">20.06.</div><div class="tname">Bareinkauf Wochenmarkt</div><div class="r muted">—</div><div class="r num">64,20</div><div class="r num">290,90</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 2fr 1fr 1fr 1fr;"><div class="muted">19.06.</div><div class="tname">Deko &amp; Blumen</div><div class="r muted">—</div><div class="r num">38,00</div><div class="r num">355,10</div></div>
+        </div>
+      </section>
+
+      <!-- ============ UST-VORANMELDUNG ============ -->
+      <section class="screen" data-screen="ustva">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">USt-Voranmeldung</div>
+            <div class="sub">Der Agent berechnet die Voranmeldung laufend mit, plausibilisiert sie und bereitet die Übermittlung vor.</div>
+          </div>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="lab">Zeitraum</div><div class="val num" style="font-size:26px;">Juni 2026</div><div class="delta flat">monatlich</div></div>
+          <div class="card kpi"><div class="lab">Umsatzsteuer</div><div class="val num">€ 2.980</div><div class="delta flat">vereinnahmt</div></div>
+          <div class="card kpi"><div class="lab">Vorsteuer</div><div class="val num">€ 1.740</div><div class="delta flat">abziehbar</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Zahllast</div><div class="val num">€ 1.240</div><div class="delta warn">fällig 10.07.</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Voranmeldung für Juni ist vorbereitet</div><div class="d">Alle Buchungen plausibilisiert, keine Auffälligkeiten. Bereit zur Übermittlung an ELSTER.</div></div>
+          <button class="cta" onclick="toast('An ELSTER übermittelt ✓ (Demo)')">An ELSTER übermitteln →</button>
+        </div>
+        <div class="grid" style="grid-template-columns:1fr 1fr;">
+          <div class="card list-card anim" style="--d:.14s">
+            <div class="section-title" style="margin-bottom:8px;">Umsatzsteuer</div>
+            <div class="kz"><span>Umsätze 19 %</span><span class="kzc">Bemessung € 12.400 · Kz 81</span><span class="num">€ 2.356,00</span></div>
+            <div class="kz"><span>Umsätze 7 %</span><span class="kzc">Bemessung € 8.900 · Kz 86</span><span class="num">€ 623,00</span></div>
+            <div class="kz tot"><span>Summe Umsatzsteuer</span><span class="num">€ 2.979,00</span></div>
+          </div>
+          <div class="card list-card anim" style="--d:.18s">
+            <div class="section-title" style="margin-bottom:8px;">Vorsteuer</div>
+            <div class="kz"><span>Vorsteuer Eingangsrechnungen</span><span class="kzc">Kz 66</span><span class="num">€ 1.612,00</span></div>
+            <div class="kz"><span>Einfuhrumsatzsteuer</span><span class="kzc">Kz 62</span><span class="num">€ 128,00</span></div>
+            <div class="kz tot"><span>Summe Vorsteuer</span><span class="num">€ 1.740,00</span></div>
+          </div>
+        </div>
+        <div class="card konto anim" style="--d:.22s; margin-top:16px;">
+          <div class="konto-head"><div class="section-title">Zahllast (Kz 83)</div><div class="acct" style="color:var(--warn);background:var(--warn-soft);border-color:#e7cfa6;">fällig 10.07.2026</div></div>
+          <div style="display:flex;align-items:baseline;gap:10px;"><div class="pc num" style="font-size:32px;">€ 1.239,00</div><div class="sub" style="margin:0;">an das Finanzamt</div></div>
+          <div class="actions" style="margin-top:16px;">
+            <button class="btn btn-accent" onclick="toast('An ELSTER übermittelt ✓ (Demo)')">An ELSTER übermitteln</button>
+            <button class="btn btn-ghost" onclick="toast('An Steuerberater (DATEV) übergeben.')">An Steuerberater (DATEV)</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ AUSWERTUNGEN ============ -->
+      <section class="screen" data-screen="auswertungen">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Auswertungen</div>
+            <div class="sub">EÜR, GuV und Kennzahlen — automatisch aus deinen Buchungen, jederzeit aktuell.</div>
+          </div>
+          <div class="seg"><span class="on">EÜR</span><span>GuV</span><span>Kennzahlen</span></div>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="lab">Einnahmen (Juni)</div><div class="val num">€ 24.800</div><div class="delta up">▲ +8 %</div></div>
+          <div class="card kpi"><div class="lab">Ausgaben (Juni)</div><div class="val num">€ 17.180</div><div class="delta flat">69 % vom Umsatz</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Gewinn</div><div class="val num">€ 7.620</div><div class="delta up">▲ +12 %</div></div>
+          <div class="card kpi"><div class="lab">Rohertrag</div><div class="val num">68 %</div><div class="delta up">über Schnitt</div></div>
+        </div>
+        <div class="card chartwrap anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="chart-head"><div class="section-title">Einnahmen &amp; Ausgaben</div><div class="seg"><span class="on">6 Monate</span><span>12 Monate</span></div></div>
+          <svg viewBox="0 0 580 190" style="width:100%;height:190px;display:block;">
+            <line x1="0" y1="150" x2="580" y2="150" stroke="#e8e2d5" stroke-width="1.5"/>
+            <line x1="0" y1="100" x2="580" y2="100" stroke="#efeae0" stroke-width="1.5" stroke-dasharray="3 7"/>
+            <line x1="0" y1="50" x2="580" y2="50" stroke="#efeae0" stroke-width="1.5" stroke-dasharray="3 7"/>
+            <polyline class="area-line" points="0,70 116,60 232,66 348,48 464,54 580,40" fill="none" stroke="#1C7A54" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="0,118 116,112 232,116 348,104 464,108 580,100" fill="none" stroke="#c98b3a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="legend"><span><i style="background:#1C7A54"></i>Einnahmen</span><span><i style="background:#c98b3a"></i>Ausgaben</span></div>
+        </div>
+        <div class="grid" style="grid-template-columns:1fr 1fr;">
+          <div class="card list-card anim" style="--d:.14s">
+            <div class="section-title" style="margin-bottom:8px;">Betriebseinnahmen</div>
+            <div class="kz"><span>Umsatzerlöse 19 %</span><span class="num">€ 14.200</span></div>
+            <div class="kz"><span>Umsatzerlöse 7 %</span><span class="num">€ 10.100</span></div>
+            <div class="kz"><span>Sonstige Einnahmen</span><span class="num">€ 500</span></div>
+            <div class="kz tot"><span>Summe Einnahmen</span><span class="num">€ 24.800</span></div>
+          </div>
+          <div class="card list-card anim" style="--d:.18s">
+            <div class="section-title" style="margin-bottom:8px;">Betriebsausgaben</div>
+            <div class="kz"><span>Wareneinkauf</span><span class="num">€ 8.200</span></div>
+            <div class="kz"><span>Personal</span><span class="num">€ 5.100</span></div>
+            <div class="kz"><span>Miete &amp; Nebenkosten</span><span class="num">€ 2.400</span></div>
+            <div class="kz"><span>Marketing</span><span class="num">€ 480</span></div>
+            <div class="kz"><span>Sonstiges</span><span class="num">€ 1.000</span></div>
+            <div class="kz tot"><span>Summe Ausgaben</span><span class="num">€ 17.180</span></div>
+          </div>
+        </div>
+        <div class="card konto anim" style="--d:.22s; margin-top:16px;">
+          <div class="konto-head"><div class="section-title">Ergebnis (Überschuss)</div><div class="acct" style="color:var(--fin-deep);background:var(--fin-soft);border-color:#cfe6da;">Juni 2026</div></div>
+          <div class="pc num" style="font-size:32px;color:var(--fin-deep);">€ 7.620,00</div>
+        </div>
+      </section>
+
+      <!-- ============ KONTAKTE ============ -->
+      <section class="screen" data-screen="kontakte">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Kontakte</div>
+            <div class="sub">Kunden und Lieferanten an einem Ort — Stammdaten, Umsätze und offene Posten.</div>
+          </div>
+          <button class="btn btn-primary"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Kontakt anlegen</button>
+        </div>
+        <div class="seg anim" style="--d:.06s; margin-bottom:16px;"><span class="on">Kunden</span><span>Lieferanten</span></div>
+        <div class="card table anim" style="--d:.10s">
+          <div class="dgrid dt-head" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div>Name</div><div>Typ</div><div class="r">Umsatz (Jahr)</div><div class="r">Offen</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div style="display:flex;align-items:center;gap:11px;"><div class="merch">M</div><div class="tname">Müller &amp; Partner GmbH</div></div><div><span class="chip ok"><span class="cdot"></span>Stammkunde</span></div><div class="r num">€ 14.200</div><div class="r num" style="color:var(--warn);">€ 2.212</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div style="display:flex;align-items:center;gap:11px;"><div class="merch">E</div><div class="tname">Eventhaus Lux</div></div><div><span class="muted">Kunde</span></div><div class="r num">€ 3.400</div><div class="r num" style="color:var(--warn);">€ 1.180</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div style="display:flex;align-items:center;gap:11px;"><div class="merch">S</div><div class="tname">Stadtbüro Catering</div></div><div><span class="muted">Kunde</span></div><div class="r num">€ 2.100</div><div class="r muted">—</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div style="display:flex;align-items:center;gap:11px;"><div class="merch">P</div><div class="tname">Praxis Dr. Wendt</div></div><div><span class="muted">Kunde</span></div><div class="r num">€ 1.260</div><div class="r muted">—</div></div>
+        </div>
+      </section>
+
+      <!-- ============ INVENTAR ============ -->
+      <section class="screen" data-screen="inventar">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Inventar</div>
+            <div class="sub">Artikel, Bestände und Lagerwert — der Agent meldet rechtzeitig, wenn etwas knapp wird.</div>
+          </div>
+          <button class="btn btn-primary"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Artikel anlegen</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="lab">Artikel</div><div class="val num">248</div><div class="delta flat">aktiv</div></div>
+          <div class="card kpi"><div class="lab">Lagerwert</div><div class="val num">€ 6.420</div><div class="delta flat">aktuell</div></div>
+          <div class="card kpi"><div class="lab">Niedrigbestand</div><div class="val num">3</div><div class="delta warn">▲ nachbestellen</div></div>
+          <div class="card kpi"><div class="lab">Inventur fällig</div><div class="val num" style="font-size:26px;">in 12 Tagen</div><div class="delta flat">30.06.</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Nachbestellung vorgeschlagen</div><div class="d">3 Artikel unter Mindestbestand — der Agent hat eine Bestellung über ca. € 540 vorbereitet.</div></div>
+          <button class="cta" onclick="toast('Bestellvorschlag geöffnet.')">Bestellung vorbereiten →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1.7fr 1fr .8fr 1fr 1.1fr;"><div>Artikel</div><div>Kategorie</div><div class="r">Bestand</div><div class="r">EK-Preis</div><div>Status</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr .8fr 1fr 1.1fr;"><div class="tname">Rinderfilet</div><div class="muted">Fleisch</div><div class="r num">4 kg</div><div class="r num">€ 28,00</div><div><span class="chip low"><span class="cdot"></span>niedrig</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr .8fr 1fr 1.1fr;"><div class="tname">Hauswein rot</div><div class="muted">Getränke</div><div class="r num">36 Fl.</div><div class="r num">€ 4,20</div><div><span class="chip ok"><span class="cdot"></span>ok</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr .8fr 1fr 1.1fr;"><div class="tname">Olivenöl 5 L</div><div class="muted">Wareneinkauf</div><div class="r num">2</div><div class="r num">€ 32,00</div><div><span class="chip esk"><span class="cdot"></span>nachbestellen</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr .8fr 1fr 1.1fr;"><div class="tname">Pommes TK</div><div class="muted">Wareneinkauf</div><div class="r num">60 kg</div><div class="r num">€ 1,80</div><div><span class="chip ok"><span class="cdot"></span>ok</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr .8fr 1fr 1.1fr;"><div class="tname">Servietten</div><div class="muted">Verbrauch</div><div class="r num">8 Pkt</div><div class="r num">€ 6,50</div><div><span class="chip low"><span class="cdot"></span>niedrig</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ SALES PREVIEW ============ -->
+      <section class="screen" data-screen="sales">
+        <div class="preview-hero anim" style="--d:.02s;background:linear-gradient(120deg,#2c66ce,#1c3f86);">
+          <div class="ph-soon">Bald verfügbar</div>
+          <div class="ph-icon">↗</div>
+          <div>
+            <div class="ph-title">Sales-Agent</div>
+            <div class="ph-tag">Verwandelt eingehende Anfragen automatisch in Angebote, fasst nach — und lässt keine Anfrage mehr liegen.</div>
+          </div>
+        </div>
+        <div class="grid feat-grid">
+          <div class="card feat anim" style="--d:.08s"><div class="fi" style="background:var(--sales-soft);color:var(--sales);">✉</div><div class="ft">Anfragen erfassen</div><div class="fd">Liest Anfragen aus E-Mail, Telefon-Transkripten und Web-Formularen automatisch aus.</div></div>
+          <div class="card feat anim" style="--d:.12s"><div class="fi" style="background:var(--sales-soft);color:var(--sales);">⎙</div><div class="ft">Angebote erstellen</div><div class="fd">Erzeugt passende Angebote aus deinen Preisen und Leistungen und schickt sie auf Freigabe.</div></div>
+          <div class="card feat anim" style="--d:.16s"><div class="fi" style="background:var(--sales-soft);color:var(--sales);">↻</div><div class="ft">Nachfassen</div><div class="fd">Erinnert Kunden automatisch, pflegt den Kontakt und meldet, wenn ein Abschluss näher rückt.</div></div>
+        </div>
+        <div class="preview-foot anim" style="--d:.20s">
+          <div><div class="pf-t">Auf der Roadmap — Q4 2026</div><div class="pf-d">Nutzt dieselbe Datengrundlage wie der Finanz-Agent: ein Ökosystem, ein Kontext.</div></div>
+          <button class="btn btn-primary" onclick="toast('Du stehst auf der Early-Access-Liste für den Sales-Agent ✓')">Early Access sichern</button>
+        </div>
+      </section>
+
+      <!-- ============ MARKETING PREVIEW ============ -->
+      <section class="screen" data-screen="marketing">
+        <div class="preview-hero anim" style="--d:.02s;background:linear-gradient(120deg,#c2466b,#8c2e4c);">
+          <div class="ph-soon">Bald verfügbar</div>
+          <div class="ph-icon">◷</div>
+          <div>
+            <div class="ph-title">Marketing-Agent</div>
+            <div class="ph-tag">Plant Social-Posts, Aktionen &amp; Newsletter, postet zur besten Zeit — und misst, was wirklich Kunden bringt.</div>
+          </div>
+        </div>
+        <div class="grid feat-grid">
+          <div class="card feat anim" style="--d:.08s"><div class="fi" style="background:var(--mkt-soft);color:var(--mkt);">✎</div><div class="ft">Content erstellen</div><div class="fd">Schreibt Posts &amp; Aktionen passend zu Angebot, Wetter und Auslastung — in deiner Tonalität.</div></div>
+          <div class="card feat anim" style="--d:.12s"><div class="fi" style="background:var(--mkt-soft);color:var(--mkt);">◷</div><div class="ft">Planen &amp; posten</div><div class="fd">Veröffentlicht auf Instagram, Google &amp; Co. zur reichweitenstärksten Zeit — vollautomatisch.</div></div>
+          <div class="card feat anim" style="--d:.16s"><div class="fi" style="background:var(--mkt-soft);color:var(--mkt);">📈</div><div class="ft">Wirkung messen</div><div class="fd">Verknüpft Kampagnen mit echtem Umsatz aus dem Kassensystem — kein Raten mehr.</div></div>
+        </div>
+        <div class="preview-foot anim" style="--d:.20s">
+          <div><div class="pf-t">Auf der Roadmap — Q1 2027</div><div class="pf-d">Kennt deine Umsatzdaten und weiß, welche Aktion sich rechnet.</div></div>
+          <button class="btn btn-primary" onclick="toast('Du stehst auf der Early-Access-Liste für den Marketing-Agent ✓')">Early Access sichern</button>
+        </div>
+      </section>
+
+      <!-- ============ HR PREVIEW ============ -->
+      <section class="screen" data-screen="hr">
+        <div class="preview-hero anim" style="--d:.02s;background:linear-gradient(120deg,#7a50c2,#4f2f8a);">
+          <div class="ph-soon">Bald verfügbar</div>
+          <div class="ph-icon">☺</div>
+          <div>
+            <div class="ph-title">HR- &amp; Personal-Agent</div>
+            <div class="ph-tag">Erstellt Schichtpläne nach Auslastung, verwaltet Arbeitszeiten und führt neue Mitarbeitende durchs Onboarding.</div>
+          </div>
+        </div>
+        <div class="grid feat-grid">
+          <div class="card feat anim" style="--d:.08s"><div class="fi" style="background:var(--hr-soft);color:var(--hr);">🗓</div><div class="ft">Schichten planen</div><div class="fd">Plant Personal nach erwarteter Auslastung &amp; Verfügbarkeit — und reagiert auf Krankmeldungen.</div></div>
+          <div class="card feat anim" style="--d:.12s"><div class="fi" style="background:var(--hr-soft);color:var(--hr);">⏱</div><div class="ft">Zeiten erfassen</div><div class="fd">Erfasst Arbeitszeiten, rechnet Zuschläge und bereitet die Lohnabrechnung vor.</div></div>
+          <div class="card feat anim" style="--d:.16s"><div class="fi" style="background:var(--hr-soft);color:var(--hr);">✓</div><div class="ft">Onboarding</div><div class="fd">Sammelt Unterlagen, erklärt Abläufe und checkt, dass alles Rechtliche erledigt ist.</div></div>
+        </div>
+        <div class="preview-foot anim" style="--d:.20s">
+          <div><div class="pf-t">Auf der Roadmap — Q2 2027</div><div class="pf-d">Personalkosten fließen direkt in den Finanz-Agent zurück.</div></div>
+          <button class="btn btn-primary" onclick="toast('Du stehst auf der Early-Access-Liste für den HR-Agent ✓')">Early Access sichern</button>
+        </div>
+      </section>
+
+      <!-- ============ SETTINGS ============ -->
+      <section class="screen" data-screen="settings">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="h1">Einstellungen</div>
+            <div class="sub">Betrieb, Verbindungen und Automatik an einem Ort.</div>
+          </div>
+        </div>
+        <div class="grid set-grid">
+          <div class="card set-card anim" style="--d:.06s">
+            <div class="section-title" style="margin-bottom:8px;">Verbundene Systeme</div>
+            <div class="conn"><div class="ci">POS</div><div><div style="font-weight:600;">Kassen-/POS-System</div><div class="sd">Umsätze &amp; Tagesabschlüsse</div></div><div class="cs">Verbunden</div></div>
+            <div class="conn"><div class="ci">🏦</div><div><div style="font-weight:600;">Geschäftskonto</div><div class="sd">Banking via FinTS</div></div><div class="cs">Verbunden</div></div>
+            <div class="conn"><div class="ci">DTV</div><div><div style="font-weight:600;">DATEV-Export</div><div class="sd">Schnittstelle zum Steuerberater</div></div><div class="cs">Verbunden</div></div>
+            <div class="conn"><div class="ci">✉</div><div><div style="font-weight:600;">Beleg-Postfach</div><div class="sd">belege@sonneneck.mise.app</div></div><div class="cs">Aktiv</div></div>
+            <div class="conn"><div class="ci">🍔</div><div><div style="font-weight:600;">Plattform-Abrechnungen</div><div class="sd">Marktplätze &amp; Portale automatisch</div></div><div class="cs off">Verbinden</div></div>
+          </div>
+          <div class="card set-card anim" style="--d:.10s">
+            <div class="section-title" style="margin-bottom:8px;">Automatik &amp; Benachrichtigungen</div>
+            <div class="set-row"><div><div class="sl">Belege automatisch verbuchen</div><div class="sd">Im Rahmen deiner Autonomie-Stufe</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="set-row"><div><div class="sl">USt-Voranmeldung vorbereiten</div><div class="sd">Monatlich, vor Fälligkeit</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="set-row"><div><div class="sl">Wöchentlicher Finanz-Report</div><div class="sd">Montags per E-Mail &amp; Push</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="set-row"><div><div class="sl">Liquiditäts-Warnungen</div><div class="sd">Wenn Prognose unter Schwelle fällt</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+            <div class="set-row"><div><div class="sl">Eskalationen sofort melden</div><div class="sd">Push, wenn der Agent unsicher ist</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ MOBILE VIEW ============ -->
+      <section class="screen" data-screen="mobil">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="h1">Mobil-Ansicht</div>
+            <div class="sub">Dasselbe Betriebs-OS — für unterwegs. Beleg fotografieren, Agent fragt, fertig.</div>
+          </div>
+          <button class="btn btn-ghost" data-nav="dashboard">← Zur Desktop-Ansicht</button>
+        </div>
+        <div class="mob-wrap anim" style="--d:.06s">
+          <div class="phone">
+            <div class="phone-in">
+              <div class="notch"></div>
+              <div class="mtop">
+                <div class="rest-logo">S</div>
+                <div><div style="font-weight:700;font-size:14px;">Bistro Sonneneck</div><div style="font-size:11px;color:var(--ink-3);">Finanzen · Juni</div></div>
+                <div class="top-spacer"></div>
+                <div class="icon-btn" style="width:34px;height:34px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg></div>
+              </div>
+              <div class="mbody">
+                <div class="mob-h">€ 8.420</div>
+                <div style="font-size:12px;color:var(--ink-3);">diesen Monat verbucht · 96 % automatisch</div>
+                <div class="mkpi">
+                  <div class="card"><div class="lab">Offene Belege</div><div class="val num">12</div></div>
+                  <div class="card"><div class="lab">USt-Vorschau</div><div class="val num">€ 1.240</div></div>
+                </div>
+                <div class="card" style="padding:13px;border-radius:14px;margin-bottom:12px;">
+                  <div style="font-size:13px;font-weight:700;margin-bottom:6px;">Umsatz · 30 Tage</div>
+                  <svg viewBox="0 0 280 64" style="width:100%;height:54px;"><polyline points="0,50 40,36 80,42 120,22 160,30 200,16 240,24 280,9" fill="none" stroke="#1C7A54" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div style="font-size:13px;font-weight:700;margin-bottom:4px;">Zuletzt verbucht</div>
+                <div class="recent-row" style="padding:9px 0;"><div class="merch" style="width:30px;height:30px;font-size:11px;">M</div><div style="flex:1;"><div style="font-size:13.5px;font-weight:500;">Metro Großmarkt</div></div><div class="ma">€ 248,50</div></div>
+                <div class="recent-row" style="padding:9px 0;"><div class="merch" style="width:30px;height:30px;font-size:11px;">S</div><div style="flex:1;"><div style="font-size:13.5px;font-weight:500;">Stadtwerke</div></div><div class="ma">€ 182,00</div></div>
+                <div class="recent-row" style="padding:9px 0;border-bottom:none;"><div class="merch" style="width:30px;height:30px;font-size:11px;">B</div><div style="flex:1;"><div style="font-size:13.5px;font-weight:500;">Bäckerei Konrad</div></div><div class="ma">€ 64,20</div></div>
+                <button class="btn btn-accent" style="width:100%;justify-content:center;margin-top:12px;">📷 Beleg fotografieren</button>
+              </div>
+              <div class="mtab">
+                <div class="on"><span style="font-size:16px;">€</span>Finanzen</div>
+                <div><span style="font-size:16px;">▤</span>Belege</div>
+                <div><span style="font-size:16px;">◌</span>Chat</div>
+                <div><span style="font-size:16px;">⚙</span>Mehr</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<div class="modal-bg" id="sca-modal">
+  <div class="modal">
+    <div class="mtag">Sichere Freigabe · SCA</div>
+    <h3>Freigabe per Banking-App</h3>
+    <p>Zahlungslauf über <b>€ 1.392,39</b> an 7 Empfänger.</p>
+    <p style="font-size:13px;color:var(--ink-3);">Bestätige mit deinem zweiten Faktor (Besitz + Inhärenz).</p>
+    <div class="scan">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c0-3 2-6 5-7"/><path d="M22 12c0-3-2-6-5-7"/><path d="M5 12a7 7 0 0 1 14 0"/><path d="M8 12a4 4 0 0 1 8 0v3"/><path d="M8 16v2"/><path d="M12 13v5"/><path d="M16 16v1"/></svg>
+    </div>
+    <button class="btn btn-accent" onclick="confirmSca()">Mit Fingerabdruck bestätigen</button>
+    <button class="btn btn-ghost" onclick="closeSca()">Abbrechen</button>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:#211e18;color:#f3efe6;padding:13px 20px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:var(--sh-lg);opacity:0;pointer-events:none;transition:all .3s;z-index:10000;"></div>
+
+<script>
+/* ===================== DATA ===================== */
+const recent = [
+  ['M','Metro Großmarkt','14.06.2026','€ 248,50'],
+  ['S','Stadtwerke','13.06.2026','€ 182,00'],
+  ['B','Bäckerei Konrad','13.06.2026','€ 64,20'],
+  ['C','Coca-Cola GmbH','12.06.2026','€ 312,90'],
+  ['T','Telekom','11.06.2026','€ 79,99'],
+  ['R','Restaurant Bedarf24','10.06.2026','€ 156,40'],
+];
+const cam = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a877f" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3l2-2h8l2 2h3v11H3z"/><circle cx="12" cy="13" r="3.2"/></svg>';
+const mail = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a877f" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
+const pos = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a877f" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>';
+const belege = [
+  ['M','Metro Großmarkt','Großmarkt · Rechnung','14.06.2026','€ 248,50',cam,'Foto','neu','Neu'],
+  ['S','Stadtwerke','Strom & Wasser','14.06.2026','€ 182,00',mail,'E-Mail','neu','Neu'],
+  ['C','Coca-Cola GmbH','Getränkelieferung','13.06.2026','€ 312,90',pos,'Kassensystem','neu','Neu'],
+  ['B','Bäckerei Konrad','Backwaren täglich','13.06.2026','€ 64,20',cam,'Foto','neu','Neu'],
+  ['L','Lieferando','Provisionsabrechnung','12.06.2026','€ 540,00',mail,'E-Mail','neu','Neu'],
+  ['G','Gastro-Reinigung Berlin','Dienstleistung','11.06.2026','€ 210,00',mail,'E-Mail','pruef','In Prüfung'],
+  ['W','Weinhandel Veltlin','Wein-Sortiment','10.06.2026','€ 388,40',cam,'Foto','pruef','In Prüfung'],
+  ['F','Frische Fisch GmbH','Wareneinkauf','10.06.2026','€ 174,90',mail,'E-Mail','pruef','In Prüfung'],
+  ['T','Telekom','Internet & Telefon','09.06.2026','€ 79,99',mail,'E-Mail','ver','Verbucht'],
+  ['R','Restaurant Bedarf24','Verbrauchsmaterial','08.06.2026','€ 156,40',cam,'Foto','ver','Verbucht'],
+  ['K','Kaffeerösterei Süd','Kaffee-Abo','07.06.2026','€ 98,00',pos,'Kassensystem','ver','Verbucht'],
+  ['U','Unbekannter Lieferant','Betrag unklar','12.06.2026','€ ?',cam,'Foto','esk','Eskaliert'],
+  ['P','Parkschein Anlieferung','Kein Beleg-Foto','11.06.2026','€ 12,00',cam,'Foto','esk','Eskaliert'],
+];
+const cats = [
+  ['Wareneinkauf','Halb-autonom','€ 500'],
+  ['Bewirtung','Assistiert','—'],
+  ['Miete & Nebenkosten','Autonom','€ 2.000'],
+  ['Lieferdienste','Halb-autonom','€ 800'],
+  ['Getränke','Halb-autonom','€ 600'],
+  ['Sonstiges','Assistiert','—'],
+];
+
+/* ===================== RENDER ===================== */
+function esc(s){return s;}
+document.getElementById('recent-list').innerHTML = recent.map(r=>`
+  <div class="recent-row"><div class="merch">${r[0]}</div>
+    <div style="flex:1;"><div class="mn">${r[1]}</div><div class="md">${r[2]}</div></div>
+    <div class="ma num">${r[3]}<span class="tick">✓</span></div></div>`).join('');
+
+function renderBelege(status){
+  document.getElementById('belege-rows').innerHTML = belege.filter(b=>b[7]===status).map(b=>`
+    <div class="trow" data-nav="detail">
+      <div class="tprev">${b[5]}</div>
+      <div><div class="tname">${b[1]}</div><div class="tsub">${b[2]}</div></div>
+      <div class="muted">${b[3]}</div>
+      <div class="tname num">${b[4]}</div>
+      <div class="chan">${b[5]} ${b[6]}</div>
+      <div><span class="chip ${b[7]}"><span class="cdot"></span>${b[8]}</span></div>
+    </div>`).join('');
+  bindNav();
+}
+renderBelege('neu');
+
+document.getElementById('cat-rows').innerHTML = cats.map(c=>`
+  <div class="cat-row">
+    <div style="font-weight:500;">${c[0]}</div>
+    <div class="lvl" data-l="${c[1]}">${c[1]} <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+    <div class="muted num">${c[2]}</div>
+  </div>`).join('');
+
+/* ===================== NAVIGATION ===================== */
+function go(screen){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('is-active'));
+  const el = document.querySelector(`.screen[data-screen="${screen}"]`);
+  if(!el) return;
+  el.classList.remove('is-active'); void el.offsetWidth; el.classList.add('is-active');
+  document.getElementById('content').scrollTop = 0;
+
+  // sidebar active states
+  const finScreens = ['dashboard','belege','detail','chat','autonomie','rechnungspruefung','ausgangsrechnungen','angebote','kassenbuch','zahlungslauf','liquiditaet','ustva','auswertungen','kontakte','inventar','lieferanten'];
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelector('.nav-item.parent').classList.toggle('active', finScreens.includes(screen));
+  let subKey = screen==='detail' ? 'belege' : screen;
+  document.querySelectorAll('#fin-sub .nav-item').forEach(n=>{
+    n.classList.toggle('active', n.dataset.nav===subKey);
+  });
+  if(!finScreens.includes(screen)){
+    document.querySelectorAll('.nav-item').forEach(n=>{
+      if(n.dataset.nav===screen && !n.closest('#fin-sub')) n.classList.add('active');
+    });
+  }
+}
+function bindNav(){
+  document.querySelectorAll('[data-nav]').forEach(el=>{
+    if(el._bound) return; el._bound = true;
+    el.addEventListener('click', e=>{ e.stopPropagation(); go(el.dataset.nav); });
+  });
+}
+bindNav();
+
+/* ===================== BELEGE TABS ===================== */
+document.querySelectorAll('#belege-tabs .tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('#belege-tabs .tab').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    renderBelege(t.dataset.status);
+  });
+});
+
+/* ===================== AUTONOMIE MODES ===================== */
+document.querySelectorAll('#modes .mode').forEach(m=>{
+  m.addEventListener('click', ()=>{
+    document.querySelectorAll('#modes .mode').forEach(x=>x.classList.remove('on'));
+    m.classList.add('on');
+  });
+});
+
+/* ===================== CHAT ===================== */
+const msgs = document.getElementById('msgs');
+const input = document.getElementById('chat-input');
+function addMsg(text, who){
+  const d = document.createElement('div');
+  d.className = 'msg '+who; d.innerHTML = text;
+  msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
+  return d;
+}
+function botReply(q){
+  const t = document.createElement('div'); t.className='typing';
+  t.innerHTML='<span></span><span></span><span></span>';
+  msgs.appendChild(t); msgs.scrollTop = msgs.scrollHeight;
+  const lower = q.toLowerCase();
+  let reply;
+  if(lower.includes('ausgab')||lower.includes('letzten monat')||lower.includes('mai')){
+    reply = 'Im Mai hast du insgesamt <b>€ 9.310</b> ausgegeben. Größter Posten war Wareneinkauf mit € 4.120.<div class="mini"><div class="mini-row"><span>Wareneinkauf</span><b>€ 4.120</b></div><div class="mini-bar"><i style="width:80%"></i></div><div class="mini-row" style="margin-top:6px;"><span>Personal</span><b>€ 2.510</b></div><div class="mini-bar"><i style="width:49%"></i></div><div class="mini-row" style="margin-top:6px;"><span>Sonstiges</span><b>€ 2.680</b></div><div class="mini-bar"><i style="width:52%"></i></div></div>';
+  } else if(lower.includes('offen')||lower.includes('noch')){
+    reply = 'Aktuell sind <b>12 Belege offen</b>: 5 neu, 3 in Prüfung, 2 eskaliert. Die 2 eskalierten brauchen dich — einer hat keinen erkennbaren Betrag, beim anderen fehlt das Foto. Soll ich sie dir zeigen?';
+  } else if(lower.includes('ust')||lower.includes('steuer')||lower.includes('umsatzsteuer')){
+    reply = 'Deine <b>USt-Vorschau für Juni liegt bei € 1.240</b>, fällig am 10.07. Ich habe die Voranmeldung schon vorbereitet — du musst sie nur freigeben. Soll ich sie an deinen Steuerberater (DATEV) übergeben?';
+  } else if(lower.includes('metro')){
+    reply = 'Der Metro-Beleg über <b>€ 248,50</b> vom 14.06. wartet auf Bestätigung — gemischte USt (7 % / 19 %). Ich bin mir zu 92 % sicher bei der Kontierung. Möchtest du ihn öffnen?';
+  } else if(lower.includes('gewinn')||lower.includes('marge')||lower.includes('rentab')){
+    reply = 'Dein Rohertrag liegt diesen Monat bei <b>≈ 68 %</b> — etwas über deinem Schnitt. Wareneinkauf ist im Verhältnis zum Umsatz leicht gesunken. Soll ich die Entwicklung über 6 Monate aufzeigen?';
+  } else {
+    reply = 'Gute Frage. Ich habe Zugriff auf alle deine Belege, Umsätze und das Kassensystem — frag mich z. B. nach Ausgaben, offenen Belegen, der USt-Vorschau oder deiner Marge.';
+  }
+  setTimeout(()=>{ t.remove(); addMsg(reply,'bot'); }, 850);
+}
+function sendChat(){
+  const v = input.value.trim(); if(!v) return;
+  addMsg(v,'me'); input.value=''; botReply(v);
+}
+document.getElementById('chat-send').addEventListener('click', sendChat);
+input.addEventListener('keydown', e=>{ if(e.key==='Enter') sendChat(); });
+document.querySelectorAll('#chips .qchip').forEach(c=>{
+  c.addEventListener('click', ()=>{ input.value=c.textContent; sendChat(); });
+});
+
+/* ===================== COCKPIT ASK ===================== */
+const askInput = document.getElementById('ask-input');
+const askAnswer = document.getElementById('ask-answer');
+function askGo(){
+  const v = askInput.value.trim(); if(!v) return;
+  const l = v.toLowerCase();
+  let a;
+  if(l.includes('liquid')||l.includes('cash')||l.includes('konto')||l.includes('geld')){
+    a = 'Deine Liquidität bleibt insgesamt stabil, mit einem kurzen Engpass am <b>10.07.</b> (Umsatzsteuer + Miete am selben Tag). Wenn du eine Lieferantenzahlung um 5 Tage schiebst, bleibt die Reserve gewahrt und der Skonto erhalten. Runway: rund <b>2,4 Monate</b>.';
+  } else if(l.includes('ungew')||l.includes('anomal')||l.includes('auffäll')||l.includes('teuer')||l.includes('spar')){
+    a = 'Mir sind zwei Dinge aufgefallen: eine Rechnung mit 2 Einheiten zu viel (<b>€ 38</b> zu hoch) und ein Lieferant, der in 3 Monaten <b>12 %</b> teurer wurde. Für beides habe ich eine Aktion vorbereitet — Reklamation bzw. günstigere Alternative.';
+  } else if(l.includes('personal')||l.includes('lohn')||l.includes('umsatz')||l.includes('marge')){
+    a = 'Personalkosten liegen aktuell bei rund <b>27 % vom Umsatz</b> — im gesunden Bereich. Letzte Woche war es durch eine Zusatzschicht kurz höher (31 %). Soll ich dir die Entwicklung über 6 Monate zeigen?';
+  } else {
+    a = 'Ich habe Zugriff auf Finanzen, Umsätze und alle Agenten. Frag mich z. B. nach <b>Liquidität</b>, <b>ungewöhnlichen Ausgaben</b> oder dem Verhältnis <b>Personal zu Umsatz</b>.';
+  }
+  askAnswer.innerHTML = '<div class="msg bot" style="max-width:100%;">'+a+'</div>';
+  askInput.value='';
+}
+if(askInput){
+  document.getElementById('ask-send').addEventListener('click', askGo);
+  askInput.addEventListener('keydown', e=>{ if(e.key==='Enter') askGo(); });
+  document.querySelectorAll('.ask-chip').forEach(c=>{
+    c.addEventListener('click', ()=>{ askInput.value=c.textContent; askGo(); });
+  });
+}
+
+/* ===================== TOAST ===================== */
+let toastT;
+function toast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.opacity='1'; el.style.transform='translateX(-50%) translateY(0)';
+  clearTimeout(toastT);
+  toastT = setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateX(-50%) translateY(20px)'; }, 2600);
+}
+window.toast = toast;
+
+/* ===================== SCA / ZAHLUNGSLAUF ===================== */
+function openSca(){ document.getElementById('sca-modal').classList.add('show'); }
+function closeSca(){ document.getElementById('sca-modal').classList.remove('show'); }
+function confirmSca(){
+  closeSca();
+  const s = document.getElementById('run-status');
+  if(s) s.innerHTML = '<span style="color:var(--fin-deep);font-weight:600;">✓ Angewiesen · 7 Zahlungen ausgeführt · werden automatisch abgeglichen</span>';
+  const b = document.getElementById('run-btn');
+  if(b){ b.textContent = 'Freigegeben ✓'; b.disabled = true; b.style.opacity = '.6'; b.style.cursor = 'default'; }
+  toast('Zahlungslauf freigegeben ✓ Zahlungen angewiesen.');
+}
+window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confirmSca;
+</script>
+</body>
+</html>

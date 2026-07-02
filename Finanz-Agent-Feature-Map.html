@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finanz-Agent · Feature-Map (Orientierung an SevDesk)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3EFE6; --surface:#FFFFFF; --surface-2:#FBF8F2; --surface-3:#F6F2EA;
+  --ink:#211E18; --ink-2:#5A544A; --ink-3:#938C7E; --line:#E8E2D5; --line-2:#F0EBE0;
+  --fin:#1C7A54; --fin-soft:#E3F0E8; --fin-deep:#155F41;
+  --warn:#B5722A; --warn-soft:#F6EAD6; --grey-soft:#ECE6D9;
+  --dark:#211E18;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Hanken Grotesk',system-ui,sans-serif;color:var(--ink);
+  background:radial-gradient(900px 600px at 90% -10%,rgba(28,122,84,.08),transparent 60%),var(--bg);
+  font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1060px;margin:0 auto;padding:48px 32px 80px;}
+h1{font-family:'Fraunces',serif;font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1.05;margin:0 0 6px;}
+.lede{color:var(--ink-2);font-size:16px;max-width:760px;margin:0 0 8px;}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--fin-deep);background:var(--fin-soft);border-radius:20px;padding:4px 12px;margin-bottom:16px;}
+h2{font-family:'Fraunces',serif;font-size:24px;font-weight:600;letter-spacing:-.01em;margin:38px 0 6px;}
+h2 .ico{font-size:18px;margin-right:6px;}
+.note{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--fin);border-radius:12px;padding:16px 18px;margin:18px 0;box-shadow:0 1px 2px rgba(40,33,20,.04);}
+.note.warnbox{border-left-color:var(--warn);}
+.note b{font-weight:700;}
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin:20px 0 6px;font-size:13px;color:var(--ink-2);}
+.legend b{color:var(--ink);}
+table{width:100%;border-collapse:collapse;margin:10px 0 4px;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(40,33,20,.04);}
+th,td{text-align:left;padding:12px 14px;vertical-align:top;font-size:14px;}
+th{background:var(--surface-2);color:var(--ink-3);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;border-bottom:1px solid var(--line);}
+td{border-bottom:1px solid var(--line-2);}
+tr:last-child td{border-bottom:none;}
+.feat{font-weight:600;}
+.desc{color:var(--ink-2);font-size:13.5px;}
+.badge{display:inline-block;font-size:11.5px;font-weight:700;border-radius:20px;padding:2px 9px;white-space:nowrap;}
+.must{background:var(--dark);color:#F3EFE6;}
+.should{background:var(--warn-soft);color:var(--warn);}
+.later{background:var(--grey-soft);color:var(--ink-2);}
+.eff{font-size:12.5px;font-weight:600;}
+.lo{color:var(--fin-deep);} .mi{color:var(--warn);} .hi{color:#a23b22;}
+.st{font-weight:700;font-size:14px;}
+.st.yes{color:var(--fin);} .st.part{color:var(--warn);} .st.no{color:var(--ink-3);}
+col.c-feat{width:20%;} col.c-desc{width:40%;} col.c-prio{width:11%;} col.c-eff{width:14%;} col.c-st{width:15%;}
+.wedge{background:linear-gradient(120deg,#23201a,#15120d);color:#F3EFE6;border-radius:18px;padding:24px 26px;margin:30px 0;}
+.wedge h2{color:#fff;margin-top:0;}
+.wedge p{opacity:.85;margin:8px 0 0;}
+.wedge .row{display:flex;gap:12px;align-items:flex-start;margin-top:14px;}
+.wedge .row .k{color:#e8c88a;font-weight:700;flex:none;width:200px;}
+ol{padding-left:20px;} ol li{margin:8px 0;}
+.foot{margin-top:30px;color:var(--ink-3);font-size:12.5px;border-top:1px solid var(--line);padding-top:16px;}
+a{color:var(--fin-deep);}
+@media(max-width:760px){col,th:nth-child(2),td:nth-child(2){display:none;}.wrap{padding:32px 18px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow"><span>●</span> Produkt-Planung · Finanz-Agent</div>
+  <h1>Feature-Map: Finanz-Agent in Orientierung an SevDesk</h1>
+  <p class="lede">Welche Funktionen SevDesk (über die Tarife Rechnung, Buchhaltung &amp; Warenwirtschaft) bietet — und in welcher Reihenfolge wir sie für den Finanz-Agenten sinnvoll nachbauen. Beispiel-Zielgruppe: Gastronomie/KMU.</p>
+
+  <div class="note warnbox">
+    <b>Kein 1:1-Klon — funktionale Parität.</b> Wir bauen denselben <b>Funktionsumfang</b> in eigenem Design und mit eigener Logik. Code, Layout, Texte, Logo und Marke von SevDesk werden nicht übernommen (urheber-/markenrechtlich geschützt). Funktionen selbst sind frei — so wie SevDesk, lexoffice &amp; Co. sich gegenseitig ähneln.
+  </div>
+
+  <div class="legend">
+    <span><b>Priorität:</b> <span class="badge must">Must</span> Kern · <span class="badge should">Should</span> wichtig · <span class="badge later">Später</span></span>
+    <span><b>Aufwand</b> (echtes Produkt): <span class="eff lo">Niedrig</span> · <span class="eff mi">Mittel</span> · <span class="eff hi">Hoch</span></span>
+    <span><b>Prototyp:</b> <span class="st yes">✓</span> da · <span class="st part">~</span> teilweise · <span class="st no">–</span> offen</span>
+  </div>
+
+  <!-- RECHNUNGEN & VERKAUF -->
+  <h2><span class="ico">🧾</span>Rechnungen &amp; Verkauf</h2>
+  <table>
+    <colgroup><col class="c-feat"><col class="c-desc"><col class="c-prio"><col class="c-eff"><col class="c-st"></colgroup>
+    <tr><th>Feature</th><th>Was es tut</th><th>Priorität</th><th>Aufwand</th><th>Prototyp</th></tr>
+    <tr><td class="feat">Rechnungen erstellen</td><td class="desc">Ausgangsrechnungen mit Positionen, Steuersätzen, Pflichtangaben; PDF-Versand.</td><td><span class="badge must">Must</span></td><td><span class="eff lo">Niedrig</span></td><td><span class="st yes">✓</span></td></tr>
+    <tr><td class="feat">E-Rechnung</td><td class="desc">XRechnung / ZUGFeRD (EN 16931) — ab 2025/28 Pflicht im B2B.</td><td><span class="badge must">Must</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st yes">✓</span></td></tr>
+    <tr><td class="feat">Angebote &amp; Auftragsbestätigungen</td><td class="desc">Angebot → Auftrag → Rechnung als durchgängiger Fluss (Brücke zum Sales-Agent).</td><td><span class="badge should">Should</span></td><td><span class="eff lo">Niedrig</span></td><td><span class="st no">–</span></td></tr>
+    <tr><td class="feat">Wiederkehrende Rechnungen</td><td class="desc">Abos/Dauerkunden automatisch und termingerecht abrechnen.</td><td><span class="badge should">Should</span></td><td><span class="eff lo">Niedrig</span></td><td><span class="st part">~</span></td></tr>
+    <tr><td class="feat">Mahnwesen</td><td class="desc">Mehrstufige Zahlungserinnerungen/Mahnungen aus überfälligen Rechnungen.</td><td><span class="badge must">Must</span></td><td><span class="eff lo">Niedrig</span></td><td><span class="st part">~</span></td></tr>
+    <tr><td class="feat">Lieferscheine</td><td class="desc">Lieferschein erstellen; bei Warenwirtschaft mit Bestandsabzug.</td><td><span class="badge later">Später</span></td><td><span class="eff lo">Niedrig</span></td><td><span class="st no">–</span></td></tr>
+    <tr><td class="feat">Online-Zahlung</td><td class="desc">Bezahllink (z. B. PayPal/Stripe) auf der Rechnung für schnelleren Geldeingang.</td><td><span class="badge should">Should</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st no">–</span></td></tr>
+  </table>
+
+  <!-- BELEGE & BUCHHALTUNG -->
+  <h2><span class="ico">📥</span>Belege &amp; Buchhaltung</h2>
+  <table>
+    <colgroup><col class="c-feat"><col class="c-desc"><col class="c-prio"><col class="c-eff"><col class="c-st"></colgroup>
+    <tr><th>Feature</th><th>Was es tut</th><th>Priorität</th><th>Aufwand</th><th>Prototyp</th></tr>
+    <tr><td class="feat">Belegerfassung</td><td class="desc">Eingang per Foto, E-Mail-Postfach, Upload, Kassensystem — zentraler Posteingang.</td><td><span class="badge must">Must</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st yes">✓</span></td></tr>
+    <tr><td class="feat">Belegerkennung (OCR)</td><td class="desc">Liest Datum, Betrag, Belegnummer, Lieferant &amp; Kategorie automatisch aus.</td><td><span class="badge must">Must</span></td><td><span class="eff hi">Hoch</span></td><td><span class="st yes">✓</span></td></tr>
+    <tr><td class="feat">Automatische Kontierung</td><td class="desc">Buchungsvorschlag mit Konto (SKR03/04) inkl. Konfidenz &amp; Lernen.</td><td><span class="badge must">Must</span></td><td><span class="eff hi">Hoch</span></td><td><span class="st yes">✓</span></td></tr>
+    <tr><td class="feat">Rechnungsprüfung (3-Wege)</td><td class="desc">Abgleich Rechnung ↔ Bestellung ↔ Lieferschein; Abweichungen melden.</td><td><span class="badge should">Should</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st yes">✓</span></td></tr>
+    <tr><td class="feat">Kassenbuch</td><td class="desc">Bareinnahmen/-ausgaben GoBD-konform erfassen — für Gastro besonders relevant.</td><td><span class="badge must">Must</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st no">–</span></td></tr>
+    <tr><td class="feat">Dokumenten-/Belegarchiv</td><td class="desc">Digitale, durchsuchbare Ablage aller Belege; GoBD-konforme Aufbewahrung.</td><td><span class="badge should">Should</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st part">~</span></td></tr>
+    <tr><td class="feat">GoBD / Festschreibung</td><td class="desc">Unveränderbarkeit, Audit-Trail, Verfahrensdokumentation.</td><td><span class="badge must">Must</span></td><td><span class="eff hi">Hoch</span></td><td><span class="st part">~</span></td></tr>
+  </table>
+
+  <!-- BANKING -->
+  <h2><span class="ico">🏦</span>Banking &amp; Zahlungen</h2>
+  <table>
+    <colgroup><col class="c-feat"><col class="c-desc"><col class="c-prio"><col class="c-eff"><col class="c-st"></colgroup>
+    <tr><th>Feature</th><th>Was es tut</th><th>Priorität</th><th>Aufwand</th><th>Prototyp</th></tr>
+    <tr><td class="feat">Bankanbindung (Multibanking)</td><td class="desc">Konten verbinden (PSD2/FinTS), Umsätze automatisch importieren.</td><td><span class="badge must">Must</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st part">~</span></td></tr>
+    <tr><td class="feat">Zahlungsabgleich</td><td class="desc">Bankumsatz automatisch der passenden Rechnung/Beleg zuordnen.</td><td><span class="badge must">Must</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st part">~</span></td></tr>
+    <tr><td class="feat">Zahlungslauf (Überweisung)</td><td class="desc">Fällige Rechnungen bündeln &amp; per SCA freigeben (PIS).</td><td><span class="badge should">Should</span></td><td><span class="eff hi">Hoch</span></td><td><span class="st yes">✓</span></td></tr>
+  </table>
+
+  <!-- STEUER -->
+  <h2><span class="ico">🧮</span>Steuer &amp; Abschluss</h2>
+  <table>
+    <colgroup><col class="c-feat"><col class="c-desc"><col class="c-prio"><col class="c-eff"><col class="c-st"></colgroup>
+    <tr><th>Feature</th><th>Was es tut</th><th>Priorität</th><th>Aufwand</th><th>Prototyp</th></tr>
+    <tr><td class="feat">USt-Voranmeldung</td><td class="desc">Vorbereiten &amp; (perspektivisch) per ELSTER übermitteln.</td><td><span class="badge must">Must</span></td><td><span class="eff hi">Hoch</span></td><td><span class="st part">~</span></td></tr>
+    <tr><td class="feat">EÜR &amp; GuV</td><td class="desc">Einnahmen-Überschuss-Rechnung bzw. Gewinn-/Verlustrechnung.</td><td><span class="badge should">Should</span></td><td><span class="eff hi">Hoch</span></td><td><span class="st no">–</span></td></tr>
+    <tr><td class="feat">DATEV-Export / Steuerberater</td><td class="desc">Buchungs-/Belegdaten standardisiert an den Steuerberater übergeben.</td><td><span class="badge must">Must</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st part">~</span></td></tr>
+  </table>
+
+  <!-- WARENWIRTSCHAFT & KONTAKTE -->
+  <h2><span class="ico">📦</span>Warenwirtschaft &amp; Kontakte</h2>
+  <table>
+    <colgroup><col class="c-feat"><col class="c-desc"><col class="c-prio"><col class="c-eff"><col class="c-st"></colgroup>
+    <tr><th>Feature</th><th>Was es tut</th><th>Priorität</th><th>Aufwand</th><th>Prototyp</th></tr>
+    <tr><td class="feat">Artikel &amp; Inventar</td><td class="desc">Artikel/Leistungen pflegen, Kategorien, Lagerbestände.</td><td><span class="badge later">Später</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st no">–</span></td></tr>
+    <tr><td class="feat">Bestandsführung</td><td class="desc">Bestand passt sich bei Lieferschein/Verkauf automatisch an.</td><td><span class="badge later">Später</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st no">–</span></td></tr>
+    <tr><td class="feat">Kunden- &amp; Lieferantenverwaltung</td><td class="desc">Stammdaten, Historie, Preise; Basis für Rechnungen &amp; Einkauf.</td><td><span class="badge should">Should</span></td><td><span class="eff lo">Niedrig</span></td><td><span class="st part">~</span></td></tr>
+  </table>
+
+  <!-- AUSWERTUNGEN & PLATTFORM -->
+  <h2><span class="ico">📊</span>Auswertungen &amp; Plattform</h2>
+  <table>
+    <colgroup><col class="c-feat"><col class="c-desc"><col class="c-prio"><col class="c-eff"><col class="c-st"></colgroup>
+    <tr><th>Feature</th><th>Was es tut</th><th>Priorität</th><th>Aufwand</th><th>Prototyp</th></tr>
+    <tr><td class="feat">Dashboards &amp; Reports</td><td class="desc">Umsatz, Ausgaben nach Kategorie, offene Posten.</td><td><span class="badge must">Must</span></td><td><span class="eff lo">Niedrig</span></td><td><span class="st yes">✓</span></td></tr>
+    <tr><td class="feat">Liquiditätsvorschau</td><td class="desc">Cashflow-Prognose mit Frühwarnung (über SevDesk hinaus).</td><td><span class="badge should">Should</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st yes">✓</span></td></tr>
+    <tr><td class="feat">Mobile App</td><td class="desc">Beleg fotografieren, Status unterwegs prüfen.</td><td><span class="badge should">Should</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st part">~</span></td></tr>
+    <tr><td class="feat">API &amp; Schnittstellen</td><td class="desc">Kassensystem, Shop, Lohn etc. anbinden.</td><td><span class="badge later">Später</span></td><td><span class="eff mi">Mittel</span></td><td><span class="st no">–</span></td></tr>
+  </table>
+
+  <!-- WEDGE -->
+  <div class="wedge">
+    <h2>Wo wir über SevDesk hinausgehen (euer Vorsprung)</h2>
+    <p>Feature-Parität ist die Pflicht — der Unterschied ist der <b>proaktive Agent</b> statt einer reinen Verwaltungs-Software.</p>
+    <div class="row"><div class="k">Agentisch statt manuell</div><div>SevDesk ist ein Werkzeug, das du bedienst. Der Finanz-Agent erledigt selbst (im Rahmen der Autonomie-Stufe) und legt nur Unsicheres vor.</div></div>
+    <div class="row"><div class="k">Betriebsleiter darüber</div><div>Verknüpft Finanzen mit Sales, Marketing &amp; Personal — Empfehlungen, die eine reine Buchhaltung nicht geben kann.</div></div>
+    <div class="row"><div class="k">Ein Ökosystem</div><div>Alle Daten an einem Ort → Liquidität, Marketing-ROI und Personalkosten hängen zusammen, nicht in Insellösungen.</div></div>
+  </div>
+
+  <!-- REIHENFOLGE -->
+  <h2><span class="ico">🗺️</span>Empfohlene Reihenfolge</h2>
+  <ol>
+    <li><b>Kern-Buchhaltung (Must, größter Pflicht-Block):</b> Belegerfassung + OCR + Kontierung, Bankanbindung + Abgleich, Rechnungen + E-Rechnung, Mahnwesen, Kassenbuch, USt-Voranmeldung, DATEV-Export. Das ist die echte SevDesk-Parität.</li>
+    <li><b>Verkaufsfluss (Should):</b> Angebote → Aufträge → wiederkehrende Rechnungen, Kunden-/Lieferantenstammdaten, Online-Zahlung.</li>
+    <li><b>Abschluss &amp; Auswertung (Should):</b> EÜR/GuV, erweiterte Reports, mobile App.</li>
+    <li><b>Warenwirtschaft &amp; API (Später):</b> Inventar/Bestände, externe Schnittstellen — je nach Zielkunde.</li>
+  </ol>
+
+  <div class="note">
+    <b>Prototyp-Stand heute:</b> Der klickbare Prototyp deckt bereits Dashboard, Belegeingang, Belegerkennung/Kontierung, Rechnungsprüfung, Ausgangsrechnungen + E-Rechnung, Zahlungslauf, Liquidität, Lieferanten, Autonomie &amp; Agent-Chat ab. Die größten echten <b>Must</b>-Lücken für volle SevDesk-Parität: <b>Kassenbuch</b>, <b>echte Bankanbindung/Abgleich</b>, <b>USt-Voranmeldung (ELSTER)</b> und <b>EÜR/GuV</b>.
+  </div>
+
+  <div class="foot">
+    Quellen: sevdesk.de/funktionen sowie öffentliche Test-/Übersichtsberichte (experte.de, heise, anyworks). Funktionsbeschreibungen in eigenen Worten zusammengefasst. Aufwand/Priorität = Einschätzung für die Beispiel-Zielgruppe Gastronomie/KMU, Stand Juni 2026.
+  </div>
+
+</div>
+</body>
+</html>

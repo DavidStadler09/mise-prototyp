@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:#eceae3; }
+  ::-webkit-scrollbar{ width:10px; height:10px; }
+  ::-webkit-scrollbar-thumb{ background:#cfccc2; border-radius:8px; }
+  @keyframes wfPop{ from{ transform:translateY(6px);} to{ transform:none;} }
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="--wf-accent:#3b3a36; --wf-radius:255px 15px 225px 15px/15px 225px 15px 255px; --wf-pill:18px 200px 22px 200px/200px 20px 190px 24px; display:flex; height:760px; min-height:560px; background:#f5f4ef; color:#34322e; font-family:'Kalam',cursive; font-size:16px; overflow:hidden; border:2px solid #d6d3c9;">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside style="width:250px; flex:none; border-right:2px solid #d8d5cb; display:flex; flex-direction:column; padding:18px 14px; gap:4px; background:#faf9f4;">
+    <div style="display:flex; align-items:center; gap:10px; padding:6px 6px 14px;">
+      <div style="width:40px; height:40px; flex:none; background:#e3e1d8; border:2px solid #bdbab0; border-radius:var(--wf-pill); display:flex; align-items:center; justify-content:center; color:#8a877f; font-size:13px;">◎</div>
+      <div style="height:14px; flex:1; background:#e3e1d8; border-radius:8px;"></div>
+    </div>
+
+    <div style="font-size:13px; letter-spacing:2px; color:#a09d93; padding:8px 8px 4px;">AGENTEN</div>
+
+    <!-- Finanzen (active, expanded) -->
+    <div onClick="{{ go }}" data-screen="dashboard" style="position:relative; display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:12px; cursor:pointer; font-weight:700;" style-hover="background:#f0eee6;">
+      <sc-if value="{{ navFinanzen }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; inset:0; background:#e6e3d9; border:2px solid #bdbab0; border-radius:11px;"></span></sc-if>
+      <span style="position:relative; width:22px; display:flex; justify-content:center;">€</span>
+      <span style="position:relative;">Finanzen</span>
+    </div>
+
+    <!-- Finanzen sub-nav -->
+    <div style="display:flex; flex-direction:column; gap:2px; margin:2px 0 6px; padding-left:14px; border-left:2px dashed #d8d5cb; margin-left:18px;">
+      <div onClick="{{ go }}" data-screen="dashboard" style="position:relative; padding:8px 12px; border-radius:10px; cursor:pointer; font-size:15px;" style-hover="background:#f0eee6;">
+        <sc-if value="{{ navDashboard }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; inset:0; background:#eceadf; border-radius:9px;"></span></sc-if>
+        <span style="position:relative;">Dashboard</span>
+      </div>
+      <div onClick="{{ go }}" data-screen="pipeline" style="position:relative; padding:8px 12px; border-radius:10px; cursor:pointer; font-size:15px; display:flex; justify-content:space-between; align-items:center;" style-hover="background:#f0eee6;">
+        <sc-if value="{{ navPipeline }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; inset:0; background:#eceadf; border-radius:9px;"></span></sc-if>
+        <span style="position:relative;">Belegeingang</span>
+        <span style="position:relative; font-size:12px; background:#dedbd1; border:2px solid #c4c1b7; border-radius:20px; padding:0 7px;">12</span>
+      </div>
+      <div onClick="{{ go }}" data-screen="chat" style="position:relative; padding:8px 12px; border-radius:10px; cursor:pointer; font-size:15px;" style-hover="background:#f0eee6;">
+        <sc-if value="{{ navChat }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; inset:0; background:#eceadf; border-radius:9px;"></span></sc-if>
+        <span style="position:relative;">Agent-Chat</span>
+      </div>
+      <div onClick="{{ go }}" data-screen="autonomy" style="position:relative; padding:8px 12px; border-radius:10px; cursor:pointer; font-size:15px;" style-hover="background:#f0eee6;">
+        <sc-if value="{{ navAutonomy }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; inset:0; background:#eceadf; border-radius:9px;"></span></sc-if>
+        <span style="position:relative;">Autonomie</span>
+      </div>
+    </div>
+
+    <!-- Locked agents -->
+    <div onClick="{{ go }}" data-screen="coming" data-title="Sales-Agent" data-desc="Verfolgt Anfragen, erstellt Angebote und pflegt deine Kundenkontakte — automatisch." style="display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:12px; cursor:pointer; color:#a8a59b;" style-hover="background:#f0eee6;">
+      <span style="width:22px; display:flex; justify-content:center;">↗</span>
+      <span style="flex:1;">Sales</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+    </div>
+    <div onClick="{{ go }}" data-screen="coming" data-title="Marketing-Agent" data-desc="Plant Social-Posts, Aktionen und Newsletter — und misst, was wirklich funktioniert." style="display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:12px; cursor:pointer; color:#a8a59b;" style-hover="background:#f0eee6;">
+      <span style="width:22px; display:flex; justify-content:center;">◷</span>
+      <span style="flex:1;">Marketing</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+    </div>
+    <div onClick="{{ go }}" data-screen="coming" data-title="HR-Agent" data-desc="Verwaltet Schichtpläne, Arbeitszeiten und das Onboarding neuer Mitarbeiter." style="display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:12px; cursor:pointer; color:#a8a59b;" style-hover="background:#f0eee6;">
+      <span style="width:22px; display:flex; justify-content:center;">☺</span>
+      <span style="flex:1;">HR</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+    </div>
+    <div style="display:flex; justify-content:flex-end; padding:0 4px 4px;">
+      <span style="font-size:12px; color:#8a877f; background:#eceadf; border:2px dashed #cbc8be; border-radius:20px; padding:2px 10px;">Bald verfügbar</span>
+    </div>
+
+    <div style="flex:1;"></div>
+
+    <div onClick="{{ go }}" data-screen="autonomy" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; cursor:pointer;" style-hover="background:#f0eee6;">
+      <span style="width:22px; display:flex; justify-content:center;">⚙</span><span>Einstellungen</span>
+    </div>
+    <div onClick="{{ go }}" data-screen="mobile" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; cursor:pointer;" style-hover="background:#f0eee6;">
+      <span style="width:22px; display:flex; justify-content:center;">▢</span><span>Mobil-Ansicht</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; padding:10px 6px; margin-top:4px; border-top:2px dashed #d8d5cb;">
+      <div style="width:34px; height:34px; flex:none; border-radius:50%; background:#e3e1d8; border:2px solid #bdbab0;"></div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:5px;">
+        <div style="height:9px; width:80%; background:#e0ded5; border-radius:6px;"></div>
+        <div style="height:8px; width:55%; background:#e8e6dd; border-radius:6px;"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <div style="flex:1; display:flex; flex-direction:column; min-width:0;">
+
+    <!-- Top bar -->
+    <header style="height:62px; flex:none; display:flex; align-items:center; gap:14px; padding:0 24px; border-bottom:2px solid #d8d5cb; background:#faf9f4;">
+      <div style="display:flex; align-items:center; gap:9px; flex:1; max-width:420px; background:#fffdf8; border:2px solid #cbc8be; border-radius:var(--wf-pill); padding:9px 14px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+        <span style="color:#a8a59b;">Belege, Lieferanten, Beträge durchsuchen…</span>
+      </div>
+      <div style="flex:1;"></div>
+      <div style="position:relative; width:42px; height:42px; display:flex; align-items:center; justify-content:center; background:#fffdf8; border:2px solid #cbc8be; border-radius:50%;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a584f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.5 21a2 2 0 0 1-3 0"/></svg>
+        <span style="position:absolute; top:-3px; right:-3px; width:16px; height:16px; background:#5a584f; color:#fff; border-radius:50%; font-size:10px; display:flex; align-items:center; justify-content:center;">2</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; background:#fffdf8; border:2px solid #cbc8be; border-radius:var(--wf-pill); padding:8px 14px; cursor:pointer;">
+        <div style="width:24px; height:24px; border-radius:50%; background:#e3e1d8; border:2px solid #bdbab0;"></div>
+        <span>Bistro Sonneneck</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c7a72" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </header>
+
+    <!-- Scrollable content -->
+    <main id="wf-content" style="flex:1; overflow:auto; padding:30px 38px;">
+
+      <!-- ============ SCREEN 1: DASHBOARD ============ -->
+      <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="Dashboard" style="animation:wfPop .25s ease; max-width:1120px; margin:0 auto;">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom:22px;">
+          <div>
+            <div style="font-family:'Caveat',cursive; font-size:42px; line-height:1; color:#33312e;">Finanzen</div>
+            <div style="color:#8a877f; margin-top:4px;">Übersicht · Juni 2026</div>
+          </div>
+          <div style="display:inline-flex; align-items:center; gap:9px; background:var(--wf-accent,#3b3a36); color:#fffdf8; border:2px solid #2b2a27; border-radius:var(--wf-pill); padding:12px 20px; cursor:pointer; box-shadow:3px 3px 0 -1px #cfccc2;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fffdf8" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Belege hinzufügen</span>
+          </div>
+        </div>
+
+        <!-- KPI cards -->
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:18px;">
+          <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:18px;">
+            <div style="color:#8a877f; font-size:14px;">Offene Belege</div>
+            <div style="font-family:'Caveat',cursive; font-size:40px; line-height:1.1;">12</div>
+            <div style="font-size:13px; color:#a8a59b;">+3 seit gestern</div>
+          </div>
+          <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:18px;">
+            <div style="color:#8a877f; font-size:14px;">Diesen Monat verbucht</div>
+            <div style="font-family:'Caveat',cursive; font-size:40px; line-height:1.1;">€ 8.420</div>
+            <div style="font-size:13px; color:#a8a59b;">86 Belege</div>
+          </div>
+          <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:18px;">
+            <div style="color:#8a877f; font-size:14px;">USt-Vorschau</div>
+            <div style="font-family:'Caveat',cursive; font-size:40px; line-height:1.1;">€ 1.240</div>
+            <div style="font-size:13px; color:#a8a59b;">fällig 10.07.</div>
+          </div>
+          <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:18px;">
+            <div style="color:#8a877f; font-size:14px; margin-bottom:8px;">Ausgaben nach Kategorie</div>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <svg width="64" height="64" viewBox="0 0 42 42"><circle cx="21" cy="21" r="15.9" fill="none" stroke="#e6e3da" stroke-width="7"/><circle cx="21" cy="21" r="15.9" fill="none" stroke="#9a978f" stroke-width="7" stroke-dasharray="42 58" stroke-dashoffset="25"/><circle cx="21" cy="21" r="15.9" fill="none" stroke="#bdbab0" stroke-width="7" stroke-dasharray="26 74" stroke-dashoffset="-17"/></svg>
+              <div style="display:flex; flex-direction:column; gap:5px; font-size:13px; color:#8a877f;">
+                <div style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; background:#9a978f; border-radius:50%;"></span>Wareneinkauf</div>
+                <div style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; background:#bdbab0; border-radius:50%;"></span>Personal</div>
+                <div style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; background:#e6e3da; border-radius:50%;"></span>Sonstiges</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart + list -->
+        <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:16px;">
+          <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <div style="font-size:18px; font-weight:700;">Umsatz & Liquidität</div>
+              <div style="display:flex; gap:6px; font-size:13px; color:#8a877f;">
+                <span style="background:#eceadf; border:2px solid #cbc8be; border-radius:16px; padding:2px 10px;">30 Tage</span>
+                <span style="border:2px solid transparent; padding:2px 10px;">12 Mon.</span>
+              </div>
+            </div>
+            <svg viewBox="0 0 560 180" style="width:100%; height:180px;">
+              <line x1="0" y1="150" x2="560" y2="150" stroke="#ddd9cf" stroke-width="2"/>
+              <line x1="0" y1="100" x2="560" y2="100" stroke="#ece9df" stroke-width="2" stroke-dasharray="4 6"/>
+              <line x1="0" y1="50" x2="560" y2="50" stroke="#ece9df" stroke-width="2" stroke-dasharray="4 6"/>
+              <polyline points="0,120 70,96 140,108 210,64 280,80 350,44 420,60 490,30 560,46" fill="none" stroke="#9a978f" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,140 70,132 140,136 210,120 280,128 350,112 420,122 490,104 560,116" fill="none" stroke="#c9c6bb" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:20px;">
+            <div style="font-size:18px; font-weight:700; margin-bottom:12px;">Zuletzt verbucht</div>
+            <div style="display:flex; flex-direction:column;">
+              <sc-for list="{{ recent }}" as="r" hint-placeholder-count="6">
+                <div style="display:flex; align-items:center; gap:11px; padding:9px 0; border-bottom:2px dashed #ece9df;">
+                  <div style="width:34px; height:34px; flex:none; background:#e9e6dd; border:2px solid #c9c6bb; border-radius:9px;"></div>
+                  <div style="flex:1; min-width:0;">
+                    <div style="font-size:15px;">{{ r.name }}</div>
+                    <div style="font-size:12px; color:#a8a59b;">{{ r.date }}</div>
+                  </div>
+                  <div style="font-size:15px; white-space:nowrap;">{{ r.amount }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </section>
+      </sc-if>
+
+      <!-- ============ SCREEN 2: BELEGEINGANG ============ -->
+      <sc-if value="{{ isPipeline }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Belegeingang" style="animation:wfPop .25s ease; max-width:1120px; margin:0 auto;">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom:18px;">
+          <div>
+            <div style="font-family:'Caveat',cursive; font-size:42px; line-height:1;">Belegeingang</div>
+            <div style="color:#8a877f; margin-top:4px;">Zentraler Posteingang für alle eingehenden Belege</div>
+          </div>
+          <div style="display:inline-flex; align-items:center; gap:9px; background:var(--wf-accent,#3b3a36); color:#fffdf8; border:2px solid #2b2a27; border-radius:var(--wf-pill); padding:12px 20px; cursor:pointer; box-shadow:3px 3px 0 -1px #cfccc2;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fffdf8" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Belege hinzufügen</span>
+          </div>
+        </div>
+
+        <!-- Status tabs -->
+        <div style="display:flex; gap:8px; margin-bottom:14px; border-bottom:2px solid #ddd9cf; padding-bottom:0;">
+          <div style="position:relative; padding:9px 16px; cursor:pointer; font-weight:700; display:flex; gap:8px; align-items:center;">
+            Neu <span style="font-size:12px; background:#dedbd1; border:2px solid #c4c1b7; border-radius:18px; padding:0 8px;">5</span>
+            <span style="position:absolute; left:6px; right:6px; bottom:-2px; height:4px; background:var(--wf-accent,#3b3a36); border-radius:4px;"></span>
+          </div>
+          <div style="padding:9px 16px; cursor:pointer; color:#8a877f; display:flex; gap:8px; align-items:center;">In Prüfung <span style="font-size:12px; background:#eceadf; border:2px solid #d4d1c7; border-radius:18px; padding:0 8px;">3</span></div>
+          <div style="padding:9px 16px; cursor:pointer; color:#8a877f; display:flex; gap:8px; align-items:center;">Verbucht <span style="font-size:12px; background:#eceadf; border:2px solid #d4d1c7; border-radius:18px; padding:0 8px;">86</span></div>
+          <div style="padding:9px 16px; cursor:pointer; color:#8a877f; display:flex; gap:8px; align-items:center;">Eskaliert <span style="font-size:12px; background:#eceadf; border:2px solid #d4d1c7; border-radius:18px; padding:0 8px;">2</span></div>
+        </div>
+
+        <!-- Filter bar -->
+        <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:8px; background:#fffdf8; border:2px solid #cbc8be; border-radius:var(--wf-pill); padding:8px 14px; font-size:14px; cursor:pointer;">Zeitraum <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div style="display:flex; align-items:center; gap:8px; background:#fffdf8; border:2px solid #cbc8be; border-radius:var(--wf-pill); padding:8px 14px; font-size:14px; cursor:pointer;">Lieferant <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div style="display:flex; align-items:center; gap:8px; background:#fffdf8; border:2px solid #cbc8be; border-radius:var(--wf-pill); padding:8px 14px; font-size:14px; cursor:pointer;">Betrag <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div style="flex:1;"></div>
+          <div style="display:flex; align-items:center; gap:8px; background:#fffdf8; border:2px solid #cbc8be; border-radius:var(--wf-pill); padding:8px 14px; font-size:14px; color:#a8a59b;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg> Suchen</div>
+        </div>
+
+        <!-- Table -->
+        <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; overflow:hidden;">
+          <div style="display:grid; grid-template-columns:64px 1.6fr 1fr 1fr 1fr 1.1fr; gap:10px; padding:13px 18px; border-bottom:2px solid #ddd9cf; font-size:13px; color:#8a877f; letter-spacing:.5px;">
+            <div>Vorschau</div><div>Lieferant</div><div>Datum</div><div>Betrag</div><div>Kanal</div><div>Status</div>
+          </div>
+          <sc-for list="{{ pipeline }}" as="row" hint-placeholder-count="6">
+            <div onClick="{{ go }}" data-screen="detail" style="display:grid; grid-template-columns:64px 1.6fr 1fr 1fr 1fr 1.1fr; gap:10px; align-items:center; padding:12px 18px; border-bottom:2px dashed #ece9df; cursor:pointer;" style-hover="background:#f6f4ed;">
+              <div style="width:44px; height:34px; background:#e9e6dd; border:2px solid #c9c6bb; border-radius:7px;"></div>
+              <div style="font-size:15px;">{{ row.name }}</div>
+              <div style="font-size:14px; color:#7c7a72;">{{ row.date }}</div>
+              <div style="font-size:15px;">{{ row.amount }}</div>
+              <div style="display:flex; align-items:center; gap:7px; font-size:13px; color:#8a877f;">{{ row.channelIcon }}<span>{{ row.channel }}</span></div>
+              <div>{{ row.statusChip }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+      </sc-if>
+
+      <!-- ============ SCREEN 3: BELEG-DETAIL ============ -->
+      <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Beleg-Detail" style="animation:wfPop .25s ease; max-width:1120px; margin:0 auto;">
+        <div onClick="{{ go }}" data-screen="pipeline" style="display:inline-flex; align-items:center; gap:7px; color:#7c7a72; cursor:pointer; margin-bottom:12px; font-size:15px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c7a72" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> Zurück zum Belegeingang
+        </div>
+
+        <!-- Escalation notice -->
+        <div style="display:flex; align-items:center; gap:14px; background:#f0ede4; border:2px solid #c4c1b7; border-radius:var(--wf-radius); padding:14px 18px; margin-bottom:16px; box-shadow:4px 5px 0 -2px #e6e3da;">
+          <div style="width:38px; height:38px; flex:none; border:2px solid #8a877f; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Caveat',cursive; font-size:26px; color:#5a584f;">!</div>
+          <div style="flex:1;">
+            <div style="font-weight:700;">Agent unsicher — bitte prüfen</div>
+            <div style="font-size:14px; color:#8a877f;">USt-Satz konnte nicht eindeutig erkannt werden. Bitte Kontierung bestätigen.</div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start;">
+          <!-- Left: receipt preview -->
+          <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div style="font-weight:700;">Beleg-Vorschau</div>
+              <div style="display:flex; gap:6px; color:#a8a59b; font-size:18px;"><span style="cursor:pointer;">⊖</span><span style="cursor:pointer;">⊕</span><span style="cursor:pointer;">↻</span></div>
+            </div>
+            <div style="background:#eceadf; border:2px dashed #b9b6ae; border-radius:10px; height:430px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; color:#a8a59b;">
+              <svg width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="#b9b6ae" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span style="font-size:14px;">rechnung_metro_0614.pdf</span>
+            </div>
+          </div>
+
+          <!-- Right: extracted fields -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:18px;">
+              <div style="font-weight:700; margin-bottom:12px;">Vom Agent erkannt</div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px 16px;">
+                <div><div style="font-size:13px; color:#8a877f;">Lieferant</div><div style="border-bottom:2px solid #ddd9cf; padding:4px 0;">Metro Großmarkt</div></div>
+                <div><div style="font-size:13px; color:#8a877f;">Datum</div><div style="border-bottom:2px solid #ddd9cf; padding:4px 0;">14.06.2026</div></div>
+                <div><div style="font-size:13px; color:#8a877f;">Betrag (brutto)</div><div style="border-bottom:2px solid #ddd9cf; padding:4px 0;">€ 248,50</div></div>
+                <div><div style="font-size:13px; color:#8a877f;">USt-Sätze</div><div style="border-bottom:2px solid #b9b6ae; padding:4px 0; color:#5a584f;">7 % / 19 % ⚠</div></div>
+              </div>
+              <div style="font-size:13px; color:#8a877f; margin:14px 0 6px;">Einzelpositionen</div>
+              <div style="display:flex; flex-direction:column; gap:0;">
+                <div style="display:flex; justify-content:space-between; padding:7px 0; border-bottom:2px dashed #ece9df; font-size:14px;"><span>Getränke (Großgebinde)</span><span style="color:#7c7a72;">€ 96,00 · 19 %</span></div>
+                <div style="display:flex; justify-content:space-between; padding:7px 0; border-bottom:2px dashed #ece9df; font-size:14px;"><span>Lebensmittel</span><span style="color:#7c7a72;">€ 118,50 · 7 %</span></div>
+                <div style="display:flex; justify-content:space-between; padding:7px 0; font-size:14px;"><span>Verpackung</span><span style="color:#7c7a72;">€ 34,00 · 19 %</span></div>
+              </div>
+            </div>
+
+            <!-- Kontierungs-Vorschlag -->
+            <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <div style="font-weight:700;">Kontierungs-Vorschlag</div>
+                <div style="font-size:13px; color:#8a877f;">Konto 5400 · Wareneinkauf</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="flex:1; height:14px; background:#eceadf; border:2px solid #cbc8be; border-radius:10px; overflow:hidden;">
+                  <div style="width:92%; height:100%; background:#9a978f;"></div>
+                </div>
+                <div style="font-family:'Caveat',cursive; font-size:24px; color:#5a584f;">92% sicher</div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div style="display:flex; gap:12px;">
+              <div style="flex:1; text-align:center; background:var(--wf-accent,#3b3a36); color:#fffdf8; border:2px solid #2b2a27; border-radius:var(--wf-pill); padding:13px; cursor:pointer; box-shadow:3px 3px 0 -1px #cfccc2;">Bestätigen & buchen</div>
+              <div style="text-align:center; background:#fffdf8; color:#34322e; border:2px solid #9a978f; border-radius:var(--wf-pill); padding:13px 22px; cursor:pointer;">Korrigieren</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </sc-if>
+
+      <!-- ============ SCREEN 4: AGENT-CHAT ============ -->
+      <sc-if value="{{ isChat }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Agent-Chat" style="animation:wfPop .25s ease; max-width:1120px; margin:0 auto; height:100%; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+          <div style="width:44px; height:44px; border-radius:50%; background:#e3e1d8; border:2px solid #bdbab0; display:flex; align-items:center; justify-content:center; font-size:20px;">€</div>
+          <div>
+            <div style="font-family:'Caveat',cursive; font-size:30px; line-height:1;">Finanz-Agent</div>
+            <div style="font-size:13px; color:#8a877f; display:flex; align-items:center; gap:6px;"><span style="width:8px; height:8px; background:#9a978f; border-radius:50%;"></span>Aktiv · antwortet sofort</div>
+          </div>
+        </div>
+
+        <div style="flex:1; display:grid; grid-template-columns:1fr 300px; gap:18px; min-height:0;">
+          <!-- Chat column -->
+          <div style="display:flex; flex-direction:column; background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; min-height:0;">
+            <div style="flex:1; overflow:auto; padding:20px; display:flex; flex-direction:column; gap:14px;">
+              <div style="align-self:flex-start; max-width:78%; background:#f0eee6; border:2px solid #d8d5cb; border-radius:16px 16px 16px 4px; padding:12px 15px; font-size:15px;">Hallo! Ich habe heute 8 neue Belege erfasst und 6 davon automatisch verbucht. 2 brauchen noch deine Prüfung.</div>
+              <div style="align-self:flex-end; max-width:78%; background:#e3e0d6; border:2px solid #cbc8be; border-radius:16px 16px 4px 16px; padding:12px 15px; font-size:15px;">Wie waren meine Ausgaben letzten Monat?</div>
+              <div style="align-self:flex-start; max-width:78%; background:#f0eee6; border:2px solid #d8d5cb; border-radius:16px 16px 16px 4px; padding:12px 15px; font-size:15px;">Im Mai hast du insgesamt <b>€ 9.310</b> ausgegeben. Größter Posten war Wareneinkauf mit € 4.120. Soll ich dir die Aufschlüsselung zeigen?</div>
+              <div style="align-self:flex-end; max-width:78%; background:#e3e0d6; border:2px solid #cbc8be; border-radius:16px 16px 4px 16px; padding:12px 15px; font-size:15px;">Ja, und was ist noch offen?</div>
+            </div>
+
+            <!-- Suggested chips -->
+            <div style="display:flex; gap:8px; padding:0 18px 12px; flex-wrap:wrap;">
+              <div style="font-size:13px; background:#f0eee6; border:2px dashed #cbc8be; border-radius:20px; padding:6px 12px; cursor:pointer;">Wie waren meine Ausgaben letzten Monat?</div>
+              <div style="font-size:13px; background:#f0eee6; border:2px dashed #cbc8be; border-radius:20px; padding:6px 12px; cursor:pointer;">Was ist noch offen?</div>
+              <div style="font-size:13px; background:#f0eee6; border:2px dashed #cbc8be; border-radius:20px; padding:6px 12px; cursor:pointer;">Zeig mir die USt-Vorschau</div>
+            </div>
+
+            <!-- Input -->
+            <div style="display:flex; align-items:center; gap:10px; padding:14px 18px; border-top:2px solid #ddd9cf;">
+              <div style="flex:1; background:#f6f4ed; border:2px solid #cbc8be; border-radius:var(--wf-pill); padding:11px 16px; color:#a8a59b;">Frag den Finanz-Agent etwas…</div>
+              <div style="width:44px; height:44px; flex:none; background:var(--wf-accent,#3b3a36); border:2px solid #2b2a27; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fffdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Context panel -->
+          <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:18px; display:flex; flex-direction:column; gap:14px;">
+            <div style="font-weight:700;">Kontext</div>
+            <div style="font-size:13px; color:#8a877f;">Bezogene Belege</div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; gap:10px; align-items:center; background:#f6f4ed; border:2px solid #ddd9cf; border-radius:10px; padding:8px;">
+                <div style="width:30px; height:30px; background:#e9e6dd; border:2px solid #c9c6bb; border-radius:6px;"></div>
+                <div style="flex:1;"><div style="font-size:13px;">Metro Großmarkt</div><div style="font-size:11px; color:#a8a59b;">€ 248,50</div></div>
+              </div>
+              <div style="display:flex; gap:10px; align-items:center; background:#f6f4ed; border:2px solid #ddd9cf; border-radius:10px; padding:8px;">
+                <div style="width:30px; height:30px; background:#e9e6dd; border:2px solid #c9c6bb; border-radius:6px;"></div>
+                <div style="flex:1;"><div style="font-size:13px;">Stadtwerke</div><div style="font-size:11px; color:#a8a59b;">€ 182,00</div></div>
+              </div>
+            </div>
+            <div style="border-top:2px dashed #ddd9cf; padding-top:12px;">
+              <div style="font-size:13px; color:#8a877f;">Ausgaben Mai</div>
+              <div style="font-family:'Caveat',cursive; font-size:32px; line-height:1.1;">€ 9.310</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </sc-if>
+
+      <!-- ============ SCREEN 5: AUTONOMIE ============ -->
+      <sc-if value="{{ isAutonomy }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Autonomie-Einstellungen" style="animation:wfPop .25s ease; max-width:1120px; margin:0 auto;">
+        <div style="margin-bottom:20px;">
+          <div style="font-family:'Caveat',cursive; font-size:42px; line-height:1;">Autonomie-Einstellungen</div>
+          <div style="color:#8a877f; margin-top:4px;">Lege fest, wie viel der Finanz-Agent selbst entscheiden darf</div>
+        </div>
+
+        <!-- 3 mode cards -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px;">
+          <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:18px; display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;"><div style="font-weight:700; font-size:17px;">Assistiert</div><div style="width:20px; height:20px; border:2px solid #bdbab0; border-radius:50%;"></div></div>
+            <div style="font-size:14px; color:#8a877f;">Der Agent schlägt vor, du bestätigst jeden Beleg manuell.</div>
+          </div>
+          <div style="background:#f3f1e8; border:3px solid #5a584f; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #d8d5cb; padding:18px; display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;"><div style="font-weight:700; font-size:17px;">Halb-autonom</div><div style="width:20px; height:20px; border:2px solid #5a584f; border-radius:50%; display:flex; align-items:center; justify-content:center;"><div style="width:10px; height:10px; background:#5a584f; border-radius:50%;"></div></div></div>
+            <div style="font-size:14px; color:#7c7a72;">Routine wird automatisch verbucht, Unsicheres wird eskaliert.</div>
+            <div style="font-size:12px; color:#8a877f; background:#e6e3d9; border-radius:14px; padding:3px 10px; align-self:flex-start;">Empfohlen</div>
+          </div>
+          <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:18px; display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;"><div style="font-weight:700; font-size:17px;">Autonom + Stichprobe</div><div style="width:20px; height:20px; border:2px solid #bdbab0; border-radius:50%;"></div></div>
+            <div style="font-size:14px; color:#8a877f;">Alles automatisch, du prüfst nur zufällige Stichproben.</div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.7fr 1fr; gap:16px; align-items:start;">
+          <!-- Per-category table -->
+          <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; overflow:hidden;">
+            <div style="padding:16px 18px 8px; font-weight:700;">Feineinstellung pro Belegtyp</div>
+            <div style="display:grid; grid-template-columns:1.4fr 1.3fr 1fr; gap:10px; padding:8px 18px; border-bottom:2px solid #ddd9cf; font-size:13px; color:#8a877f;"><div>Kategorie</div><div>Autonomiegrad</div><div>Schwelle</div></div>
+            <sc-for list="{{ categories }}" as="c" hint-placeholder-count="5">
+              <div style="display:grid; grid-template-columns:1.4fr 1.3fr 1fr; gap:10px; align-items:center; padding:11px 18px; border-bottom:2px dashed #ece9df;">
+                <div style="font-size:15px;">{{ c.name }}</div>
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; background:#f6f4ed; border:2px solid #cbc8be; border-radius:var(--wf-pill); padding:6px 12px; font-size:14px; cursor:pointer;">{{ c.level }} <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+                <div style="font-size:14px; color:#7c7a72;">{{ c.threshold }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- Trust indicator -->
+          <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:var(--wf-radius); box-shadow:4px 5px 0 -2px #e6e3da; padding:20px; display:flex; flex-direction:column; gap:12px;">
+            <div style="font-weight:700;">Trefferquote des Agenten</div>
+            <div style="display:flex; align-items:baseline; gap:8px;"><div style="font-family:'Caveat',cursive; font-size:64px; line-height:1; color:#5a584f;">96%</div><div style="font-size:13px; color:#a8a59b;">letzte 30 Tage</div></div>
+            <div style="height:14px; background:#eceadf; border:2px solid #cbc8be; border-radius:10px; overflow:hidden;"><div style="width:96%; height:100%; background:#9a978f;"></div></div>
+            <div style="font-size:13px; color:#8a877f;">1.180 von 1.228 Vorschlägen ohne Korrektur übernommen. Vertrauensbasis für höhere Autonomie.</div>
+          </div>
+        </div>
+      </section>
+      </sc-if>
+
+      <!-- ============ SCREEN 6: COMING SOON ============ -->
+      <sc-if value="{{ isComing }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Coming-Soon" style="animation:wfPop .25s ease; height:100%; display:flex; align-items:center; justify-content:center;">
+        <div style="text-align:center; max-width:460px; display:flex; flex-direction:column; align-items:center; gap:18px;">
+          <div style="width:180px; height:140px; background:#eceadf; border:2px dashed #b9b6ae; border-radius:var(--wf-radius); display:flex; align-items:center; justify-content:center; color:#b9b6ae;">
+            <svg width="62" height="62" viewBox="0 0 24 24" fill="none" stroke="#b9b6ae" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="M21 15l-5-5L5 21"/></svg>
+          </div>
+          <div style="display:inline-flex; align-items:center; gap:8px; font-size:13px; color:#8a877f; background:#eceadf; border:2px dashed #cbc8be; border-radius:20px; padding:4px 14px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8a877f" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Bald verfügbar
+          </div>
+          <div style="font-family:'Caveat',cursive; font-size:44px; line-height:1.05;">{{ comingTitle }} — bald verfügbar</div>
+          <div style="color:#8a877f; font-size:16px; line-height:1.5;">{{ comingDesc }}</div>
+          <div style="display:inline-flex; align-items:center; gap:9px; background:#fffdf8; color:#34322e; border:2px solid #9a978f; border-radius:var(--wf-pill); padding:12px 22px; cursor:pointer; box-shadow:3px 3px 0 -1px #e6e3da;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5a584f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.5 21a2 2 0 0 1-3 0"/></svg>
+            Benachrichtige mich, wenn verfügbar
+          </div>
+        </div>
+      </section>
+      </sc-if>
+
+      <!-- ============ MOBILE VIEW ============ -->
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Mobil-Ansicht" style="animation:wfPop .25s ease; display:flex; flex-direction:column; align-items:center; gap:16px;">
+        <div style="text-align:center;">
+          <div style="font-family:'Caveat',cursive; font-size:34px; line-height:1;">Mobil-Ansicht</div>
+          <div style="color:#8a877f; font-size:14px;">Dashboard Finanzen · responsive (≤ 480px)</div>
+        </div>
+        <!-- Phone frame -->
+        <div style="width:340px; flex:none; background:#34322e; border-radius:38px; padding:12px; box-shadow:6px 8px 0 -2px #d8d5cb;">
+          <div style="background:#f5f4ef; border-radius:28px; overflow:hidden;">
+            <!-- mobile status/topbar -->
+            <div style="display:flex; align-items:center; gap:10px; padding:14px 16px 10px; border-bottom:2px solid #ddd9cf;">
+              <div style="display:flex; flex-direction:column; gap:4px;"><span style="width:20px; height:3px; background:#5a584f; border-radius:3px;"></span><span style="width:20px; height:3px; background:#5a584f; border-radius:3px;"></span><span style="width:20px; height:3px; background:#5a584f; border-radius:3px;"></span></div>
+              <div style="flex:1; height:12px; background:#e3e1d8; border-radius:6px; max-width:90px;"></div>
+              <div style="flex:1;"></div>
+              <div style="width:30px; height:30px; border:2px solid #cbc8be; border-radius:50%; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5a584f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg></div>
+            </div>
+            <div style="padding:16px;">
+              <div style="font-family:'Caveat',cursive; font-size:30px; line-height:1;">Finanzen</div>
+              <div style="color:#8a877f; font-size:13px; margin-bottom:14px;">Übersicht · Juni</div>
+              <!-- KPI 2x2 -->
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+                <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:16px; box-shadow:3px 4px 0 -2px #e6e3da; padding:12px;"><div style="font-size:12px; color:#8a877f;">Offene Belege</div><div style="font-family:'Caveat',cursive; font-size:30px; line-height:1.1;">12</div></div>
+                <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:16px; box-shadow:3px 4px 0 -2px #e6e3da; padding:12px;"><div style="font-size:12px; color:#8a877f;">Verbucht</div><div style="font-family:'Caveat',cursive; font-size:30px; line-height:1.1;">€ 8.420</div></div>
+                <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:16px; box-shadow:3px 4px 0 -2px #e6e3da; padding:12px;"><div style="font-size:12px; color:#8a877f;">USt-Vorschau</div><div style="font-family:'Caveat',cursive; font-size:30px; line-height:1.1;">€ 1.240</div></div>
+                <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:16px; box-shadow:3px 4px 0 -2px #e6e3da; padding:12px;"><div style="font-size:12px; color:#8a877f;">Kategorien</div><svg width="40" height="40" viewBox="0 0 42 42" style="margin-top:2px;"><circle cx="21" cy="21" r="15.9" fill="none" stroke="#e6e3da" stroke-width="7"/><circle cx="21" cy="21" r="15.9" fill="none" stroke="#9a978f" stroke-width="7" stroke-dasharray="42 58" stroke-dashoffset="25"/></svg></div>
+              </div>
+              <!-- mini chart -->
+              <div style="background:#fffdf8; border:2px solid #c9c6bb; border-radius:16px; box-shadow:3px 4px 0 -2px #e6e3da; padding:12px; margin-bottom:14px;">
+                <div style="font-size:13px; font-weight:700; margin-bottom:6px;">Umsatz</div>
+                <svg viewBox="0 0 280 70" style="width:100%; height:60px;"><polyline points="0,55 40,40 80,46 120,24 160,32 200,16 240,24 280,10" fill="none" stroke="#9a978f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <!-- list -->
+              <div style="font-size:13px; font-weight:700; margin-bottom:6px;">Zuletzt verbucht</div>
+              <div style="display:flex; flex-direction:column;">
+                <div style="display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:2px dashed #ece9df;"><div style="width:30px; height:30px; background:#e9e6dd; border:2px solid #c9c6bb; border-radius:7px;"></div><div style="flex:1; font-size:14px;">Metro Großmarkt</div><div style="font-size:13px;">€ 248,50</div></div>
+                <div style="display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:2px dashed #ece9df;"><div style="width:30px; height:30px; background:#e9e6dd; border:2px solid #c9c6bb; border-radius:7px;"></div><div style="flex:1; font-size:14px;">Stadtwerke</div><div style="font-size:13px;">€ 182,00</div></div>
+                <div style="display:flex; align-items:center; gap:10px; padding:8px 0;"><div style="width:30px; height:30px; background:#e9e6dd; border:2px solid #c9c6bb; border-radius:7px;"></div><div style="flex:1; font-size:14px;">Bäckerei Konrad</div><div style="font-size:13px;">€ 64,20</div></div>
+              </div>
+            </div>
+            <!-- bottom tab bar -->
+            <div style="display:flex; justify-content:space-around; padding:12px 0 16px; border-top:2px solid #ddd9cf; color:#a8a59b; font-size:11px;">
+              <div style="display:flex; flex-direction:column; align-items:center; gap:3px; color:#34322e;"><span style="font-size:16px;">€</span>Finanzen</div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:3px;"><span style="font-size:16px;">▤</span>Belege</div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:3px;"><span style="font-size:16px;">◌</span>Chat</div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:3px;"><span style="font-size:16px;">⚙</span>Mehr</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:inline-flex; align-items:center; gap:8px; color:#7c7a72; cursor:pointer; font-size:14px;" onClick="{{ go }}" data-screen="dashboard">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c7a72" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> Zurück zur Desktop-Ansicht
+        </div>
+      </section>
+      </sc-if>
+
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1280, &quot;height&quot;: 800}, &quot;accent&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#3b3a36&quot;, &quot;options&quot;: [&quot;#3b3a36&quot;, &quot;#6b6a66&quot;, &quot;#2f5bd0&quot;, &quot;#1f8a5b&quot;]}, &quot;wobble&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true}}">
+class Component extends DCLogic {
+  state = { screen: 'dashboard', comingTitle: 'Sales-Agent', comingDesc: 'Verfolgt Anfragen, erstellt Angebote und pflegt deine Kundenkontakte — automatisch.' };
+
+  applyVars() {
+    const el = this._root;
+    if (!el) return;
+    el.style.setProperty('--wf-accent', this.props.accent || '#3b3a36');
+    const wobble = this.props.wobble ?? true;
+    el.style.setProperty('--wf-radius', wobble ? '255px 15px 225px 15px/15px 225px 15px 255px' : '14px');
+    el.style.setProperty('--wf-pill', wobble ? '18px 200px 22px 200px/200px 20px 190px 24px' : '24px');
+  }
+  componentDidMount() { this.applyVars(); }
+  componentDidUpdate() { this.applyVars(); }
+
+  renderVals() {
+    const s = this.state.screen;
+    const go = (e) => {
+      const d = e.currentTarget.dataset;
+      const next = { screen: d.screen };
+      if (d.screen === 'coming') { next.comingTitle = d.title; next.comingDesc = d.desc; }
+      this.setState(next);
+      const c = document.getElementById('wf-content');
+      if (c) c.scrollTop = 0;
+    };
+
+    const icon = (paths) => React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: '#8a877f', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, paths.map((d, i) => React.createElement('path', { key: i, d })));
+    const cam = React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: '#8a877f', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, [React.createElement('path', { key: 0, d: 'M3 8h3l2-2h8l2 2h3v11H3z' }), React.createElement('circle', { key: 1, cx: 12, cy: 13, r: 3.4 })]);
+    const mail = icon(['M3 6h18v13H3z', 'M3 7l9 7 9-7']);
+    const pos = icon(['M3 4h18v12H3z', 'M9 20h6', 'M12 16v4']);
+
+    const chip = (label, dark) => React.createElement('span', { style: { fontSize: '12px', whiteSpace: 'nowrap', background: dark ? '#dedbd1' : '#eceadf', border: '2px solid ' + (dark ? '#9a978f' : '#d4d1c7'), borderRadius: '20px', padding: '3px 11px', color: '#5a584f' } }, label);
+
+    return {
+      rootRef: (el) => { this._root = el; this.applyVars(); },
+      go,
+      isDashboard: s === 'dashboard',
+      isPipeline: s === 'pipeline',
+      isDetail: s === 'detail',
+      isChat: s === 'chat',
+      isAutonomy: s === 'autonomy',
+      isComing: s === 'coming',
+      isMobile: s === 'mobile',
+      navFinanzen: ['dashboard', 'pipeline', 'detail', 'chat', 'autonomy'].includes(s),
+      navDashboard: s === 'dashboard',
+      navPipeline: s === 'pipeline' || s === 'detail',
+      navChat: s === 'chat',
+      navAutonomy: s === 'autonomy',
+      comingTitle: this.state.comingTitle,
+      comingDesc: this.state.comingDesc,
+      recent: [
+        { name: 'Metro Großmarkt', date: '14.06.2026', amount: '€ 248,50' },
+        { name: 'Stadtwerke', date: '13.06.2026', amount: '€ 182,00' },
+        { name: 'Bäckerei Konrad', date: '13.06.2026', amount: '€ 64,20' },
+        { name: 'Coca-Cola GmbH', date: '12.06.2026', amount: '€ 312,90' },
+        { name: 'Telekom', date: '11.06.2026', amount: '€ 79,99' },
+        { name: 'Restaurant Bedarf24', date: '10.06.2026', amount: '€ 156,40' },
+      ],
+      pipeline: [
+        { name: 'Metro Großmarkt', date: '14.06.2026', amount: '€ 248,50', channel: 'Foto', channelIcon: cam, statusChip: chip('Neu', true) },
+        { name: 'Stadtwerke', date: '14.06.2026', amount: '€ 182,00', channel: 'E-Mail', channelIcon: mail, statusChip: chip('Neu', true) },
+        { name: 'Coca-Cola GmbH', date: '13.06.2026', amount: '€ 312,90', channel: 'Kassensystem', channelIcon: pos, statusChip: chip('Neu', true) },
+        { name: 'Bäckerei Konrad', date: '13.06.2026', amount: '€ 64,20', channel: 'Foto', channelIcon: cam, statusChip: chip('Neu', true) },
+        { name: 'Telekom', date: '12.06.2026', amount: '€ 79,99', channel: 'E-Mail', channelIcon: mail, statusChip: chip('Neu', true) },
+        { name: 'Lieferando', date: '12.06.2026', amount: '€ 540,00', channel: 'E-Mail', channelIcon: mail, statusChip: chip('Neu', true) },
+      ],
+      categories: [
+        { name: 'Wareneinkauf', level: 'Halb-autonom', threshold: '€ 500' },
+        { name: 'Bewirtung', level: 'Assistiert', threshold: '—' },
+        { name: 'Miete & Nebenkosten', level: 'Autonom', threshold: '€ 2.000' },
+        { name: 'Lieferdienste', level: 'Halb-autonom', threshold: '€ 800' },
+        { name: 'Sonstiges', level: 'Assistiert', threshold: '—' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
