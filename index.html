@@ -276,6 +276,54 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .kz.tot{border-top:2px solid var(--ink);border-bottom:none;font-weight:700;margin-top:6px;padding-top:10px;font-size:15px;}
 .chip.ok{background:var(--fin-soft);color:var(--fin-deep);}
 .chip.low{background:var(--warn-soft);color:var(--warn);}
+/* ===== Ausgangsrechnungen – funktional ===== */
+.ar-toolbar{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:22px;flex-wrap:wrap;}
+.ar-back{display:inline-flex;align-items:center;gap:7px;color:var(--ink-3);cursor:pointer;font-size:14px;font-weight:600;margin-bottom:14px;}
+.ar-back:hover{color:var(--ink);}
+.ar-field label{display:block;font-size:12px;color:var(--ink-3);margin-bottom:5px;font-weight:600;}
+.ar-field input,.ar-field select,.ar-field textarea{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:inherit;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s;}
+.ar-field input:focus,.ar-field select:focus,.ar-field textarea:focus{border-color:var(--fin);box-shadow:0 0 0 3px var(--fin-soft);}
+.ar-form2{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;}
+.ar-form3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px 18px;}
+.ar-li-head,.ar-li{display:grid;grid-template-columns:2.4fr .7fr .8fr 1fr .8fr 1.1fr 32px;gap:9px;align-items:center;}
+.ar-li-head{font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;font-weight:600;padding:0 0 8px;border-bottom:1px solid var(--line);}
+.ar-li{padding:8px 0;border-bottom:1px dashed var(--line-2);}
+.ar-li input,.ar-li select{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:7px 9px;font:inherit;color:var(--ink);outline:none;}
+.ar-li input:focus,.ar-li select:focus{border-color:var(--fin);box-shadow:0 0 0 2px var(--fin-soft);}
+.ar-li .lt{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;padding-right:2px;}
+.ar-del{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);color:var(--ink-3);display:flex;align-items:center;justify-content:center;background:var(--surface);cursor:pointer;font-size:16px;line-height:1;}
+.ar-del:hover{color:#b0432c;border-color:#e7c7bf;background:#faf1ee;}
+.ar-addline{margin-top:12px;display:inline-flex;align-items:center;gap:7px;color:var(--fin-deep);font-weight:600;font-size:14px;cursor:pointer;background:var(--fin-soft);border:1px solid #cfe6da;border-radius:10px;padding:8px 13px;}
+.ar-addline:hover{background:#d7ebe0;}
+.ar-totbox{margin-left:auto;max-width:360px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-top:16px;}
+.ar-totrow{display:flex;justify-content:space-between;padding:5px 0;font-size:14px;color:var(--ink-2);}
+.ar-totrow span:last-child{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600;}
+.ar-totrow.grand{border-top:2px solid var(--ink);margin-top:8px;padding-top:10px;font-size:18px;color:var(--ink);}
+.ar-totrow.grand span{font-weight:700;}
+.ar-actionbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+.ar-check{display:flex;align-items:center;gap:9px;font-size:14px;color:var(--ink-2);cursor:pointer;}
+.ar-check input{width:auto;}
+.ar-actions-row{display:flex;gap:8px;align-items:center;}
+.ar-mini-btn{font-size:13px;font-weight:600;border-radius:9px;padding:6px 11px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer;}
+.ar-mini-btn:hover{background:var(--surface-2);color:var(--ink);}
+/* invoice document */
+.ar-doc{background:#fff;border:1px solid var(--line);border-radius:14px;padding:40px 44px;color:#26231d;box-shadow:var(--sh-md);max-width:840px;margin:0 auto;}
+.ar-doc .dhead{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:26px;}
+.ar-doc .dco{font-family:var(--font-d);font-size:23px;font-weight:600;}
+.ar-doc .dsmall{font-size:12px;color:#8b8474;line-height:1.7;}
+.ar-doc .dmeta{font-size:12.5px;color:#6f6858;text-align:right;line-height:1.8;}
+.ar-doc .dbadge{display:inline-block;font-size:11px;font-weight:700;border-radius:20px;padding:3px 10px;margin-bottom:8px;}
+.ar-doc h2{font-family:var(--font-d);font-size:28px;font-weight:600;margin:8px 0 2px;letter-spacing:-.01em;}
+.ar-doc table{width:100%;border-collapse:collapse;margin:14px 0 6px;}
+.ar-doc th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#8b8474;border-bottom:2px solid #26231d;padding:8px 6px;}
+.ar-doc td{padding:9px 6px;border-bottom:1px solid #efe6d4;font-size:13.5px;vertical-align:top;}
+.ar-doc td.n,.ar-doc th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.ar-doc .dtot{margin-left:auto;width:320px;margin-top:12px;}
+.ar-doc .dtot .row{display:flex;justify-content:space-between;padding:5px 0;font-size:13.5px;color:#57503f;}
+.ar-doc .dtot .row span:last-child{color:#26231d;font-variant-numeric:tabular-nums;}
+.ar-doc .dtot .row.g{border-top:2px solid #26231d;margin-top:6px;padding-top:10px;font-weight:700;font-size:17px;color:#26231d;}
+.ar-doc .dfoot{margin-top:28px;font-size:12px;color:#8b8474;line-height:1.7;border-top:1px solid #efe6d4;padding-top:16px;}
+.ar-empty{text-align:center;color:var(--ink-3);padding:40px 0;}
 .chip .cdot{width:6px;height:6px;border-radius:50%;background:currentColor;}
 
 /* ---------- Detail screen ---------- */
@@ -1085,93 +1133,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 
       <!-- ============ AUSGANGSRECHNUNGEN ============ -->
       <section class="screen" data-screen="ausgangsrechnungen">
-        <div class="page-head anim" style="--d:.02s">
-          <div>
-            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
-            <div class="h1">Ausgangsrechnungen</div>
-            <div class="sub">Rechnungen an deine Kunden — der Agent erstellt sie aus dem Auftrag, prüft alle Pflichtangaben und erzeugt eine E-Rechnung. Du gibst frei.</div>
-          </div>
-          <button class="btn btn-primary">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Neue Rechnung
-          </button>
-        </div>
-
-        <div class="grid kpis anim" style="--d:.06s">
-          <div class="card kpi"><div class="ring"></div><div class="lab">Offene Forderungen</div><div class="val num">€ 4.310</div><div class="delta flat">6 Rechnungen</div></div>
-          <div class="card kpi"><div class="lab">Überfällig</div><div class="val num">€ 1.180</div><div class="delta warn">▲ 2 Rechnungen</div></div>
-          <div class="card kpi"><div class="lab">Diesen Monat bezahlt</div><div class="val num">€ 7.640</div><div class="delta up">14 Rechnungen</div></div>
-          <div class="card kpi"><div class="lab">Ø Zahlungsdauer</div><div class="val num">9 Tage</div><div class="delta up">▼ −2 vs. Vormonat</div></div>
-        </div>
-
-        <div class="insight anim" style="--d:.10s; margin-bottom:16px; background:linear-gradient(100deg,#3a2c14,#2a2010);">
-          <div class="ai" style="color:#e8c88a;">!</div>
-          <div>
-            <div class="t">2 Rechnungen sind überfällig</div>
-            <div class="d">Ich habe für beide eine freundliche Zahlungserinnerung (Mahnstufe 1) vorbereitet — du musst sie nur freigeben.</div>
-          </div>
-          <button class="cta" onclick="toast('Zahlungserinnerungen gesendet ✓')">Erinnerungen senden →</button>
-        </div>
-
-        <div class="grid" style="grid-template-columns:1.15fr 1fr;">
-          <!-- Draft invoice -->
-          <div class="card receipt-card anim" style="--d:.14s">
-            <div class="rc-head">
-              <div class="section-title">Rechnungsentwurf · vom Agent erstellt</div>
-              <span class="conf-mini">aus Auftrag #2026-0142</span>
-            </div>
-            <div class="receipt">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                <div>
-                  <div class="rco">RECHNUNG</div>
-                  <div class="rmeta">Bistro Sonneneck · Berlin · USt-IdNr. DE327…</div>
-                </div>
-                <div style="text-align:right;" class="rmeta">Nr. 2026-0142<br>Datum 21.06.2026<br>Leistung 18.06.2026</div>
-              </div>
-              <div style="margin:14px 0 4px;" class="rsmall">RECHNUNGSEMPFÄNGER</div>
-              <div style="font-weight:600;">Müller &amp; Partner GmbH</div>
-              <div class="rsmall">Friedrichstraße 12 · 10117 Berlin</div>
-              <div style="margin:16px 0 6px;" class="rsmall">LEISTUNGEN</div>
-              <div class="rrow"><span>Catering-Menü „Sommer" · 40 Pers.</span><span>€ 1.400,00 <span class="rsmall">· 7%</span></span></div>
-              <div class="rrow"><span>Getränkepauschale</span><span>€ 360,00 <span class="rsmall">· 19%</span></span></div>
-              <div class="rrow"><span>Service &amp; Personal</span><span>€ 240,00 <span class="rsmall">· 19%</span></span></div>
-              <div class="rrow"><span>Netto</span><span>€ 2.000,00</span></div>
-              <div class="rrow"><span>zzgl. USt 7 %</span><span>€ 98,00</span></div>
-              <div class="rrow"><span>zzgl. USt 19 %</span><span>€ 114,00</span></div>
-              <div class="rrow tot"><span>Gesamtbetrag</span><span>€ 2.212,00</span></div>
-              <div style="margin-top:14px;" class="rsmall">Zahlbar bis 05.07.2026 · IBAN DE12 1001 0010 0000 0000 00</div>
-            </div>
-
-            <div class="pflicht">
-              <div class="p"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Fortlaufende Rechnungsnummer</div>
-              <div class="p"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Steuernummer / USt-IdNr.</div>
-              <div class="p"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Leistungsdatum</div>
-              <div class="p"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>USt nach Sätzen aufgeschlüsselt</div>
-            </div>
-            <div class="einv">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-              E-Rechnung (ZUGFeRD 2.3) eingebettet · konform zu EN 16931
-            </div>
-            <div class="actions" style="margin-top:14px;">
-              <button class="btn btn-accent" onclick="toast('Rechnung gesendet ✓ Zahlung wird automatisch überwacht.')">Prüfen &amp; senden</button>
-              <button class="btn btn-ghost" onclick="toast('Bearbeitungsmodus geöffnet.')">Bearbeiten</button>
-            </div>
-          </div>
-
-          <!-- List -->
-          <div class="card list-card anim" style="--d:.18s">
-            <div class="section-title" style="margin-bottom:8px;">Letzte Ausgangsrechnungen</div>
-            <div class="ar-row"><div class="merch">M</div><div style="flex:1;min-width:0;"><div class="arn">Müller &amp; Partner GmbH</div><div class="ard">2026-0142 · € 2.212,00</div></div><span class="chip draft"><span class="cdot"></span>Entwurf</span></div>
-            <div class="ar-row"><div class="merch">E</div><div style="flex:1;min-width:0;"><div class="arn">Eventhaus Lux</div><div class="ard">2026-0141 · € 1.180,00 · Mahnstufe 1</div></div><span class="chip esk"><span class="cdot"></span>Überfällig</span></div>
-            <div class="ar-row"><div class="merch">S</div><div style="flex:1;min-width:0;"><div class="arn">Stadtbüro Catering</div><div class="ard">2026-0140 · € 640,00</div></div><span class="chip sent"><span class="cdot"></span>Gesendet</span></div>
-            <div class="ar-row"><div class="merch">M</div><div style="flex:1;min-width:0;"><div class="arn">Müller &amp; Partner GmbH</div><div class="ard">2026-0139 · € 2.212,00</div></div><span class="chip ver"><span class="cdot"></span>Bezahlt</span></div>
-            <div class="ar-row"><div class="merch">P</div><div style="flex:1;min-width:0;"><div class="arn">Praxis Dr. Wendt</div><div class="ard">2026-0138 · € 420,00</div></div><span class="chip ver"><span class="cdot"></span>Bezahlt</span></div>
-            <div style="margin-top:14px;padding-top:13px;border-top:1px solid var(--line-2);">
-              <div class="cl" style="font-size:12px;color:var(--ink-3);">Wiederkehrend · automatisch</div>
-              <div class="ar-row" style="border:none;padding-top:8px;"><div class="merch" style="background:var(--fin-soft);color:var(--fin);border-color:#cfe6da;">↻</div><div style="flex:1;"><div class="arn">Müller &amp; Partner · monatlich</div><div class="ard">nächste Rechnung am 01.07. — wird automatisch erstellt</div></div></div>
-            </div>
-          </div>
-        </div>
+        <div id="ar-app"></div>
       </section>
 
       <!-- ============ LIQUIDITÄT ============ -->
@@ -1865,6 +1827,247 @@ function confirmSca(){
   toast('Zahlungslauf freigegeben ✓ Zahlungen angewiesen.');
 }
 window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confirmSca;
+
+/* ===================== AUSGANGSRECHNUNGEN (funktional) ===================== */
+(function(){
+  const app = document.getElementById('ar-app');
+  if(!app) return;
+  const toast = window.toast || function(){};
+  const TODAY = '2026-06-21';
+  const CO = { name:'Bistro Sonneneck', addr:'Sonnenallee 12 · 12045 Berlin', vat:'DE327456789', tax:'34/123/45678', iban:'DE12 1001 0010 0000 0000 00', bic:'PBNKDEFFXXX', email:'rechnung@sonneneck.de' };
+  const KEY = 'mise_ar_v2';
+  const uid = () => 'i' + Math.random().toString(36).slice(2,9);
+  const pad = n => String(n).padStart(4,'0');
+  const num = v => parseFloat(String(v).replace(',','.')) || 0;
+  const fmt = n => '€ ' + (n||0).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const deDate = d => { if(!d) return '—'; const p=String(d).split('-'); return p.length===3 ? p[2]+'.'+p[1]+'.'+p[0] : d; };
+  const addDays = (d,n) => { const x=new Date(d); x.setDate(x.getDate()+n); return x.toISOString().slice(0,10); };
+  const val = id => { const el=document.getElementById(id); return el?el.value:''; };
+  const setVal = (id,v) => { const el=document.getElementById(id); if(el) el.value = v||''; };
+  const find = id => db.invoices.find(i=>i.id===id);
+  const scrollTop = () => { const c=document.getElementById('content'); if(c) c.scrollTop=0; };
+
+  let db = load();
+  let state = { view:'list', draft:null, currentId:null };
+
+  function load(){ try{ const r=localStorage.getItem(KEY); if(r){ const d=JSON.parse(r); if(d&&d.invoices) return d; } }catch(e){} return seed(); }
+  function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(db)); }catch(e){} }
+  function seed(){
+    const customers = [
+      {name:'Müller & Partner GmbH', addr:'Friedrichstraße 12 · 10117 Berlin', vat:'DE811111111', email:'buchhaltung@mueller-partner.de'},
+      {name:'Eventhaus Lux', addr:'Lichtstraße 4 · 10245 Berlin', vat:'', email:'info@eventhaus-lux.de'},
+      {name:'Stadtbüro Catering', addr:'Rathausplatz 1 · 10178 Berlin', vat:'', email:''},
+      {name:'Praxis Dr. Wendt', addr:'Kurfürstendamm 90 · 10709 Berlin', vat:'', email:''}
+    ];
+    const mk = (number,c,date,service,status,items) => { const cu=customers.find(x=>x.name===c)||{name:c,addr:'',vat:'',email:''}; return { id:uid(), number, custName:cu.name, custAddr:cu.addr, custVat:cu.vat, custEmail:cu.email, date, serviceDate:service, dueDate:addDays(date,14), status, items, note:'', headerText:'', klein:false }; };
+    const invoices = [
+      mk('2026-0139','Müller & Partner GmbH','2026-06-01','2026-05-30','bezahlt',[{desc:'Catering-Menü „Sommer" · 40 Personen',qty:40,unit:'Pers.',price:35,vat:7},{desc:'Getränkepauschale',qty:1,unit:'Pausch.',price:360,vat:19},{desc:'Service & Personal',qty:1,unit:'Pausch.',price:240,vat:19}]),
+      mk('2026-0140','Stadtbüro Catering','2026-06-08','2026-06-06','offen',[{desc:'Mittagscatering Büro (Woche)',qty:1,unit:'Pausch.',price:640,vat:7}]),
+      mk('2026-0141','Eventhaus Lux','2026-05-20','2026-05-18','offen',[{desc:'Event-Bewirtung Firmenfeier',qty:1,unit:'Pausch.',price:1180,vat:19}]),
+      mk('2026-0142','Müller & Partner GmbH','2026-06-21','2026-06-18','entwurf',[{desc:'Catering-Menü „Sommer" · 40 Personen',qty:40,unit:'Pers.',price:35,vat:7},{desc:'Getränkepauschale',qty:1,unit:'Pausch.',price:360,vat:19},{desc:'Service & Personal',qty:1,unit:'Pausch.',price:240,vat:19}])
+    ];
+    return { customers, invoices, next:143 };
+  }
+
+  function calc(inv){
+    let net=0; const rates={};
+    (inv.items||[]).forEach(it=>{ const line=num(it.qty)*num(it.price); net+=line; const r=inv.klein?0:num(it.vat); rates[r]=(rates[r]||0)+line; });
+    let vat=0; const vatLines=[];
+    Object.keys(rates).map(Number).sort((a,b)=>a-b).forEach(r=>{ if(r>0){ const amt=rates[r]*r/100; vat+=amt; vatLines.push({rate:r,base:rates[r],amt:amt}); } });
+    return { net:net, vat:vat, gross:net+vat, vatLines:vatLines };
+  }
+  const STAT = { entwurf:['Entwurf','draft'], offen:['Offen','sent'], bezahlt:['Bezahlt','ver'], ueberfaellig:['Überfällig','esk'] };
+  function effStatus(inv){ return (inv.status==='offen' && inv.dueDate && inv.dueDate < TODAY) ? 'ueberfaellig' : inv.status; }
+  function chip(inv){ const s=effStatus(inv); const a=STAT[s]||['—','draft']; return '<span class="chip '+a[1]+'"><span class="cdot"></span>'+a[0]+'</span>'; }
+  function kpi(l,v,d,cls){ return '<div class="card kpi"><div class="lab">'+l+'</div><div class="val num">'+v+'</div><div class="delta '+cls+'">'+d+'</div></div>'; }
+
+  function render(){ if(state.view==='edit') return renderEditor(); if(state.view==='doc') return renderDoc(); return renderList(); }
+
+  function renderList(){
+    const open = db.invoices.filter(i=>['offen','ueberfaellig'].includes(effStatus(i)));
+    const overdue = db.invoices.filter(i=>effStatus(i)==='ueberfaellig');
+    const paid = db.invoices.filter(i=>i.status==='bezahlt');
+    const sum = arr => arr.reduce((a,i)=>a+calc(i).gross,0);
+    const rows = db.invoices.slice().sort((a,b)=>String(b.number||'zzzz').localeCompare(String(a.number||'zzzz'))).map(i=>
+      '<div class="dgrid dt-row" style="grid-template-columns:1fr 1.7fr 1fr 1fr 1.1fr 92px;cursor:pointer;" data-act="view" data-id="'+i.id+'">'
+      +'<div class="muted">'+(i.number||'Entwurf')+'</div>'
+      +'<div class="tname">'+esc(i.custName||'—')+'</div>'
+      +'<div class="muted">'+deDate(i.date)+'</div>'
+      +'<div class="tname num">'+fmt(calc(i).gross)+'</div>'
+      +'<div>'+chip(i)+'</div>'
+      +'<div class="r"><span class="ar-mini-btn" data-act="view" data-id="'+i.id+'">Ansehen</span></div>'
+      +'</div>').join('');
+    const overdueBox = overdue.length ? '<div class="insight anim" style="--d:.08s;margin-bottom:16px;background:linear-gradient(100deg,#3a2c14,#2a2010);"><div class="ai" style="color:#e8c88a;">!</div><div><div class="t">'+overdue.length+' Rechnung'+(overdue.length>1?'en':'')+' überfällig</div><div class="d">Offener Betrag: '+fmt(sum(overdue))+'. Öffne eine Rechnung, um eine Mahnung zu erstellen.</div></div></div>' : '';
+    app.innerHTML =
+      '<div class="ar-toolbar anim" style="--d:.02s"><div>'
+      +'<div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>'
+      +'<div class="h1">Ausgangsrechnungen</div>'
+      +'<div class="sub">Rechnungen erstellen, versenden und verwalten — fortlaufende Nummer, USt-Aufschlüsselung, PDF &amp; E-Rechnung.</div></div>'
+      +'<button class="btn btn-primary" data-act="new"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neue Rechnung</button></div>'
+      +'<div class="grid kpis anim" style="--d:.05s">'
+      +kpi('Offene Forderungen', fmt(sum(open)), open.length+' Rechnungen','flat')
+      +kpi('Überfällig', fmt(sum(overdue)), overdue.length+' Rechnungen', overdue.length?'warn':'flat')
+      +kpi('Bezahlt', fmt(sum(paid)), paid.length+' Rechnungen','up')
+      +kpi('Rechnungen gesamt', String(db.invoices.length), 'im System','flat')
+      +'</div>'+overdueBox
+      +'<div class="card table anim" style="--d:.12s">'
+      +'<div class="dgrid dt-head" style="grid-template-columns:1fr 1.7fr 1fr 1fr 1.1fr 92px;"><div>Nr.</div><div>Kunde</div><div>Datum</div><div>Betrag</div><div>Status</div><div></div></div>'
+      +(rows || '<div class="ar-empty">Noch keine Rechnungen. Lege deine erste an.</div>')
+      +'</div>';
+  }
+
+  function lineRow(it,idx){
+    return '<div class="ar-li" data-idx="'+idx+'">'
+      +'<input data-f="desc" value="'+esc(it.desc)+'" placeholder="Leistung / Artikel">'
+      +'<input data-f="qty" type="number" step="0.01" value="'+esc(it.qty)+'">'
+      +'<input data-f="unit" value="'+esc(it.unit)+'" placeholder="Stk">'
+      +'<input data-f="price" class="r" type="number" step="0.01" value="'+esc(it.price)+'">'
+      +'<select data-f="vat"><option value="19"'+(num(it.vat)===19?' selected':'')+'>19</option><option value="7"'+(num(it.vat)===7?' selected':'')+'>7</option><option value="0"'+(num(it.vat)===0?' selected':'')+'>0</option></select>'
+      +'<div class="lt">'+fmt(num(it.qty)*num(it.price))+'</div>'
+      +'<div class="ar-del" data-act="delline" data-idx="'+idx+'">×</div></div>';
+  }
+  function totalsHtml(t,d){
+    let vh='';
+    if(d.klein){ vh='<div class="ar-totrow"><span>Umsatzsteuer</span><span>§19 – keine USt</span></div>'; }
+    else { t.vatLines.forEach(v=>{ vh+='<div class="ar-totrow"><span>zzgl. USt '+v.rate+' % (auf '+fmt(v.base)+')</span><span>'+fmt(v.amt)+'</span></div>'; }); }
+    return '<div class="ar-totbox"><div class="ar-totrow"><span>Zwischensumme (netto)</span><span>'+fmt(t.net)+'</span></div>'+vh+'<div class="ar-totrow grand"><span>Gesamtbetrag</span><span>'+fmt(t.gross)+'</span></div></div>';
+  }
+  function renderEditor(){
+    const d = state.draft; const t = calc(d);
+    const custOpts = ['<option value="">— Kunde wählen / neu —</option>'].concat(db.customers.map(c=>'<option value="'+esc(c.name)+'"'+(c.name===d.custName?' selected':'')+'>'+esc(c.name)+'</option>')).join('');
+    const lines = d.items.map((it,idx)=>lineRow(it,idx)).join('');
+    app.innerHTML =
+      '<div class="ar-back" data-act="cancel">← Zurück zur Übersicht</div>'
+      +'<div class="page-head" style="margin-bottom:18px;"><div><div class="h1">'+(d.number?('Rechnung '+d.number):'Neue Rechnung')+'</div><div class="sub">Positionen &amp; Beträge werden live berechnet.</div></div></div>'
+      +'<div class="card" style="padding:22px;">'
+      +'<div class="ar-form2" style="margin-bottom:16px;"><div class="ar-field"><label>Kunde</label><select id="ar-cust-select">'+custOpts+'</select></div><div class="ar-field"><label>E-Mail</label><input id="ar-f-email" value="'+esc(d.custEmail)+'" placeholder="kunde@example.de"></div></div>'
+      +'<div class="ar-form2" style="margin-bottom:16px;"><div class="ar-field"><label>Name / Firma</label><input id="ar-f-name" value="'+esc(d.custName)+'" placeholder="Kundenname"></div><div class="ar-field"><label>USt-IdNr. (optional)</label><input id="ar-f-vat" value="'+esc(d.custVat)+'" placeholder="DE…"></div></div>'
+      +'<div class="ar-field" style="margin-bottom:16px;"><label>Anschrift</label><input id="ar-f-addr" value="'+esc(d.custAddr)+'" placeholder="Straße · PLZ Ort"></div>'
+      +'<div class="ar-form3" style="margin-bottom:20px;"><div class="ar-field"><label>Rechnungsdatum</label><input type="date" id="ar-f-date" value="'+d.date+'"></div><div class="ar-field"><label>Leistungsdatum</label><input type="date" id="ar-f-service" value="'+d.serviceDate+'"></div><div class="ar-field"><label>Fällig bis</label><input type="date" id="ar-f-due" value="'+d.dueDate+'"></div></div>'
+      +'<div class="section-title" style="margin-bottom:10px;">Positionen</div>'
+      +'<div class="ar-li-head"><div>Beschreibung</div><div>Menge</div><div>Einheit</div><div class="r">Einzel €</div><div>USt %</div><div class="r">Gesamt</div><div></div></div>'
+      +'<div id="ar-lines">'+lines+'</div>'
+      +'<div class="ar-addline" data-act="addline">+ Position hinzufügen</div>'
+      +'<div class="ar-form2" style="margin-top:20px;"><div class="ar-field"><label>Einleitungstext (optional)</label><textarea id="ar-f-header" rows="2" placeholder="z. B. vielen Dank für Ihren Auftrag …">'+esc(d.headerText)+'</textarea></div><div class="ar-field"><label>Fußtext / Hinweis (optional)</label><textarea id="ar-f-note" rows="2" placeholder="z. B. Zahlbar innerhalb 14 Tagen ohne Abzug.">'+esc(d.note)+'</textarea></div></div>'
+      +'<label class="ar-check" style="margin-top:14px;"><input type="checkbox" id="ar-f-klein"'+(d.klein?' checked':'')+'> Kleinunternehmer nach §19 UStG (keine Umsatzsteuer ausweisen)</label>'
+      +'<div id="ar-tot">'+totalsHtml(t,d)+'</div>'
+      +'<div class="ar-actionbar"><button class="btn btn-accent" data-act="finalize">Finalisieren &amp; versenden</button><button class="btn btn-ghost" data-act="savedraft">Als Entwurf speichern</button><button class="btn btn-ghost" data-act="cancel">Abbrechen</button></div>'
+      +'</div>';
+  }
+
+  function docHtml(inv,t){
+    const rows = inv.items.map(it=>'<tr><td>'+esc(it.desc)+'</td><td class="n">'+num(it.qty).toLocaleString('de-DE')+'</td><td>'+esc(it.unit)+'</td><td class="n">'+fmt(num(it.price))+'</td><td class="n">'+(inv.klein?'—':it.vat+' %')+'</td><td class="n">'+fmt(num(it.qty)*num(it.price))+'</td></tr>').join('');
+    let vh=''; if(inv.klein){ vh='<div class="row"><span>Umsatzsteuer</span><span>§19 – keine USt</span></div>'; } else { t.vatLines.forEach(v=>{ vh+='<div class="row"><span>zzgl. USt '+v.rate+' %</span><span>'+fmt(v.amt)+'</span></div>'; }); }
+    const a = STAT[effStatus(inv)]; const cls=a[1];
+    const badge = cls==='ver'?'background:#e3f0e8;color:#155f41;':cls==='esk'?'background:#f7e0db;color:#b0432c;':cls==='sent'?'background:#e4ecfa;color:#2c66ce;':'background:#efe9dd;color:#6f6858;';
+    return '<div class="ar-doc" id="ar-doc">'
+      +'<div class="dhead"><div><div class="dco">'+esc(CO.name)+'</div><div class="dsmall">'+esc(CO.addr)+'<br>USt-IdNr. '+esc(CO.vat)+' · St-Nr. '+esc(CO.tax)+'</div></div>'
+      +'<div class="dmeta"><span class="dbadge" style="'+badge+'">'+a[0]+'</span><br>Rechnungs-Nr. <b>'+(inv.number||'(Entwurf)')+'</b><br>Datum '+deDate(inv.date)+'<br>Leistungsdatum '+deDate(inv.serviceDate)+'</div></div>'
+      +'<div class="dsmall" style="margin-bottom:2px;">'+esc(CO.name)+' · '+esc(CO.addr)+'</div>'
+      +'<div style="font-weight:600;font-size:15px;">'+esc(inv.custName||'—')+'</div><div class="dsmall">'+esc(inv.custAddr)+(inv.custVat?' · USt-IdNr. '+esc(inv.custVat):'')+'</div>'
+      +'<h2>Rechnung'+(inv.number?(' '+inv.number):'')+'</h2>'
+      +(inv.headerText?'<div style="margin:10px 0 4px;font-size:13.5px;">'+esc(inv.headerText)+'</div>':'')
+      +'<table><thead><tr><th>Beschreibung</th><th class="n">Menge</th><th>Einheit</th><th class="n">Einzelpreis</th><th class="n">USt</th><th class="n">Gesamt</th></tr></thead><tbody>'+rows+'</tbody></table>'
+      +'<div class="dtot"><div class="row"><span>Zwischensumme (netto)</span><span>'+fmt(t.net)+'</span></div>'+vh+'<div class="row g"><span>Gesamtbetrag</span><span>'+fmt(t.gross)+'</span></div></div>'
+      +'<div class="dfoot">Zahlbar bis '+deDate(inv.dueDate)+' ohne Abzug auf: '+esc(CO.name)+' · IBAN '+esc(CO.iban)+' · BIC '+esc(CO.bic)+'.'+(inv.note?'<br>'+esc(inv.note):'')+(inv.klein?'<br>Gemäß §19 UStG wird keine Umsatzsteuer berechnet.':'')+'<br>Bitte geben Sie bei der Zahlung die Rechnungsnummer '+(inv.number||'')+' an.</div></div>';
+  }
+  function renderDoc(){
+    const inv = find(state.currentId); if(!inv){ state.view='list'; return renderList(); }
+    const t = calc(inv); const s = effStatus(inv); const acts=[];
+    acts.push('<button class="btn btn-ghost" data-act="edit" data-id="'+inv.id+'">Bearbeiten</button>');
+    if(inv.status!=='bezahlt') acts.push('<button class="btn btn-accent" data-act="paid" data-id="'+inv.id+'">Als bezahlt markieren</button>');
+    if(s==='ueberfaellig') acts.push('<button class="btn btn-ghost" data-act="mahnung" data-id="'+inv.id+'">Mahnung erstellen</button>');
+    acts.push('<button class="btn btn-ghost" data-act="print" data-id="'+inv.id+'">Als PDF drucken</button>');
+    acts.push('<button class="btn btn-ghost" data-act="xml" data-id="'+inv.id+'">E-Rechnung (XML)</button>');
+    acts.push('<button class="btn btn-ghost" data-act="dup" data-id="'+inv.id+'">Duplizieren</button>');
+    acts.push('<button class="ar-mini-btn" data-act="del" data-id="'+inv.id+'" style="border-color:#e7c7bf;color:#b0432c;">Löschen</button>');
+    app.innerHTML = '<div class="ar-back" data-act="list">← Zurück zur Übersicht</div>'
+      +'<div class="ar-actionbar" style="margin:0 0 18px;">'+acts.join('')+'</div>'+docHtml(inv,t);
+  }
+
+  function syncForm(){
+    const d=state.draft; if(!d) return;
+    d.custName=val('ar-f-name'); d.custAddr=val('ar-f-addr'); d.custVat=val('ar-f-vat'); d.custEmail=val('ar-f-email');
+    d.date=val('ar-f-date'); d.serviceDate=val('ar-f-service'); d.dueDate=val('ar-f-due');
+    d.headerText=val('ar-f-header'); d.note=val('ar-f-note');
+    const k=document.getElementById('ar-f-klein'); d.klein=k?k.checked:false;
+    const items=[];
+    document.querySelectorAll('#ar-lines .ar-li').forEach(row=>{ const g=f=>{ const el=row.querySelector('[data-f="'+f+'"]'); return el?el.value:''; }; items.push({desc:g('desc'),qty:g('qty'),unit:g('unit'),price:g('price'),vat:g('vat')}); });
+    if(items.length) d.items=items;
+  }
+  function updateLineTotals(){ document.querySelectorAll('#ar-lines .ar-li').forEach(row=>{ const it=state.draft.items[+row.dataset.idx]; const lt=row.querySelector('.lt'); if(it&&lt) lt.textContent=fmt(num(it.qty)*num(it.price)); }); }
+
+  function newInvoice(){ state.draft={ id:uid(), number:null, custName:'', custAddr:'', custVat:'', custEmail:'', date:TODAY, serviceDate:TODAY, dueDate:addDays(TODAY,14), status:'entwurf', items:[{desc:'',qty:1,unit:'Stk',price:0,vat:19}], note:'', headerText:'', klein:false }; state.view='edit'; render(); scrollTop(); }
+  function editInvoice(id){ const i=find(id); if(!i) return; state.draft=JSON.parse(JSON.stringify(i)); state.view='edit'; render(); scrollTop(); }
+  function duplicate(id){ const i=find(id); if(!i) return; const c=JSON.parse(JSON.stringify(i)); c.id=uid(); c.number=null; c.status='entwurf'; c.date=TODAY; c.serviceDate=TODAY; c.dueDate=addDays(TODAY,14); state.draft=c; state.view='edit'; render(); scrollTop(); toast('Kopie als neuer Entwurf.'); }
+  function setStatus(id,st){ const i=find(id); if(i){ i.status=st; persist(); render(); toast(st==='bezahlt'?'Als bezahlt markiert ✓':'Status aktualisiert.'); } }
+  function saveInvoice(finalize){
+    syncForm(); const d=state.draft;
+    if(!d.custName.trim()){ toast('Bitte einen Kunden angeben.'); return; }
+    if(!d.items.some(it=>String(it.desc).trim())){ toast('Bitte mindestens eine Position mit Beschreibung.'); return; }
+    if(d.custName.trim() && !db.customers.some(c=>c.name===d.custName.trim())) db.customers.push({name:d.custName.trim(),addr:d.custAddr,vat:d.custVat,email:d.custEmail});
+    if(finalize){ if(!d.number){ const yr=(d.date||TODAY).slice(0,4); d.number=yr+'-'+pad(db.next); db.next++; } d.status='offen'; }
+    const ix=db.invoices.findIndex(i=>i.id===d.id);
+    if(ix>=0) db.invoices[ix]=d; else db.invoices.push(d);
+    persist();
+    if(finalize){ state.currentId=d.id; state.view='doc'; render(); toast('Rechnung '+d.number+' finalisiert ✓ — als PDF druckbar.'); }
+    else { state.view='list'; render(); toast('Entwurf gespeichert.'); }
+    scrollTop();
+  }
+  function download(fn,txt,mime){ try{ const b=new Blob([txt],{type:mime||'text/plain'}); const u=URL.createObjectURL(b); const a=document.createElement('a'); a.href=u; a.download=fn; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),1000); }catch(e){ toast('Download nicht möglich.'); } }
+  function printInvoice(inv){
+    if(!inv) return; const t=calc(inv);
+    const w=window.open('','_blank','width=820,height=1000'); if(!w){ toast('Bitte Pop-ups erlauben, um zu drucken.'); return; }
+    const rows=inv.items.map(it=>'<tr><td>'+esc(it.desc)+'</td><td class="n">'+num(it.qty).toLocaleString('de-DE')+'</td><td>'+esc(it.unit)+'</td><td class="n">'+fmt(num(it.price))+'</td><td class="n">'+(inv.klein?'—':it.vat+' %')+'</td><td class="n">'+fmt(num(it.qty)*num(it.price))+'</td></tr>').join('');
+    let vh=''; if(inv.klein){ vh='<div class="row"><span>Umsatzsteuer</span><span>§19 – keine USt</span></div>'; } else { t.vatLines.forEach(v=>{ vh+='<div class="row"><span>zzgl. USt '+v.rate+' %</span><span>'+fmt(v.amt)+'</span></div>'; }); }
+    const html='<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"><title>Rechnung '+(inv.number||'Entwurf')+'</title><style>'
+      +'body{font-family:Arial,Helvetica,sans-serif;color:#222;margin:40px;font-size:13px;}.h{display:flex;justify-content:space-between;margin-bottom:28px;}'
+      +'.co{font-size:20px;font-weight:700;}.s{color:#777;font-size:11px;line-height:1.6;}.m{text-align:right;color:#555;font-size:12px;line-height:1.8;}'
+      +'h1{font-size:24px;margin:12px 0;}table{width:100%;border-collapse:collapse;margin:14px 0;}th{text-align:left;font-size:10px;text-transform:uppercase;color:#777;border-bottom:2px solid #222;padding:8px 6px;}'
+      +'td{padding:8px 6px;border-bottom:1px solid #eee;}.n{text-align:right;}.tot{margin-left:auto;width:300px;margin-top:10px;}.row{display:flex;justify-content:space-between;padding:4px 0;}'
+      +'.row.g{border-top:2px solid #222;margin-top:6px;padding-top:8px;font-weight:700;font-size:15px;}.f{margin-top:26px;color:#777;font-size:11px;border-top:1px solid #eee;padding-top:12px;line-height:1.7;}'
+      +'</style></head><body><div class="h"><div><div class="co">'+esc(CO.name)+'</div><div class="s">'+esc(CO.addr)+'<br>USt-IdNr. '+esc(CO.vat)+' · St-Nr. '+esc(CO.tax)+'</div></div>'
+      +'<div class="m">Rechnungs-Nr. <b>'+(inv.number||'(Entwurf)')+'</b><br>Datum '+deDate(inv.date)+'<br>Leistungsdatum '+deDate(inv.serviceDate)+'</div></div>'
+      +'<div class="s">'+esc(CO.name)+' · '+esc(CO.addr)+'</div><div style="font-weight:700;font-size:14px;margin-top:4px;">'+esc(inv.custName)+'</div><div class="s">'+esc(inv.custAddr)+(inv.custVat?' · USt-IdNr. '+esc(inv.custVat):'')+'</div>'
+      +'<h1>Rechnung'+(inv.number?(' '+inv.number):'')+'</h1>'+(inv.headerText?'<p>'+esc(inv.headerText)+'</p>':'')
+      +'<table><thead><tr><th>Beschreibung</th><th class="n">Menge</th><th>Einheit</th><th class="n">Einzelpreis</th><th class="n">USt</th><th class="n">Gesamt</th></tr></thead><tbody>'+rows+'</tbody></table>'
+      +'<div class="tot"><div class="row"><span>Zwischensumme (netto)</span><span>'+fmt(t.net)+'</span></div>'+vh+'<div class="row g"><span>Gesamtbetrag</span><span>'+fmt(t.gross)+'</span></div></div>'
+      +'<div class="f">Zahlbar bis '+deDate(inv.dueDate)+' auf: '+esc(CO.name)+' · IBAN '+esc(CO.iban)+' · BIC '+esc(CO.bic)+'.'+(inv.note?'<br>'+esc(inv.note):'')+(inv.klein?'<br>Gemäß §19 UStG wird keine Umsatzsteuer berechnet.':'')+'</div></body></html>';
+    w.document.write(html); w.document.close(); setTimeout(()=>{ try{ w.focus(); w.print(); }catch(e){} },350);
+  }
+  function exportXml(inv){
+    if(!inv) return; const t=calc(inv);
+    const lx=inv.items.map((it,i)=>'  <Position nr="'+(i+1)+'">\n    <Beschreibung>'+esc(it.desc)+'</Beschreibung>\n    <Menge>'+num(it.qty)+'</Menge>\n    <Einheit>'+esc(it.unit)+'</Einheit>\n    <Einzelpreis>'+num(it.price).toFixed(2)+'</Einzelpreis>\n    <UStSatz>'+(inv.klein?0:num(it.vat))+'</UStSatz>\n    <Nettobetrag>'+(num(it.qty)*num(it.price)).toFixed(2)+'</Nettobetrag>\n  </Position>').join('\n');
+    const xml='<?xml version="1.0" encoding="UTF-8"?>\n<!-- E-Rechnung Struktur-Export (angelehnt an ZUGFeRD/XRechnung) -->\n<Rechnung>\n  <Rechnungsnummer>'+(inv.number||'ENTWURF')+'</Rechnungsnummer>\n  <Rechnungsdatum>'+inv.date+'</Rechnungsdatum>\n  <Leistungsdatum>'+inv.serviceDate+'</Leistungsdatum>\n  <Faelligkeit>'+inv.dueDate+'</Faelligkeit>\n  <Verkaeufer>\n    <Name>'+esc(CO.name)+'</Name>\n    <Anschrift>'+esc(CO.addr)+'</Anschrift>\n    <UStIdNr>'+esc(CO.vat)+'</UStIdNr>\n    <IBAN>'+esc(CO.iban.replace(/\s/g,''))+'</IBAN>\n  </Verkaeufer>\n  <Kaeufer>\n    <Name>'+esc(inv.custName)+'</Name>\n    <Anschrift>'+esc(inv.custAddr)+'</Anschrift>\n    <UStIdNr>'+esc(inv.custVat)+'</UStIdNr>\n  </Kaeufer>\n  <Positionen>\n'+lx+'\n  </Positionen>\n  <Summen>\n    <Netto>'+t.net.toFixed(2)+'</Netto>\n    <Umsatzsteuer>'+t.vat.toFixed(2)+'</Umsatzsteuer>\n    <Brutto>'+t.gross.toFixed(2)+'</Brutto>\n  </Summen>\n</Rechnung>\n';
+    download('Rechnung_'+String(inv.number||'Entwurf').replace(/[^0-9A-Za-z-]/g,'_')+'.xml', xml, 'application/xml'); toast('E-Rechnung (XML) heruntergeladen.');
+  }
+
+  app.addEventListener('click', e=>{
+    const el=e.target.closest('[data-act]'); if(!el||!app.contains(el)) return;
+    const act=el.dataset.act, id=el.dataset.id;
+    if(act==='new') newInvoice();
+    else if(act==='view'){ state.currentId=id; state.view='doc'; render(); scrollTop(); }
+    else if(act==='list'||act==='cancel'){ state.view='list'; state.draft=null; render(); scrollTop(); }
+    else if(act==='edit') editInvoice(id);
+    else if(act==='addline'){ syncForm(); state.draft.items.push({desc:'',qty:1,unit:'Stk',price:0,vat:19}); render(); }
+    else if(act==='delline'){ syncForm(); state.draft.items.splice(+el.dataset.idx,1); if(!state.draft.items.length) state.draft.items.push({desc:'',qty:1,unit:'Stk',price:0,vat:19}); render(); }
+    else if(act==='savedraft') saveInvoice(false);
+    else if(act==='finalize') saveInvoice(true);
+    else if(act==='paid') setStatus(id,'bezahlt');
+    else if(act==='mahnung'){ const i=find(id); toast('Mahnung (Stufe 1) für '+(i&&i.number||'')+' erstellt · als PDF druckbar.'); }
+    else if(act==='dup') duplicate(id);
+    else if(act==='del'){ if(confirm('Diese Rechnung wirklich löschen?')){ db.invoices=db.invoices.filter(i=>i.id!==id); persist(); state.view='list'; render(); toast('Rechnung gelöscht.'); } }
+    else if(act==='print') printInvoice(find(id));
+    else if(act==='xml') exportXml(find(id));
+  });
+  app.addEventListener('input', ()=>{ if(state.view==='edit'){ syncForm(); const tot=document.getElementById('ar-tot'); if(tot) tot.innerHTML=totalsHtml(calc(state.draft),state.draft); updateLineTotals(); } });
+  app.addEventListener('change', e=>{ if(state.view==='edit' && e.target.id==='ar-cust-select'){ const c=db.customers.find(x=>x.name===e.target.value); if(c){ setVal('ar-f-name',c.name); setVal('ar-f-addr',c.addr); setVal('ar-f-vat',c.vat); setVal('ar-f-email',c.email); syncForm(); } } });
+
+  window.ARApp = { showList:function(){ state.view='list'; state.draft=null; render(); } };
+  document.querySelectorAll('[data-nav="ausgangsrechnungen"]').forEach(el=>el.addEventListener('click', ()=>setTimeout(()=>{ if(window.ARApp) window.ARApp.showList(); },0)));
+  render();
+})();
 </script>
 </body>
 </html>
