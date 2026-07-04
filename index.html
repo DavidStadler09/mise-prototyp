@@ -556,6 +556,8 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   .chat-layout{height:auto;}
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
 <div class="app">
@@ -1978,7 +1980,9 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
     acts.push('<button class="btn btn-ghost" data-act="edit" data-id="'+inv.id+'">Bearbeiten</button>');
     if(inv.status!=='bezahlt') acts.push('<button class="btn btn-accent" data-act="paid" data-id="'+inv.id+'">Als bezahlt markieren</button>');
     if(s==='ueberfaellig') acts.push('<button class="btn btn-ghost" data-act="mahnung" data-id="'+inv.id+'">Mahnung erstellen</button>');
-    acts.push('<button class="btn btn-ghost" data-act="print" data-id="'+inv.id+'">Als PDF drucken</button>');
+    acts.push('<button class="btn btn-accent" data-act="pdf" data-id="'+inv.id+'">PDF herunterladen</button>');
+    acts.push('<button class="btn btn-ghost" data-act="email" data-id="'+inv.id+'">Per E-Mail senden</button>');
+    acts.push('<button class="btn btn-ghost" data-act="print" data-id="'+inv.id+'">Drucken</button>');
     acts.push('<button class="btn btn-ghost" data-act="xml" data-id="'+inv.id+'">E-Rechnung (XML)</button>');
     acts.push('<button class="btn btn-ghost" data-act="dup" data-id="'+inv.id+'">Duplizieren</button>');
     acts.push('<button class="ar-mini-btn" data-act="del" data-id="'+inv.id+'" style="border-color:#e7c7bf;color:#b0432c;">Löschen</button>');
@@ -2036,6 +2040,66 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
       +'<div class="f">Zahlbar bis '+deDate(inv.dueDate)+' auf: '+esc(CO.name)+' · IBAN '+esc(CO.iban)+' · BIC '+esc(CO.bic)+'.'+(inv.note?'<br>'+esc(inv.note):'')+(inv.klein?'<br>Gemäß §19 UStG wird keine Umsatzsteuer berechnet.':'')+'</div></body></html>';
     w.document.write(html); w.document.close(); setTimeout(()=>{ try{ w.focus(); w.print(); }catch(e){} },350);
   }
+  function san(s){ return (s==null?'':String(s)).replace(/[„“”‟]/g,'"').replace(/[‚‘’]/g,"'").replace(/[–—]/g,'-'); }
+  function downloadPdf(inv){
+    if(!inv) return;
+    const ns = window.jspdf;
+    if(!ns || !ns.jsPDF){ printInvoice(inv); toast('PDF-Bibliothek nicht geladen — Druckansicht geöffnet.'); return; }
+    const doc = new ns.jsPDF({unit:'pt', format:'a4'});
+    if(typeof doc.autoTable !== 'function'){ printInvoice(inv); toast('PDF-Tabelle nicht verfügbar — Druckansicht geöffnet.'); return; }
+    const t = calc(inv);
+    const M = 42, W = doc.internal.pageSize.getWidth(); let y = 56;
+    doc.setFont('helvetica','bold'); doc.setFontSize(15); doc.setTextColor(30,30,26);
+    doc.text(san(CO.name), M, y);
+    doc.setFont('helvetica','normal'); doc.setFontSize(8.5); doc.setTextColor(120,120,110);
+    doc.text(san(CO.addr), M, y+14);
+    doc.text('USt-IdNr. '+CO.vat+'   St-Nr. '+CO.tax, M, y+25);
+    doc.setFontSize(9); doc.setTextColor(70,70,60); const rx = W - M;
+    doc.text('Rechnungs-Nr.  '+(inv.number||'(Entwurf)'), rx, y, {align:'right'});
+    doc.text('Datum  '+deDate(inv.date), rx, y+13, {align:'right'});
+    doc.text('Leistungsdatum  '+deDate(inv.serviceDate), rx, y+26, {align:'right'});
+    y += 70;
+    doc.setFontSize(8); doc.setTextColor(140,140,125);
+    doc.text(san(CO.name)+'  ·  '+san(CO.addr), M, y);
+    doc.setFont('helvetica','bold'); doc.setFontSize(11.5); doc.setTextColor(30,30,26);
+    doc.text(san(inv.custName||'-'), M, y+16);
+    doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(90,90,80);
+    doc.text(san(inv.custAddr)+(inv.custVat?('   USt-IdNr. '+inv.custVat):''), M, y+29);
+    y += 60;
+    doc.setFont('helvetica','bold'); doc.setFontSize(19); doc.setTextColor(30,30,26);
+    doc.text('Rechnung'+(inv.number?(' '+inv.number):''), M, y);
+    if(inv.headerText){ doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(60,60,52); y+=18; const hl=doc.splitTextToSize(san(inv.headerText), W-2*M); doc.text(hl, M, y); y += hl.length*12; }
+    const body = inv.items.map(it=>[ san(it.desc), num(it.qty).toLocaleString('de-DE'), san(it.unit), fmt(num(it.price)), (inv.klein?'-':it.vat+' %'), fmt(num(it.qty)*num(it.price)) ]);
+    doc.autoTable({
+      startY: y+16,
+      head: [['Beschreibung','Menge','Einheit','Einzelpreis','USt','Gesamt']],
+      body: body, margin:{left:M,right:M},
+      styles:{ font:'helvetica', fontSize:9, cellPadding:5, textColor:[40,40,34], lineColor:[235,230,215], lineWidth:0.5 },
+      headStyles:{ fillColor:[247,244,238], textColor:[110,105,90], fontStyle:'bold', fontSize:8 },
+      columnStyles:{ 1:{halign:'right'}, 3:{halign:'right'}, 4:{halign:'right'}, 5:{halign:'right'} }
+    });
+    let ey = doc.lastAutoTable.finalY + 18; const lx = W - M - 210, vx = W - M;
+    function trow(label,value,bold){ doc.setFont('helvetica', bold?'bold':'normal'); doc.setFontSize(bold?11.5:9.5); const c=bold?30:80; doc.setTextColor(c,c,bold?26:70); doc.text(label, lx, ey); doc.text(value, vx, ey, {align:'right'}); ey += bold?18:15; }
+    trow('Zwischensumme (netto)', fmt(t.net));
+    if(inv.klein){ trow('Umsatzsteuer', '§19 – keine USt'); } else { t.vatLines.forEach(v=> trow('zzgl. USt '+v.rate+' %', fmt(v.amt))); }
+    doc.setDrawColor(30,30,26); doc.setLineWidth(1); doc.line(lx, ey-4, vx, ey-4); ey += 8;
+    trow('Gesamtbetrag', fmt(t.gross), true);
+    let fy = ey + 30; doc.setDrawColor(235,230,215); doc.setLineWidth(0.5); doc.line(M, fy-14, W-M, fy-14);
+    doc.setFont('helvetica','normal'); doc.setFontSize(8.5); doc.setTextColor(120,120,110);
+    const foot = 'Zahlbar bis '+deDate(inv.dueDate)+' ohne Abzug auf: '+CO.name+'  ·  IBAN '+CO.iban+'  ·  BIC '+CO.bic+'.'+(inv.note?('\n'+san(inv.note)):'')+(inv.klein?'\nGemäß §19 UStG wird keine Umsatzsteuer berechnet.':'')+'\nBitte geben Sie bei der Zahlung die Rechnungsnummer '+(inv.number||'')+' an.';
+    doc.text(doc.splitTextToSize(foot, W-2*M), M, fy);
+    doc.save('Rechnung_'+String(inv.number||'Entwurf').replace(/[^0-9A-Za-z-]/g,'_')+'.pdf');
+    toast('PDF heruntergeladen.');
+  }
+  function emailInvoice(inv){
+    if(!inv) return;
+    downloadPdf(inv);
+    const subj = 'Rechnung '+(inv.number||'')+' von '+CO.name;
+    const body = 'Guten Tag,\n\nanbei erhalten Sie unsere Rechnung '+(inv.number||'')+' vom '+deDate(inv.date)+' über '+fmt(calc(inv).gross)+'.\n\nHinweis: Bitte die soeben heruntergeladene PDF-Datei an diese E-Mail anhängen.\n\nMit freundlichen Grüßen\n'+CO.name;
+    const url = 'mailto:'+encodeURIComponent(inv.custEmail||'')+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+    setTimeout(()=>{ const a=document.createElement('a'); a.href=url; document.body.appendChild(a); a.click(); a.remove(); }, 500);
+    toast('E-Mail-Entwurf geöffnet · PDF heruntergeladen — bitte anhängen.');
+  }
   function exportXml(inv){
     if(!inv) return; const t=calc(inv);
     const lx=inv.items.map((it,i)=>'  <Position nr="'+(i+1)+'">\n    <Beschreibung>'+esc(it.desc)+'</Beschreibung>\n    <Menge>'+num(it.qty)+'</Menge>\n    <Einheit>'+esc(it.unit)+'</Einheit>\n    <Einzelpreis>'+num(it.price).toFixed(2)+'</Einzelpreis>\n    <UStSatz>'+(inv.klein?0:num(it.vat))+'</UStSatz>\n    <Nettobetrag>'+(num(it.qty)*num(it.price)).toFixed(2)+'</Nettobetrag>\n  </Position>').join('\n');
@@ -2058,6 +2122,8 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
     else if(act==='mahnung'){ const i=find(id); toast('Mahnung (Stufe 1) für '+(i&&i.number||'')+' erstellt · als PDF druckbar.'); }
     else if(act==='dup') duplicate(id);
     else if(act==='del'){ if(confirm('Diese Rechnung wirklich löschen?')){ db.invoices=db.invoices.filter(i=>i.id!==id); persist(); state.view='list'; render(); toast('Rechnung gelöscht.'); } }
+    else if(act==='pdf') downloadPdf(find(id));
+    else if(act==='email') emailInvoice(find(id));
     else if(act==='print') printInvoice(find(id));
     else if(act==='xml') exportXml(find(id));
   });
