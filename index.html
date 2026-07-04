@@ -56,7 +56,23 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   width:262px;flex:none;display:flex;flex-direction:column;gap:2px;
   padding:18px 14px 16px;background:rgba(251,248,242,.72);
   backdrop-filter:blur(8px);border-right:1px solid var(--line);overflow-y:auto;
+  position:relative;transition:width .2s ease;
 }
+.sidebar.collapsed{width:76px;overflow:visible;}
+.sidebar.collapsed .brand>*:not(:first-child),
+.sidebar.collapsed .nav-item>*:not(:first-child),
+.sidebar.collapsed .user-row>*:not(:first-child),
+.sidebar.collapsed .nav-label,
+.sidebar.collapsed .subnav,
+.sidebar.collapsed .locked-note{display:none;}
+.sidebar.collapsed .nav-item{justify-content:center;}
+.side-toggle{
+  position:absolute;top:16px;right:-12px;width:26px;height:26px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--ink-3);transition:transform .2s,background .15s;z-index:5;box-shadow:var(--sh-sm);
+}
+.side-toggle:hover{background:var(--surface-2);}
+.sidebar.collapsed .side-toggle{transform:rotate(180deg);}
 .brand{display:flex;align-items:center;gap:11px;padding:6px 8px 18px;}
 .brand-mark{
   width:38px;height:38px;flex:none;border-radius:11px;
@@ -81,11 +97,15 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .nav-item .lock{margin-left:auto;color:var(--ink-4);}
 .agent-dot{width:8px;height:8px;border-radius:50%;flex:none;}
 
-.subnav{display:flex;flex-direction:column;gap:1px;margin:3px 0 4px 26px;padding-left:13px;border-left:1.5px solid var(--line);}
+.subnav{display:flex;flex-direction:column;gap:1px;margin:3px 0 4px 26px;padding-left:13px;border-left:1.5px solid var(--line);flex-shrink:0;}
+.subnav.collapsed{display:none;}
 .subnav .nav-item{padding:7px 11px;font-size:14px;border-radius:9px;}
 .subnav .nav-item.active{background:var(--fin-soft);color:var(--fin-deep);font-weight:600;}
 .subnav .nav-item.active::before{content:"";position:absolute;left:-14.5px;top:50%;transform:translateY(-50%);width:2px;height:16px;background:var(--fin);border-radius:2px;}
 .subnav .nav-item .badge{background:#dfeee7;color:var(--fin-deep);}
+.nav-item .chev{margin-left:auto;width:26px;height:26px;margin-right:-6px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;color:var(--ink-4);transition:transform .15s,background .15s;}
+.nav-item .chev:hover{background:rgba(0,0,0,.06);}
+.nav-item .chev.chev-collapsed{transform:rotate(-90deg);}
 
 .locked-note{display:flex;justify-content:flex-end;padding:2px 6px 6px;}
 .pill-ghost{font-size:10.5px;color:var(--ink-3);background:transparent;border:1px dashed var(--line);border-radius:20px;padding:2px 9px;}
@@ -558,12 +578,16 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 <div class="app">
 
   <!-- ===================== SIDEBAR ===================== -->
   <aside class="sidebar">
+    <button class="side-toggle" id="side-toggle" title="Seitenleiste ein-/ausklappen">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
     <div class="brand">
       <div class="brand-mark">M</div>
       <div>
@@ -584,6 +608,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
     <div class="nav-item parent" data-nav="dashboard">
       <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9 20v-6h6v6"/></svg></span>
       <span>Finanzen</span>
+      <span class="chev" data-target="fin-sub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
     </div>
 
     <div class="subnav" id="fin-sub">
@@ -604,10 +629,14 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
       <div class="nav-item" data-nav="autonomie"><span>Autonomie</span></div>
     </div>
 
-    <div class="nav-item" data-nav="sales">
+    <div class="nav-item parent" data-nav="sales">
       <span class="ico"><span class="agent-dot" style="background:var(--sales)"></span></span>
       <span>Sales</span>
       <span class="lock"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+      <span class="chev" data-target="sales-sub" style="margin-left:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+    </div>
+    <div class="subnav" id="sales-sub">
+      <div class="nav-item" data-nav="vertraege"><span>Verträge</span></div>
     </div>
     <div class="nav-item" data-nav="marketing">
       <span class="ico"><span class="agent-dot" style="background:var(--mkt)"></span></span>
@@ -1426,15 +1455,12 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Kontakte</div>
             <div class="sub">Kunden und Lieferanten an einem Ort — Stammdaten, Umsätze und offene Posten.</div>
           </div>
-          <button class="btn btn-primary"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Kontakt anlegen</button>
+          <button class="btn btn-primary" id="kontakt-anlegen-btn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Kontakt anlegen</button>
         </div>
         <div class="seg anim" style="--d:.06s; margin-bottom:16px;"><span class="on">Kunden</span><span>Lieferanten</span></div>
         <div class="card table anim" style="--d:.10s">
-          <div class="dgrid dt-head" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div>Name</div><div>Typ</div><div class="r">Umsatz (Jahr)</div><div class="r">Offen</div></div>
-          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div style="display:flex;align-items:center;gap:11px;"><div class="merch">M</div><div class="tname">Müller &amp; Partner GmbH</div></div><div><span class="chip ok"><span class="cdot"></span>Stammkunde</span></div><div class="r num">€ 14.200</div><div class="r num" style="color:var(--warn);">€ 2.212</div></div>
-          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div style="display:flex;align-items:center;gap:11px;"><div class="merch">E</div><div class="tname">Eventhaus Lux</div></div><div><span class="muted">Kunde</span></div><div class="r num">€ 3.400</div><div class="r num" style="color:var(--warn);">€ 1.180</div></div>
-          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div style="display:flex;align-items:center;gap:11px;"><div class="merch">S</div><div class="tname">Stadtbüro Catering</div></div><div><span class="muted">Kunde</span></div><div class="r num">€ 2.100</div><div class="r muted">—</div></div>
-          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div style="display:flex;align-items:center;gap:11px;"><div class="merch">P</div><div class="tname">Praxis Dr. Wendt</div></div><div><span class="muted">Kunde</span></div><div class="r num">€ 1.260</div><div class="r muted">—</div></div>
+          <div class="dgrid dt-head" style="grid-template-columns:1.5fr .9fr .9fr .9fr .8fr;"><div>Name</div><div>Typ</div><div class="r">Umsatz (bezahlt)</div><div class="r">Offen</div><div></div></div>
+          <div id="kontakte-rows"></div>
         </div>
       </section>
 
@@ -1487,6 +1513,21 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
         <div class="preview-foot anim" style="--d:.20s">
           <div><div class="pf-t">Auf der Roadmap — Q4 2026</div><div class="pf-d">Nutzt dieselbe Datengrundlage wie der Finanz-Agent: ein Ökosystem, ein Kontext.</div></div>
           <button class="btn btn-primary" onclick="toast('Du stehst auf der Early-Access-Liste für den Sales-Agent ✓')">Early Access sichern</button>
+        </div>
+      </section>
+
+      <!-- ============ VERTRÄGE (Sales) ============ -->
+      <section class="screen" data-screen="vertraege">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot" style="background:var(--sales)"></span>Sales</div>
+            <div class="h1">Verträge</div>
+            <div class="sub">Aus Vorlagen erzeugt, mit Kunden aus der zentralen Datenbank verknüpft. Neue Verträge legst du über "Vertrag" bei einem Kunden in den Kontakten an.</div>
+          </div>
+        </div>
+        <div class="card table anim" style="--d:.10s">
+          <div class="dgrid dt-head" style="grid-template-columns:1.7fr 1.3fr 1.1fr 1fr;"><div>Titel</div><div>Kunde</div><div>Status</div><div class="r">Wert</div></div>
+          <div id="vertraege-rows"></div>
         </div>
       </section>
 
@@ -1625,9 +1666,59 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   </div>
 </div>
 
+<div class="modal-bg" id="kontakt-modal">
+  <div class="modal" style="text-align:left;width:440px;">
+    <div class="mtag">Zentrale Kunden-DB</div>
+    <h3 style="margin-bottom:14px;">Kontakt anlegen</h3>
+    <div class="ar-form2" style="margin-bottom:12px;">
+      <div class="ar-field"><label>Name / Firma *</label><input id="kt-name" placeholder="Firmenname"></div>
+      <div class="ar-field"><label>Typ</label><select id="kt-typ"><option value="kunde">Kunde</option><option value="lieferant">Lieferant</option></select></div>
+    </div>
+    <div class="ar-form2" style="margin-bottom:12px;">
+      <div class="ar-field"><label>E-Mail</label><input id="kt-email" placeholder="kontakt@example.de"></div>
+      <div class="ar-field"><label>Telefon</label><input id="kt-tel" placeholder="+49 …"></div>
+    </div>
+    <div class="ar-field" style="margin-bottom:12px;"><label>Anschrift</label><input id="kt-addr" placeholder="Straße · PLZ Ort"></div>
+    <div class="ar-field" style="margin-bottom:18px;"><label>USt-IdNr. (optional)</label><input id="kt-vat" placeholder="DE…"></div>
+    <button class="btn btn-accent" id="kt-save">Speichern</button>
+    <button class="btn btn-ghost" id="kt-cancel">Abbrechen</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="vertrag-modal">
+  <div class="modal" style="text-align:left;width:560px;max-width:94vw;">
+    <div class="mtag">Zentrale Kunden-DB</div>
+    <h3 style="margin-bottom:14px;">Vertrag erstellen — <span id="vt-kunde-label"></span></h3>
+    <div class="ar-form2" style="margin-bottom:12px;">
+      <div class="ar-field"><label>Vorlage</label><select id="vt-vorlage"></select></div>
+      <div class="ar-field"><label>Titel</label><input id="vt-titel" placeholder="z. B. Catering-Vertrag 2026"></div>
+    </div>
+    <div class="ar-field" style="margin-bottom:12px;"><label>Leistung</label><input id="vt-leistung" placeholder="z. B. Wöchentliches Büro-Catering für 20 Personen"></div>
+    <div class="ar-form2" style="margin-bottom:12px;">
+      <div class="ar-field"><label>Vertragswert</label><input id="vt-wert" placeholder="z. B. 1.200 € / Monat"></div>
+      <div class="ar-field"><label>Laufzeit (Text)</label><input id="vt-laufzeit" placeholder="z. B. 12 Monate" value="12 Monate"></div>
+    </div>
+    <div class="ar-form2" style="margin-bottom:12px;">
+      <div class="ar-field"><label>Gültig von</label><input type="date" id="vt-von"></div>
+      <div class="ar-field"><label>Gültig bis</label><input type="date" id="vt-bis"></div>
+    </div>
+    <label style="font-size:12.5px;color:var(--ink-3);display:block;margin-bottom:6px;">Vorschau</label>
+    <textarea id="vt-preview" readonly style="width:100%;min-height:180px;font-family:monospace;font-size:11.5px;line-height:1.5;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);margin-bottom:16px;resize:vertical;"></textarea>
+    <button class="btn btn-accent" id="vt-save">PDF erstellen &amp; Vertrag speichern</button>
+    <button class="btn btn-ghost" id="vt-cancel">Abbrechen</button>
+  </div>
+</div>
+
 <div id="toast" style="position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:#211e18;color:#f3efe6;padding:13px 20px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:var(--sh-lg);opacity:0;pointer-events:none;transition:all .3s;z-index:10000;"></div>
 
 <script>
+/* ===================== ZENTRALE KUNDEN-DB (Supabase) ===================== */
+/* Gemeinsame Datenquelle für Finanzen/Sales/Marketing. RLS ist während der
+   Prototyp-Phase noch deaktiviert (siehe db/policies.sql für den geplanten Zustand). */
+const MISE_SUPABASE_URL = 'https://tosayjehwpfiazahhgyp.supabase.co';
+const MISE_SUPABASE_KEY = 'sb_publishable_QBlOBQwbtwvaWYXGmYlGLg_9eISpfWb';
+window.miseDB = window.supabase ? window.supabase.createClient(MISE_SUPABASE_URL, MISE_SUPABASE_KEY) : null;
+
 /* ===================== DATA ===================== */
 const recent = [
   ['M','Metro Großmarkt','14.06.2026','€ 248,50'],
@@ -1702,15 +1793,20 @@ function go(screen){
 
   // sidebar active states
   const finScreens = ['dashboard','belege','detail','chat','autonomie','rechnungspruefung','ausgangsrechnungen','angebote','kassenbuch','zahlungslauf','liquiditaet','ustva','auswertungen','kontakte','inventar','lieferanten'];
+  const salesScreens = ['vertraege'];
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.querySelector('.nav-item.parent').classList.toggle('active', finScreens.includes(screen));
+  document.querySelector('.nav-item.parent[data-nav="dashboard"]').classList.toggle('active', finScreens.includes(screen));
+  document.querySelector('.nav-item.parent[data-nav="sales"]').classList.toggle('active', salesScreens.includes(screen));
   let subKey = screen==='detail' ? 'belege' : screen;
   document.querySelectorAll('#fin-sub .nav-item').forEach(n=>{
     n.classList.toggle('active', n.dataset.nav===subKey);
   });
-  if(!finScreens.includes(screen)){
+  document.querySelectorAll('#sales-sub .nav-item').forEach(n=>{
+    n.classList.toggle('active', n.dataset.nav===screen);
+  });
+  if(!finScreens.includes(screen) && !salesScreens.includes(screen)){
     document.querySelectorAll('.nav-item').forEach(n=>{
-      if(n.dataset.nav===screen && !n.closest('#fin-sub')) n.classList.add('active');
+      if(n.dataset.nav===screen && !n.closest('#fin-sub') && !n.closest('#sales-sub')) n.classList.add('active');
     });
   }
 }
@@ -1721,6 +1817,38 @@ function bindNav(){
   });
 }
 bindNav();
+
+/* ===================== SIDEBAR: ein-/ausklappen & Untermenüs ===================== */
+(function(){
+  const sidebarEl = document.querySelector('.sidebar');
+  const sideToggle = document.getElementById('side-toggle');
+
+  function setSidebarCollapsed(collapsed){
+    sidebarEl.classList.toggle('collapsed', collapsed);
+    try{ localStorage.setItem('mise_sidebar_collapsed', collapsed ? '1' : '0'); }catch(e){}
+  }
+  sideToggle?.addEventListener('click', e=>{
+    e.stopPropagation();
+    setSidebarCollapsed(!sidebarEl.classList.contains('collapsed'));
+  });
+  try{ if(localStorage.getItem('mise_sidebar_collapsed')==='1') setSidebarCollapsed(true); }catch(e){}
+
+  function setSubnavCollapsed(chev, collapsed){
+    const sub = document.getElementById(chev.dataset.target);
+    if(!sub) return;
+    sub.classList.toggle('collapsed', collapsed);
+    chev.classList.toggle('chev-collapsed', collapsed);
+    try{ localStorage.setItem('mise_subnav_'+chev.dataset.target, collapsed ? '1' : '0'); }catch(e){}
+  }
+  document.querySelectorAll('.chev[data-target]').forEach(chev=>{
+    chev.addEventListener('click', e=>{
+      e.stopPropagation();
+      const sub = document.getElementById(chev.dataset.target);
+      setSubnavCollapsed(chev, sub && !sub.classList.contains('collapsed'));
+    });
+    try{ if(localStorage.getItem('mise_subnav_'+chev.dataset.target)==='1') setSubnavCollapsed(chev, true); }catch(e){}
+  });
+})();
 
 /* ===================== BELEGE TABS ===================== */
 document.querySelectorAll('#belege-tabs .tab').forEach(t=>{
@@ -1855,6 +1983,25 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
 
   function load(){ try{ const r=localStorage.getItem(KEY); if(r){ const d=JSON.parse(r); if(d&&d.invoices) return d; } }catch(e){} return seed(); }
   function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(db)); }catch(e){} }
+
+  // Zentrale Kunden-DB (Supabase) statt nur lokaler Mock-Liste — geteilt mit Sales/Marketing.
+  async function syncCustomersFromCentralDB(){
+    if(!window.miseDB) return;
+    try{
+      const { data, error } = await window.miseDB.from('kunden').select('id,name,adresse,ust_id,email').order('name');
+      if(error || !data || !data.length) return;
+      db.customers = data.map(k=>({ id:k.id, name:k.name, addr:k.adresse||'', vat:k.ust_id||'', email:k.email||'' }));
+      persist();
+      render();
+    }catch(e){ console.warn('Kunden-Sync mit zentraler DB fehlgeschlagen, nutze lokalen Stand.', e); }
+  }
+  function pushCustomerToCentralDB(c){
+    if(!window.miseDB) return;
+    window.miseDB.from('kunden').insert({ name:c.name, adresse:c.addr||null, ust_id:c.vat||null, email:c.email||null, erstellt_von:'finanz-agent' }).then(({error})=>{
+      if(error) console.warn('Neuer Kunde konnte nicht in zentraler DB gespeichert werden.', error);
+    });
+  }
+  syncCustomersFromCentralDB();
   function seed(){
     const customers = [
       {name:'Müller & Partner GmbH', addr:'Friedrichstraße 12 · 10117 Berlin', vat:'DE811111111', email:'buchhaltung@mueller-partner.de'},
@@ -2010,7 +2157,7 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
     syncForm(); const d=state.draft;
     if(!d.custName.trim()){ toast('Bitte einen Kunden angeben.'); return; }
     if(!d.items.some(it=>String(it.desc).trim())){ toast('Bitte mindestens eine Position mit Beschreibung.'); return; }
-    if(d.custName.trim() && !db.customers.some(c=>c.name===d.custName.trim())) db.customers.push({name:d.custName.trim(),addr:d.custAddr,vat:d.custVat,email:d.custEmail});
+    if(d.custName.trim() && !db.customers.some(c=>c.name===d.custName.trim())){ const newCust={name:d.custName.trim(),addr:d.custAddr,vat:d.custVat,email:d.custEmail}; db.customers.push(newCust); pushCustomerToCentralDB(newCust); }
     if(finalize){ if(!d.number){ const yr=(d.date||TODAY).slice(0,4); d.number=yr+'-'+pad(db.next); db.next++; } d.status='offen'; }
     const ix=db.invoices.findIndex(i=>i.id===d.id);
     if(ix>=0) db.invoices[ix]=d; else db.invoices.push(d);
@@ -2130,9 +2277,215 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
   app.addEventListener('input', ()=>{ if(state.view==='edit'){ syncForm(); const tot=document.getElementById('ar-tot'); if(tot) tot.innerHTML=totalsHtml(calc(state.draft),state.draft); updateLineTotals(); } });
   app.addEventListener('change', e=>{ if(state.view==='edit' && e.target.id==='ar-cust-select'){ const c=db.customers.find(x=>x.name===e.target.value); if(c){ setVal('ar-f-name',c.name); setVal('ar-f-addr',c.addr); setVal('ar-f-vat',c.vat); setVal('ar-f-email',c.email); syncForm(); } } });
 
+  // Für das Kontakte-Modul: reale Umsatz-/Offen-Posten-Zahlen je Kunde aus den Rechnungen.
+  window.miseGetCustomerInvoiceSummary = function(name){
+    const inv = db.invoices.filter(i=>i.custName===name);
+    const sum = arr => arr.reduce((a,i)=>a+calc(i).gross,0);
+    return {
+      umsatz: sum(inv.filter(i=>i.status==='bezahlt')),
+      offen: sum(inv.filter(i=>['offen','ueberfaellig'].includes(effStatus(i))))
+    };
+  };
+
   window.ARApp = { showList:function(){ state.view='list'; state.draft=null; render(); } };
   document.querySelectorAll('[data-nav="ausgangsrechnungen"]').forEach(el=>el.addEventListener('click', ()=>setTimeout(()=>{ if(window.ARApp) window.ARApp.showList(); },0)));
   render();
+})();
+
+/* ===================== KONTAKTE (zentrale Kunden-DB) ===================== */
+(function(){
+  const rowsEl = document.getElementById('kontakte-rows');
+  if(!rowsEl) return;
+  const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const fmt = n => '€ ' + Math.round(n||0).toLocaleString('de-DE');
+  const deDate = d => { if(!d) return '—'; const p=String(d).split('-'); return p.length===3 ? p[2]+'.'+p[1]+'.'+p[0] : d; };
+  const toast = window.toast || function(){};
+  const STATUS = { stammkunde:['Stammkunde','ok'], neukunde:['Kunde',''], inaktiv:['Inaktiv','esk'] };
+  let kunden = [];
+
+  function row(k){
+    const [label, cls] = STATUS[k.status] || ['Kunde',''];
+    const chip = cls ? '<span class="chip '+cls+'"><span class="cdot"></span>'+label+'</span>' : '<span class="muted">'+label+'</span>';
+    const fin = window.miseGetCustomerInvoiceSummary ? window.miseGetCustomerInvoiceSummary(k.name) : {umsatz:0,offen:0};
+    return '<div class="dgrid dt-row" style="grid-template-columns:1.5fr .9fr .9fr .9fr .8fr;">'
+      +'<div style="display:flex;align-items:center;gap:11px;"><div class="merch">'+esc((k.name||'?').charAt(0).toUpperCase())+'</div><div class="tname">'+esc(k.name)+'</div></div>'
+      +'<div>'+chip+'</div>'
+      +'<div class="r num">'+(fin.umsatz ? fmt(fin.umsatz) : '<span class="muted">—</span>')+'</div>'
+      +'<div class="r num"'+(fin.offen ? ' style="color:var(--warn);"' : '')+'>'+(fin.offen ? fmt(fin.offen) : '<span class="muted">—</span>')+'</div>'
+      +'<div class="r"><button class="btn btn-ghost vt-open" data-id="'+esc(k.id)+'" style="padding:6px 12px;font-size:12.5px;">Vertrag</button></div>'
+      +'</div>';
+  }
+
+  async function load(){
+    if(!window.miseDB){ rowsEl.innerHTML = '<div class="dgrid dt-row"><div class="muted">Keine Verbindung zur zentralen Kunden-Datenbank.</div></div>'; return; }
+    const { data, error } = await window.miseDB.from('kunden').select('id,name,status,typ,adresse,ust_id,email').eq('typ','kunde').order('name');
+    if(error){ rowsEl.innerHTML = '<div class="dgrid dt-row"><div class="muted">Kunden konnten nicht geladen werden.</div></div>'; return; }
+    kunden = data || [];
+    rowsEl.innerHTML = kunden.map(row).join('') || '<div class="dgrid dt-row"><div class="muted">Noch keine Kunden angelegt.</div></div>';
+    rowsEl.querySelectorAll('.vt-open').forEach(btn=>btn.addEventListener('click', ()=>openVertragModal(btn.dataset.id)));
+  }
+
+  document.querySelectorAll('[data-nav="kontakte"]').forEach(el=>el.addEventListener('click', ()=>setTimeout(load,0)));
+  document.querySelectorAll('[data-nav="vertraege"]').forEach(el=>el.addEventListener('click', ()=>setTimeout(loadVertraege,0)));
+  load();
+
+  // ---- Kontakt anlegen (schreibt direkt in die zentrale kunden-Tabelle) ----
+  const modalBg = document.getElementById('kontakt-modal');
+  const openBtn = document.getElementById('kontakt-anlegen-btn');
+  const fieldIds = ['kt-name','kt-email','kt-tel','kt-addr','kt-vat'];
+
+  function openModal(){
+    fieldIds.forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+    document.getElementById('kt-typ').value = 'kunde';
+    modalBg.classList.add('show');
+    document.getElementById('kt-name').focus();
+  }
+  function closeModal(){ modalBg.classList.remove('show'); }
+
+  openBtn?.addEventListener('click', openModal);
+  document.getElementById('kt-cancel')?.addEventListener('click', closeModal);
+  document.getElementById('kt-save')?.addEventListener('click', async ()=>{
+    const name = document.getElementById('kt-name').value.trim();
+    if(!name){ toast('Bitte einen Namen angeben.'); return; }
+    if(!window.miseDB){ toast('Keine Verbindung zur zentralen Datenbank.'); return; }
+    const payload = {
+      name,
+      typ: document.getElementById('kt-typ').value,
+      email: document.getElementById('kt-email').value.trim() || null,
+      telefon: document.getElementById('kt-tel').value.trim() || null,
+      adresse: document.getElementById('kt-addr').value.trim() || null,
+      ust_id: document.getElementById('kt-vat').value.trim() || null,
+      erstellt_von: 'kontakte-modul'
+    };
+    const { error } = await window.miseDB.from('kunden').insert(payload);
+    if(error){ toast('Fehler beim Speichern: '+error.message); return; }
+    closeModal();
+    toast('Kontakt angelegt.');
+    load();
+  });
+
+  // ---- Verträge: Übersicht ----
+  const vertraegeRowsEl = document.getElementById('vertraege-rows');
+  const V_STATUS = { entwurf:['Entwurf','draft'], versendet:['Versendet','sent'], unterschrieben:['Unterschrieben','ver'], aktiv:['Aktiv','ok'], beendet:['Beendet','esk'] };
+
+  function vertragRow(v){
+    const cls = (V_STATUS[v.status] || ['—','draft'])[1];
+    const options = Object.keys(V_STATUS).map(key=>'<option value="'+key+'"'+(key===v.status?' selected':'')+'>'+V_STATUS[key][0]+'</option>').join('');
+    return '<div class="dgrid dt-row" style="grid-template-columns:1.7fr 1.3fr 1.1fr 1fr;">'
+      +'<div class="tname">'+esc(v.titel)+'</div>'
+      +'<div>'+esc((v.kunden && v.kunden.name) || '—')+'</div>'
+      +'<div><select class="vt-status chip '+cls+'" data-id="'+esc(v.id)+'" style="border:none;font:inherit;font-weight:600;cursor:pointer;">'+options+'</select></div>'
+      +'<div class="r num">'+(v.wert ? fmt(v.wert) : '<span class="muted">—</span>')+'</div>'
+      +'</div>';
+  }
+
+  async function loadVertraege(){
+    if(!vertraegeRowsEl || !window.miseDB) return;
+    const { data, error } = await window.miseDB.from('vertraege').select('id,titel,status,wert,kunden(name)').order('created_at',{ascending:false});
+    if(error){ vertraegeRowsEl.innerHTML = '<div class="dgrid dt-row"><div class="muted">Verträge konnten nicht geladen werden.</div></div>'; return; }
+    vertraegeRowsEl.innerHTML = (data||[]).map(vertragRow).join('') || '<div class="dgrid dt-row"><div class="muted">Noch keine Verträge erstellt.</div></div>';
+    vertraegeRowsEl.querySelectorAll('.vt-status').forEach(sel=>{
+      sel.dataset.prev = sel.value;
+      sel.addEventListener('change', async ()=>{
+        const newStatus = sel.value, prevStatus = sel.dataset.prev;
+        const { error } = await window.miseDB.from('vertraege').update({status:newStatus}).eq('id', sel.dataset.id);
+        if(error){ toast('Status konnte nicht geändert werden: '+error.message); sel.value = prevStatus; return; }
+        sel.classList.remove(V_STATUS[prevStatus][1]);
+        sel.classList.add(V_STATUS[newStatus][1]);
+        sel.dataset.prev = newStatus;
+        toast('Status geändert: '+V_STATUS[newStatus][0]);
+      });
+    });
+  }
+  loadVertraege();
+
+  // ---- Vertrag erstellen (Vorlage + Kunde -> Vorschau -> DB-Eintrag + PDF) ----
+  const vtModal = document.getElementById('vertrag-modal');
+  const vtFieldIds = ['vt-titel','vt-leistung','vt-wert','vt-von','vt-bis'];
+  let vorlagen = [];
+  let currentKunde = null;
+
+  async function ensureVorlagen(){
+    if(vorlagen.length || !window.miseDB) return;
+    const { data, error } = await window.miseDB.from('vertrag_vorlagen').select('id,name,inhalt').order('name');
+    if(!error) vorlagen = data || [];
+  }
+
+  function mergedText(){
+    const v = vorlagen.find(x=>x.id===document.getElementById('vt-vorlage').value);
+    if(!v || !currentKunde) return '';
+    const ustZeile = currentKunde.ust_id ? (', USt-IdNr. '+currentKunde.ust_id) : '';
+    const heute = new Date().toLocaleDateString('de-DE');
+    return v.inhalt
+      .replaceAll('{{kunde_name}}', currentKunde.name || '')
+      .replaceAll('{{kunde_adresse}}', currentKunde.adresse || '—')
+      .replaceAll('{{ust_id_zeile}}', ustZeile)
+      .replaceAll('{{leistung}}', document.getElementById('vt-leistung').value || '—')
+      .replaceAll('{{vertragswert}}', document.getElementById('vt-wert').value || '—')
+      .replaceAll('{{laufzeit}}', document.getElementById('vt-laufzeit').value || '—')
+      .replaceAll('{{datum}}', heute);
+  }
+
+  function refreshPreview(){ document.getElementById('vt-preview').value = mergedText(); }
+
+  async function openVertragModal(kundeId){
+    currentKunde = kunden.find(k=>k.id===kundeId);
+    if(!currentKunde) return;
+    await ensureVorlagen();
+    document.getElementById('vt-kunde-label').textContent = currentKunde.name;
+    document.getElementById('vt-vorlage').innerHTML = vorlagen.map(v=>'<option value="'+v.id+'">'+esc(v.name)+'</option>').join('');
+    vtFieldIds.forEach(id=>{ const el=document.getElementById(id); if(el && el.type!=='date') el.value=''; });
+    document.getElementById('vt-titel').value = vorlagen[0] ? (vorlagen[0].name+' — '+currentKunde.name) : '';
+    document.getElementById('vt-laufzeit').value = '12 Monate';
+    const today = new Date().toISOString().slice(0,10);
+    document.getElementById('vt-von').value = today;
+    document.getElementById('vt-bis').value = today;
+    refreshPreview();
+    vtModal.classList.add('show');
+  }
+  function closeVertragModal(){ vtModal.classList.remove('show'); }
+
+  document.getElementById('vt-cancel')?.addEventListener('click', closeVertragModal);
+  ['vt-vorlage','vt-leistung','vt-wert','vt-laufzeit'].forEach(id=>{
+    document.getElementById(id)?.addEventListener('input', refreshPreview);
+    document.getElementById(id)?.addEventListener('change', refreshPreview);
+  });
+
+  function downloadVertragPdf(titel, text){
+    const ns = window.jspdf;
+    if(!ns || !ns.jsPDF){ toast('PDF-Bibliothek nicht verfügbar.'); return; }
+    const doc = new ns.jsPDF({unit:'pt', format:'a4'});
+    const M = 48, W = doc.internal.pageSize.getWidth();
+    doc.setFont('helvetica','normal'); doc.setFontSize(10);
+    const lines = doc.splitTextToSize(text, W - 2*M);
+    doc.text(lines, M, 64);
+    doc.save((titel||'Vertrag').replace(/[^\w\-]+/g,'_')+'.pdf');
+  }
+
+  document.getElementById('vt-save')?.addEventListener('click', async ()=>{
+    if(!currentKunde){ return; }
+    const titel = document.getElementById('vt-titel').value.trim();
+    if(!titel){ toast('Bitte einen Titel angeben.'); return; }
+    const vorlageId = document.getElementById('vt-vorlage').value;
+    if(!window.miseDB){ toast('Keine Verbindung zur zentralen Datenbank.'); return; }
+    const wertRaw = document.getElementById('vt-wert').value.replace(/[^\d,\.]/g,'').replace(',','.');
+    const payload = {
+      kunde_id: currentKunde.id,
+      vorlage_id: vorlageId || null,
+      titel,
+      status: 'entwurf',
+      gueltig_von: document.getElementById('vt-von').value || null,
+      gueltig_bis: document.getElementById('vt-bis').value || null,
+      wert: wertRaw ? parseFloat(wertRaw) : null,
+      erstellt_von: 'kontakte-modul'
+    };
+    const { error } = await window.miseDB.from('vertraege').insert(payload);
+    if(error){ toast('Fehler beim Speichern: '+error.message); return; }
+    downloadVertragPdf(titel, mergedText());
+    closeVertragModal();
+    toast('Vertrag gespeichert, PDF wird heruntergeladen.');
+    loadVertraege();
+  });
 })();
 </script>
 </body>
