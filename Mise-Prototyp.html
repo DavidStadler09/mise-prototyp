@@ -2020,7 +2020,8 @@ function refreshBelegCounts(){
         return `<div class="rrow"><span>${it.desc||'—'}</span><span>${amtHtml} <span class="rsmall">· ${it.vat}%</span></span></div>`;
       }).join('')
         || '<div class="rrow"><span class="muted">Noch keine Positionen erfasst</span><span></span></div>';
-      const isPhysical = b.channel==='Foto' || b.channel==='Kassensystem';
+      const isPhysical = b.channel==='Foto' || b.channel==='Kassensystem' || b.channel==='Upload';
+      const captions = { Foto:'📷 Foto-Beleg · kein Original-Scan hinterlegt', Kassensystem:'🖨 Kassenbon · kein Original-Scan hinterlegt', Upload:'📎 Hochgeladen · keine Originaldatei zur Anzeige hinterlegt' };
       const receiptHtml = `<div class="receipt${isPhysical?' photo-tilt mono':''}"${isPhysical?'':' style="max-width:360px;margin:0 auto;"'}>
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
           <div><div class="rco">${b.vendor||'—'}</div><div class="rmeta">${b.subtitle||''}</div></div>
@@ -2029,7 +2030,7 @@ function refreshBelegCounts(){
         <div style="margin:16px 0 6px;" class="rsmall">POSITIONEN</div>
         ${rows}
         <div class="rrow tot"><span>Gesamt brutto</span><span>${b.amount!=null?belegFmtEUR(b.amount):'<span style="color:var(--warn);">€ ? · bitte ergänzen</span>'}</span></div>
-        ${isPhysical?'<div style="margin-top:14px;" class="rsmall">'+esc(b.channel==='Foto'?'📷 Foto-Beleg · kein Original-Scan hinterlegt':'🖨 Kassenbon · kein Original-Scan hinterlegt')+'</div>':''}
+        ${isPhysical?'<div style="margin-top:14px;" class="rsmall">'+esc(captions[b.channel]||'')+'</div>':''}
       </div>`;
       el.innerHTML = isPhysical ? `<div class="receipt-photo-bg">${receiptHtml}</div>` : receiptHtml;
     }
