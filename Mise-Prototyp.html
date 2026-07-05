@@ -598,11 +598,56 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .flow-ic{width:30px;height:30px;flex:none;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--surface-3);border:1px solid var(--line);}
 
 @media (max-width:1080px){
-  .cols2,.tri{grid-template-columns:1fr;}
-  .kpis{grid-template-columns:repeat(2,1fr);}
-  .feat-grid,.modes{grid-template-columns:1fr;}
-  .detail-grid,.auto-grid,.chat-layout,.set-grid{grid-template-columns:1fr;}
+  .cols2,.tri{grid-template-columns:minmax(0,1fr);}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .feat-grid,.modes{grid-template-columns:minmax(0,1fr);}
+  .detail-grid,.auto-grid,.chat-layout,.set-grid{grid-template-columns:minmax(0,1fr);}
   .chat-layout{height:auto;}
+}
+
+/* ---------- Mobile layout ---------- */
+.mobile-menu-btn{display:none;}
+.sidebar-backdrop{display:none;}
+@media (max-width:860px){
+  .mobile-menu-btn{display:flex;}
+  .side-toggle{display:none;}
+  .sidebar{
+    position:fixed;top:0;left:0;bottom:0;z-index:200;
+    width:84vw;max-width:300px;
+    transform:translateX(-100%);transition:transform .25s ease;
+    box-shadow:0 0 40px rgba(20,17,12,.3);
+  }
+  .sidebar.mobile-open{transform:translateX(0);}
+  .sidebar-backdrop.show{
+    display:block;position:fixed;inset:0;background:rgba(20,17,12,.45);
+    z-index:190;animation:fadeUp .2s ease both;
+  }
+  .topbar{padding:0 12px;gap:8px;}
+  .search{max-width:none;}
+  .search kbd{display:none;}
+  .rest-switch .rest-name,.rest-switch .rest-meta{display:none;}
+  .rest-switch{padding:6px;gap:0;}
+  .content{padding:18px 14px 40px;}
+  .h1{font-size:28px;}
+  .page-head{flex-wrap:wrap;}
+  .table{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .thead,.trow{min-width:620px;}
+  .dt-head,.dt-row{min-width:520px;}
+  .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;margin-left:-14px;margin-right:-14px;padding:0 14px;}
+  .tab{flex:none;white-space:nowrap;}
+  .filters{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;margin-left:-14px;margin-right:-14px;padding:0 14px 4px;}
+  .fchip{flex:none;white-space:nowrap;}
+  .ar-form2,.ar-form3{grid-template-columns:1fr;}
+  .ar-lines-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .ar-li-head,.ar-li{min-width:520px;}
+  .receipt-card{overflow:hidden;}
+  .rc-head{flex-wrap:wrap;gap:8px;}
+  .actions{flex-direction:column;}
+  .actions .btn{width:100%;justify-content:center;}
+  .grid[style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr) !important;}
+  .kpis{grid-template-columns:minmax(0,1fr) !important;}
+  .insight{flex-wrap:wrap;}
+  .insight .cta{flex-basis:100%;margin-left:0;text-align:center;margin-top:6px;}
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -693,10 +738,14 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
       </div>
     </div>
   </aside>
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
   <!-- ===================== MAIN ===================== -->
   <div class="main">
     <header class="topbar">
+      <button class="icon-btn mobile-menu-btn" id="mobile-menu-btn" title="Menü öffnen">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
       <label class="search">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
         <input placeholder="Belege, Lieferanten, Beträge durchsuchen…">
@@ -2175,6 +2224,25 @@ bindNav();
     });
     try{ if(localStorage.getItem('mise_subnav_'+chev.dataset.target)==='1') setSubnavCollapsed(chev, true); }catch(e){}
   });
+
+  // ---- Mobil: Off-Canvas-Menü ----
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const backdrop = document.getElementById('sidebar-backdrop');
+  function openMobileMenu(){
+    sidebarEl.classList.remove('collapsed');
+    sidebarEl.classList.add('mobile-open');
+    backdrop.classList.add('show');
+  }
+  function closeMobileMenu(){
+    sidebarEl.classList.remove('mobile-open');
+    backdrop.classList.remove('show');
+  }
+  menuBtn?.addEventListener('click', e=>{ e.stopPropagation(); openMobileMenu(); });
+  backdrop?.addEventListener('click', closeMobileMenu);
+  sidebarEl.querySelectorAll('[data-nav]').forEach(el=>{
+    el.addEventListener('click', ()=>{ if(window.innerWidth<=860) closeMobileMenu(); });
+  });
+  window.addEventListener('resize', ()=>{ if(window.innerWidth>860) closeMobileMenu(); });
 })();
 
 /* ===================== BELEGE TABS ===================== */
@@ -2422,8 +2490,8 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
       +'<div class="ar-field" style="margin-bottom:16px;"><label>Anschrift</label><input id="ar-f-addr" value="'+esc(d.custAddr)+'" placeholder="Straße · PLZ Ort"></div>'
       +'<div class="ar-form3" style="margin-bottom:20px;"><div class="ar-field"><label>Rechnungsdatum</label><input type="date" id="ar-f-date" value="'+d.date+'"></div><div class="ar-field"><label>Leistungsdatum</label><input type="date" id="ar-f-service" value="'+d.serviceDate+'"></div><div class="ar-field"><label>Fällig bis</label><input type="date" id="ar-f-due" value="'+d.dueDate+'"></div></div>'
       +'<div class="section-title" style="margin-bottom:10px;">Positionen</div>'
-      +'<div class="ar-li-head"><div>Beschreibung</div><div>Menge</div><div>Einheit</div><div class="r">Einzel €</div><div>USt %</div><div class="r">Gesamt</div><div></div></div>'
-      +'<div id="ar-lines">'+lines+'</div>'
+      +'<div class="ar-lines-scroll"><div class="ar-li-head"><div>Beschreibung</div><div>Menge</div><div>Einheit</div><div class="r">Einzel €</div><div>USt %</div><div class="r">Gesamt</div><div></div></div>'
+      +'<div id="ar-lines">'+lines+'</div></div>'
       +'<div class="ar-addline" data-act="addline">+ Position hinzufügen</div>'
       +'<div class="ar-form2" style="margin-top:20px;"><div class="ar-field"><label>Einleitungstext (optional)</label><textarea id="ar-f-header" rows="2" placeholder="z. B. vielen Dank für Ihren Auftrag …">'+esc(d.headerText)+'</textarea></div><div class="ar-field"><label>Fußtext / Hinweis (optional)</label><textarea id="ar-f-note" rows="2" placeholder="z. B. Zahlbar innerhalb 14 Tagen ohne Abzug.">'+esc(d.note)+'</textarea></div></div>'
       +'<label class="ar-check" style="margin-top:14px;"><input type="checkbox" id="ar-f-klein"'+(d.klein?' checked':'')+'> Kleinunternehmer nach §19 UStG (keine Umsatzsteuer ausweisen)</label>'
