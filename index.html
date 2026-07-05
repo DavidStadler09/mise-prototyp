@@ -373,7 +373,11 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .rc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
 .rc-tools{display:flex;gap:4px;}
 .rc-tool{width:30px;height:30px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-3);}
-.receipt{background:#fffdf8;border:1px solid var(--line);border-radius:10px;padding:26px 26px 22px;font-size:13px;color:#3a352c;box-shadow:inset 0 0 0 1px #fff, var(--sh-sm);}
+.receipt-photo-bg{background:repeating-linear-gradient(135deg,#e4e0d6,#e4e0d6 2px,#dcd7ca 2px,#dcd7ca 4px);border-radius:12px;padding:26px 14px;display:flex;justify-content:center;}
+.receipt{background:#fffdf8;border:1px solid var(--line);border-radius:4px;padding:26px 26px 22px;font-size:13px;color:#3a352c;box-shadow:0 14px 28px rgba(30,26,18,.22), 0 3px 8px rgba(30,26,18,.14), inset 0 0 0 1px #fff;width:100%;max-width:340px;}
+.receipt.photo-tilt{transform:rotate(-1.4deg);}
+.receipt.mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;}
+.receipt.mono .rco{font-family:inherit;letter-spacing:.02em;}
 .receipt .rco{font-family:var(--font-d);font-size:20px;font-weight:600;}
 .receipt .rmeta{color:#8b8474;font-size:11.5px;margin-top:2px;}
 .rrow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed #e6ddcb;}
@@ -2016,7 +2020,8 @@ function refreshBelegCounts(){
         return `<div class="rrow"><span>${it.desc||'—'}</span><span>${amtHtml} <span class="rsmall">· ${it.vat}%</span></span></div>`;
       }).join('')
         || '<div class="rrow"><span class="muted">Noch keine Positionen erfasst</span><span></span></div>';
-      el.innerHTML = `<div class="receipt">
+      const isPhysical = b.channel==='Foto' || b.channel==='Kassensystem';
+      const receiptHtml = `<div class="receipt${isPhysical?' photo-tilt mono':''}"${isPhysical?'':' style="max-width:360px;margin:0 auto;"'}>
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
           <div><div class="rco">${b.vendor||'—'}</div><div class="rmeta">${b.subtitle||''}</div></div>
           <div style="text-align:right;" class="rmeta">${belegDeDate(b.date)}</div>
@@ -2024,7 +2029,9 @@ function refreshBelegCounts(){
         <div style="margin:16px 0 6px;" class="rsmall">POSITIONEN</div>
         ${rows}
         <div class="rrow tot"><span>Gesamt brutto</span><span>${b.amount!=null?belegFmtEUR(b.amount):'<span style="color:var(--warn);">€ ? · bitte ergänzen</span>'}</span></div>
+        ${isPhysical?'<div style="margin-top:14px;" class="rsmall">'+esc(b.channel==='Foto'?'📷 Foto-Beleg · kein Original-Scan hinterlegt':'🖨 Kassenbon · kein Original-Scan hinterlegt')+'</div>':''}
       </div>`;
+      el.innerHTML = isPhysical ? `<div class="receipt-photo-bg">${receiptHtml}</div>` : receiptHtml;
     }
   }
 
