@@ -372,7 +372,10 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .receipt-card{padding:16px;}
 .rc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
 .rc-tools{display:flex;gap:4px;}
-.rc-tool{width:30px;height:30px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-3);}
+.rc-tool{width:30px;height:30px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-3);cursor:pointer;user-select:none;transition:background .15s,color .15s;}
+.rc-tool:hover{background:var(--fin-soft);color:var(--fin-deep);}
+.rc-tool.disabled{opacity:.4;cursor:not-allowed;}
+.rc-tool.disabled:hover{background:var(--surface-2);color:var(--ink-3);}
 .receipt-photo-bg{background:repeating-linear-gradient(135deg,#e4e0d6,#e4e0d6 2px,#dcd7ca 2px,#dcd7ca 4px);border-radius:12px;padding:26px 14px;display:flex;justify-content:center;}
 .receipt{background:#fffdf8;border:1px solid var(--line);border-radius:4px;padding:26px 26px 22px;font-size:13px;color:#3a352c;box-shadow:0 14px 28px rgba(30,26,18,.22), 0 3px 8px rgba(30,26,18,.14), inset 0 0 0 1px #fff;width:100%;max-width:340px;}
 .receipt.photo-tilt{transform:rotate(-1.4deg);}
@@ -921,11 +924,14 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="rc-head">
               <div class="section-title">Beleg-Vorschau</div>
               <div class="rc-tools">
-                <div class="rc-tool">−</div><div class="rc-tool">+</div>
-                <div class="rc-tool"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg></div>
+                <div class="rc-tool" id="bd-zoom-out" title="Verkleinern">−</div>
+                <div class="rc-tool" id="bd-zoom-in" title="Vergrößern">+</div>
+                <div class="rc-tool" id="bd-zoom-reset" title="Zoom zurücksetzen"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg></div>
               </div>
             </div>
-            <div id="bd-preview"></div>
+            <div id="bd-preview-scroll" style="overflow:auto;max-height:560px;">
+              <div id="bd-preview" style="transform-origin:top center;transition:transform .15s ease;"></div>
+            </div>
           </div>
 
           <div style="display:flex;flex-direction:column;gap:16px;">
@@ -2049,10 +2055,25 @@ function refreshBelegCounts(){
     renderItems(b);
     recompute(b);
     renderPreview(b);
+    resetZoom();
   };
 
   vendorEl.addEventListener('input', ()=>{ const b=findBeleg(currentBelegId); if(b) b.vendor = vendorEl.value; });
   dateEl.addEventListener('input', ()=>{ const b=findBeleg(currentBelegId); if(b) b.date = dateEl.value; });
+
+  // ---- Beleg-Vorschau: Zoom ----
+  const ZOOM_MIN = 0.6, ZOOM_MAX = 2.2, ZOOM_STEP = 0.15;
+  let zoomLevel = 1;
+  function applyZoom(){
+    const preview = document.getElementById('bd-preview');
+    if(preview) preview.style.transform = 'scale('+zoomLevel.toFixed(2)+')';
+    document.getElementById('bd-zoom-out')?.classList.toggle('disabled', zoomLevel<=ZOOM_MIN+0.001);
+    document.getElementById('bd-zoom-in')?.classList.toggle('disabled', zoomLevel>=ZOOM_MAX-0.001);
+  }
+  function resetZoom(){ zoomLevel = 1; applyZoom(); }
+  document.getElementById('bd-zoom-in')?.addEventListener('click', ()=>{ zoomLevel = Math.min(ZOOM_MAX, Math.round((zoomLevel+ZOOM_STEP)*100)/100); applyZoom(); });
+  document.getElementById('bd-zoom-out')?.addEventListener('click', ()=>{ zoomLevel = Math.max(ZOOM_MIN, Math.round((zoomLevel-ZOOM_STEP)*100)/100); applyZoom(); });
+  document.getElementById('bd-zoom-reset')?.addEventListener('click', resetZoom);
 
   document.getElementById('bd-add-item')?.addEventListener('click', ()=>{
     const b = findBeleg(currentBelegId); if(!b) return;
