@@ -282,6 +282,19 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .modal p{color:var(--ink-2);font-size:14px;margin:0 0 6px;}
 .scan{width:88px;height:88px;border-radius:50%;background:var(--fin-soft);display:flex;align-items:center;justify-content:center;margin:16px auto;color:var(--fin);}
 .modal .btn{width:100%;justify-content:center;margin-top:8px;}
+.dropzone{border:2px dashed var(--line);border-radius:14px;padding:32px 18px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s,color .15s;color:var(--ink-3);}
+.dropzone:hover{background:var(--surface-2);}
+.dropzone.dragover{border-color:var(--fin);background:var(--fin-soft);color:var(--fin-deep);}
+.dropzone .dz-icon{margin:0 auto 10px;width:42px;height:42px;border-radius:12px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--ink-3);}
+.dropzone.dragover .dz-icon{background:#fff;color:var(--fin);}
+.dropzone .dz-t{font-weight:600;color:var(--ink);font-size:14.5px;}
+.dropzone .dz-s{font-size:12.5px;margin-top:3px;}
+.dz-filelist{display:flex;flex-direction:column;gap:6px;margin-top:14px;max-height:180px;overflow-y:auto;text-align:left;}
+.dz-file{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:13px;}
+.dz-file .fn{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.dz-file .fsz{color:var(--ink-3);font-size:12px;flex:none;}
+.dz-file .frm{cursor:pointer;color:var(--ink-3);font-weight:700;flex:none;padding:0 2px;}
+.dz-file .frm:hover{color:#b0432c;}
 /* generic data tables (parity screens) */
 .dgrid{display:grid;gap:12px;align-items:center;}
 .dt-head{padding:12px 20px;border-bottom:1px solid var(--line);font-size:11.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;font-weight:600;}
@@ -378,6 +391,13 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .lpos{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line-2);font-size:13.5px;}
 .lpos:last-child{border-bottom:none;}
 .lpos .tax{color:var(--ink-3);font-size:12px;}
+.fv-input{border:none;border-bottom:1.5px solid var(--line);padding:5px 0;font-weight:600;font:inherit;color:var(--ink);background:none;width:100%;}
+.fv-input:focus{outline:none;border-color:var(--fin);}
+.lpos-edit{display:grid;grid-template-columns:1fr 92px 74px 20px;gap:8px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line-2);}
+.lpos-edit:last-child{border-bottom:none;}
+.lpos-edit input,.lpos-edit select{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:7px;padding:5px 7px;background:var(--surface);color:var(--ink);width:100%;}
+.lpos-edit .li-rm{cursor:pointer;color:var(--ink-3);text-align:center;font-weight:700;}
+.lpos-edit .li-rm:hover{color:#b0432c;}
 .konto{padding:18px 20px;}
 .konto-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
 .acct{font-size:13px;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:4px 10px;}
@@ -763,7 +783,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Finanzen</div>
             <div class="sub">Übersicht · Juni 2026 · zuletzt synchronisiert vor 4 Min.</div>
           </div>
-          <button class="btn btn-primary">
+          <button class="btn btn-primary beleg-add-trigger">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Belege hinzufügen
           </button>
@@ -849,7 +869,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Belegeingang</div>
             <div class="sub">Zentraler Posteingang — Foto, E-Mail, Kassensystem &amp; Lieferdienste laufen automatisch hier ein.</div>
           </div>
-          <button class="btn btn-primary">
+          <button class="btn btn-primary beleg-add-trigger">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Belege hinzufügen
           </button>
@@ -882,11 +902,11 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> Zurück zum Belegeingang
         </div>
 
-        <div class="escal anim" style="--d:.05s">
+        <div class="escal anim" style="--d:.05s" id="bd-escal">
           <div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
           <div style="flex:1;">
-            <div class="t">Agent unsicher — kurz prüfen</div>
-            <div class="d">Beleg enthält gemischte USt-Sätze (7 % &amp; 19 %). Aufteilung wurde vorgeschlagen, bitte Kontierung bestätigen.</div>
+            <div class="t" id="bd-escal-t">Agent unsicher — kurz prüfen</div>
+            <div class="d" id="bd-escal-d">Beleg enthält gemischte USt-Sätze. Aufteilung wurde vorgeschlagen, bitte Kontierung bestätigen.</div>
           </div>
         </div>
 
@@ -899,53 +919,38 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
                 <div class="rc-tool"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg></div>
               </div>
             </div>
-            <div class="receipt">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                <div>
-                  <div class="rco">METRO Großmarkt</div>
-                  <div class="rmeta">Berlin-Friedrichshain · USt-IdNr. DE811…</div>
-                </div>
-                <div style="text-align:right;" class="rmeta">Rechnung 0614<br>14.06.2026</div>
-              </div>
-              <div style="margin:16px 0 6px;" class="rsmall">POSITIONEN</div>
-              <div class="rrow"><span>Getränke (Großgebinde)</span><span>€ 96,00 <span class="rsmall">· 19%</span></span></div>
-              <div class="rrow"><span>Lebensmittel</span><span class="hl">€ 118,50 <span class="rsmall">· 7%</span></span></div>
-              <div class="rrow"><span>Verpackung &amp; Einweg</span><span>€ 34,00 <span class="rsmall">· 19%</span></span></div>
-              <div class="rrow tot"><span>Gesamt brutto</span><span>€ 248,50</span></div>
-              <div style="margin-top:14px;" class="rsmall">Zahlung: EC-Karte · Beleg-Nr. 0614 · Danke für Ihren Einkauf</div>
-            </div>
+            <div id="bd-preview"></div>
           </div>
 
           <div style="display:flex;flex-direction:column;gap:16px;">
             <div class="card fields-card anim" style="--d:.12s">
-              <div class="section-title" style="margin-bottom:14px;">Vom Agent erkannt</div>
+              <div class="section-title" style="margin-bottom:14px;">Vom Agent erkannt <span class="muted" id="bd-pending-note" style="font-weight:400;font-size:12px;"></span></div>
               <div class="field-grid">
-                <div class="field"><div class="fl">Lieferant</div><div class="fv">Metro Großmarkt</div></div>
-                <div class="field"><div class="fl">Datum</div><div class="fv">14.06.2026</div></div>
-                <div class="field"><div class="fl">Betrag (brutto)</div><div class="fv">€ 248,50</div></div>
-                <div class="field flag"><div class="fl">USt-Sätze</div><div class="fv">7 % / 19 % <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg></div></div>
+                <div class="field"><div class="fl">Lieferant</div><input class="fv-input" id="bd-vendor" placeholder="Lieferant"></div>
+                <div class="field"><div class="fl">Datum</div><input type="date" class="fv-input" id="bd-date"></div>
+                <div class="field"><div class="fl">Betrag (brutto)</div><div class="fv" id="bd-amount">—</div></div>
+                <div class="field flag"><div class="fl">USt-Sätze</div><div class="fv" id="bd-ust">—</div></div>
               </div>
               <div class="linehd">Einzelpositionen</div>
-              <div class="lpos"><span>Getränke (Großgebinde)</span><span>€ 96,00 <span class="tax">· 19 %</span></span></div>
-              <div class="lpos"><span>Lebensmittel</span><span>€ 118,50 <span class="tax">· 7 %</span></span></div>
-              <div class="lpos"><span>Verpackung &amp; Einweg</span><span>€ 34,00 <span class="tax">· 19 %</span></span></div>
+              <div id="bd-items"></div>
+              <button class="btn btn-ghost" id="bd-add-item" style="margin-top:10px;font-size:13px;padding:8px 12px;width:auto;">+ Position hinzufügen</button>
             </div>
 
             <div class="card konto anim" style="--d:.16s">
               <div class="konto-head">
                 <div class="section-title">Kontierungs-Vorschlag</div>
-                <div class="acct">SKR03 · 3400 Wareneinkauf</div>
+                <div class="acct" id="bd-konto">—</div>
               </div>
               <div class="conf">
-                <div class="bar"><i style="--w:92%"></i></div>
-                <div class="pc num">92 %</div>
+                <div class="bar"><i id="bd-conf-bar" style="--w:0%"></i></div>
+                <div class="pc num" id="bd-conf-pct">—</div>
               </div>
-              <div class="sub" style="margin-top:8px;font-size:13px;">Hohe Übereinstimmung mit 24 früheren Metro-Belegen.</div>
+              <div class="sub" style="margin-top:8px;font-size:13px;" id="bd-conf-sub"></div>
             </div>
 
             <div class="actions anim" style="--d:.20s">
-              <button class="btn btn-accent" onclick="toast('Beleg verbucht ✓ Der Agent lernt aus deiner Bestätigung.')">Bestätigen &amp; buchen</button>
-              <button class="btn btn-ghost" onclick="toast('Korrekturmodus geöffnet.')">Korrigieren</button>
+              <button class="btn btn-accent" id="bd-confirm">Bestätigen &amp; verbuchen</button>
+              <button class="btn btn-ghost" id="bd-save">Änderungen speichern</button>
             </div>
           </div>
         </div>
@@ -1709,6 +1714,24 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   </div>
 </div>
 
+<div class="modal-bg" id="beleg-upload-modal">
+  <div class="modal" style="text-align:left;width:460px;max-width:94vw;">
+    <div class="mtag">Belegeingang</div>
+    <h3 style="margin-bottom:14px;">Belege hinzufügen</h3>
+    <div class="dropzone" id="beleg-dropzone">
+      <div class="dz-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M7 8l5-5 5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+      </div>
+      <div class="dz-t">Belege hierher ziehen</div>
+      <div class="dz-s">oder klicken, um Dateien auszuwählen (Foto, PDF, Scan)</div>
+    </div>
+    <input type="file" id="beleg-file-input" multiple accept="image/*,.pdf" style="display:none;">
+    <div class="dz-filelist" id="beleg-filelist"></div>
+    <button class="btn btn-accent" id="beleg-upload-save">Belege hochladen</button>
+    <button class="btn btn-ghost" id="beleg-upload-cancel">Abbrechen</button>
+  </div>
+</div>
+
 <div id="toast" style="position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:#211e18;color:#f3efe6;padding:13px 20px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:var(--sh-lg);opacity:0;pointer-events:none;transition:all .3s;z-index:10000;"></div>
 
 <script>
@@ -1731,21 +1754,34 @@ const recent = [
 const cam = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a877f" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3l2-2h8l2 2h3v11H3z"/><circle cx="12" cy="13" r="3.2"/></svg>';
 const mail = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a877f" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
 const pos = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a877f" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>';
+const STAT_LABEL = { neu:'Neu', pruef:'In Prüfung', ver:'Verbucht', esk:'Eskaliert' };
+let belegSeq = 1;
+const nextBelegId = () => 'bl' + (belegSeq++);
+function mkBeleg(vendor, subtitle, date, amount, icon, channel, status, items, konto, confidence){
+  return {
+    id: nextBelegId(), vendor, subtitle, date, amount, icon, channel,
+    status, statusLabel: STAT_LABEL[status],
+    items: items || (amount!=null ? [{desc:subtitle, amount, vat:19}] : []),
+    konto: konto || 'SKR03 · 3400 Wareneinkauf', confidence: confidence!=null ? confidence : 90,
+    fileURL: null, fileType: null, pending:false
+  };
+}
 const belege = [
-  ['M','Metro Großmarkt','Großmarkt · Rechnung','14.06.2026','€ 248,50',cam,'Foto','neu','Neu'],
-  ['S','Stadtwerke','Strom & Wasser','14.06.2026','€ 182,00',mail,'E-Mail','neu','Neu'],
-  ['C','Coca-Cola GmbH','Getränkelieferung','13.06.2026','€ 312,90',pos,'Kassensystem','neu','Neu'],
-  ['B','Bäckerei Konrad','Backwaren täglich','13.06.2026','€ 64,20',cam,'Foto','neu','Neu'],
-  ['L','Lieferando','Provisionsabrechnung','12.06.2026','€ 540,00',mail,'E-Mail','neu','Neu'],
-  ['G','Gastro-Reinigung Berlin','Dienstleistung','11.06.2026','€ 210,00',mail,'E-Mail','pruef','In Prüfung'],
-  ['W','Weinhandel Veltlin','Wein-Sortiment','10.06.2026','€ 388,40',cam,'Foto','pruef','In Prüfung'],
-  ['F','Frische Fisch GmbH','Wareneinkauf','10.06.2026','€ 174,90',mail,'E-Mail','pruef','In Prüfung'],
-  ['T','Telekom','Internet & Telefon','09.06.2026','€ 79,99',mail,'E-Mail','ver','Verbucht'],
-  ['R','Restaurant Bedarf24','Verbrauchsmaterial','08.06.2026','€ 156,40',cam,'Foto','ver','Verbucht'],
-  ['K','Kaffeerösterei Süd','Kaffee-Abo','07.06.2026','€ 98,00',pos,'Kassensystem','ver','Verbucht'],
-  ['U','Unbekannter Lieferant','Betrag unklar','12.06.2026','€ ?',cam,'Foto','esk','Eskaliert'],
-  ['P','Parkschein Anlieferung','Kein Beleg-Foto','11.06.2026','€ 12,00',cam,'Foto','esk','Eskaliert'],
+  mkBeleg('Metro Großmarkt','Großmarkt · Rechnung','2026-06-14',248.50,cam,'Foto','neu',[{desc:'Getränke (Großgebinde)',amount:96,vat:19},{desc:'Lebensmittel',amount:118.50,vat:7},{desc:'Verpackung & Einweg',amount:34,vat:19}],'SKR03 · 3400 Wareneinkauf',92),
+  mkBeleg('Stadtwerke','Strom & Wasser','2026-06-14',182.00,mail,'E-Mail','neu'),
+  mkBeleg('Coca-Cola GmbH','Getränkelieferung','2026-06-13',312.90,pos,'Kassensystem','neu'),
+  mkBeleg('Bäckerei Konrad','Backwaren täglich','2026-06-13',64.20,cam,'Foto','neu'),
+  mkBeleg('Lieferando','Provisionsabrechnung','2026-06-12',540.00,mail,'E-Mail','neu'),
+  mkBeleg('Gastro-Reinigung Berlin','Dienstleistung','2026-06-11',210.00,mail,'E-Mail','pruef'),
+  mkBeleg('Weinhandel Veltlin','Wein-Sortiment','2026-06-10',388.40,cam,'Foto','pruef'),
+  mkBeleg('Frische Fisch GmbH','Wareneinkauf','2026-06-10',174.90,mail,'E-Mail','pruef'),
+  mkBeleg('Telekom','Internet & Telefon','2026-06-09',79.99,mail,'E-Mail','ver'),
+  mkBeleg('Restaurant Bedarf24','Verbrauchsmaterial','2026-06-08',156.40,cam,'Foto','ver'),
+  mkBeleg('Kaffeerösterei Süd','Kaffee-Abo','2026-06-07',98.00,pos,'Kassensystem','ver'),
+  mkBeleg('Unbekannter Lieferant','Betrag unklar','2026-06-12',null,cam,'Foto','esk',[]),
+  mkBeleg('Parkschein Anlieferung','Kein Beleg-Foto','2026-06-11',12.00,cam,'Foto','esk'),
 ];
+let currentBelegId = null;
 const cats = [
   ['Wareneinkauf','Halb-autonom','€ 500'],
   ['Bewirtung','Assistiert','—'],
@@ -1762,19 +1798,252 @@ document.getElementById('recent-list').innerHTML = recent.map(r=>`
     <div style="flex:1;"><div class="mn">${r[1]}</div><div class="md">${r[2]}</div></div>
     <div class="ma num">${r[3]}<span class="tick">✓</span></div></div>`).join('');
 
+const belegDeDate = iso => { if(!iso) return '—'; const p=iso.split('-'); return p.length===3 ? p[2]+'.'+p[1]+'.'+p[0] : iso; };
+const belegFmtEUR = n => '€ ' + n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});
+function findBeleg(id){ return belege.find(b=>b.id===id); }
+
 function renderBelege(status){
-  document.getElementById('belege-rows').innerHTML = belege.filter(b=>b[7]===status).map(b=>`
-    <div class="trow" data-nav="detail">
-      <div class="tprev">${b[5]}</div>
-      <div><div class="tname">${b[1]}</div><div class="tsub">${b[2]}</div></div>
-      <div class="muted">${b[3]}</div>
-      <div class="tname num">${b[4]}</div>
-      <div class="chan">${b[5]} ${b[6]}</div>
-      <div><span class="chip ${b[7]}"><span class="cdot"></span>${b[8]}</span></div>
+  document.getElementById('belege-rows').innerHTML = belege.filter(b=>b.status===status).map(b=>`
+    <div class="trow" data-nav="detail" data-id="${b.id}">
+      <div class="tprev">${b.icon}</div>
+      <div><div class="tname">${b.vendor}</div><div class="tsub">${b.subtitle}</div></div>
+      <div class="muted">${belegDeDate(b.date)}</div>
+      <div class="tname num">${b.pending ? '<span class="muted">Wird gelesen…</span>' : (b.amount!=null ? belegFmtEUR(b.amount) : '€ ?')}</div>
+      <div class="chan">${b.icon} ${b.channel}</div>
+      <div><span class="chip ${b.status}"><span class="cdot"></span>${b.statusLabel}</span></div>
     </div>`).join('');
+  document.querySelectorAll('#belege-rows .trow').forEach(row=>row.addEventListener('click', ()=>{ currentBelegId = row.dataset.id; renderDetailScreen(currentBelegId); }));
   bindNav();
 }
 renderBelege('neu');
+
+/* ===================== BELEGE HINZUFÜGEN (Drag & Drop) ===================== */
+(function(){
+  const modal = document.getElementById('beleg-upload-modal');
+  const dropzone = document.getElementById('beleg-dropzone');
+  const fileInput = document.getElementById('beleg-file-input');
+  const fileListEl = document.getElementById('beleg-filelist');
+  if(!modal || !dropzone) return;
+  const toast = window.toast || function(){};
+  let queued = [];
+
+  function fmtSize(bytes){
+    if(bytes < 1024) return bytes + ' B';
+    if(bytes < 1024*1024) return Math.round(bytes/1024) + ' KB';
+    return (bytes/1024/1024).toFixed(1) + ' MB';
+  }
+  function renderFileList(){
+    fileListEl.innerHTML = queued.map((f,i)=>`
+      <div class="dz-file">
+        <span class="fn">${f.name}</span>
+        <span class="fsz">${fmtSize(f.size)}</span>
+        <span class="frm" data-idx="${i}">✕</span>
+      </div>`).join('');
+    fileListEl.querySelectorAll('.frm').forEach(el=>el.addEventListener('click', e=>{
+      e.stopPropagation();
+      queued.splice(Number(el.dataset.idx), 1);
+      renderFileList();
+    }));
+  }
+  function addFiles(fileArr){
+    [...fileArr].forEach(f=>queued.push(f));
+    renderFileList();
+  }
+
+  function openModal(){
+    queued = [];
+    renderFileList();
+    modal.classList.add('show');
+  }
+  function closeModal(){ modal.classList.remove('show'); }
+
+  document.querySelectorAll('.beleg-add-trigger').forEach(btn=>btn.addEventListener('click', openModal));
+  document.getElementById('beleg-upload-cancel')?.addEventListener('click', closeModal);
+
+  dropzone.addEventListener('click', ()=>fileInput.click());
+  fileInput.addEventListener('change', ()=>{ addFiles(fileInput.files); fileInput.value=''; });
+
+  ['dragenter','dragover'].forEach(evt=>dropzone.addEventListener(evt, e=>{
+    e.preventDefault(); e.stopPropagation(); dropzone.classList.add('dragover');
+  }));
+  ['dragleave','dragend'].forEach(evt=>dropzone.addEventListener(evt, e=>{
+    e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('dragover');
+  }));
+  dropzone.addEventListener('drop', e=>{
+    e.preventDefault(); e.stopPropagation();
+    dropzone.classList.remove('dragover');
+    if(e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
+  });
+
+  document.getElementById('beleg-upload-save')?.addEventListener('click', ()=>{
+    if(!queued.length){ toast('Bitte mindestens einen Beleg auswählen.'); return; }
+    const today = new Date().toISOString().slice(0,10);
+    const added = queued.map(f=>{
+      const name = f.name.replace(/\.[^.]+$/, '').replace(/[_-]+/g,' ');
+      const isImg = f.type.startsWith('image/');
+      const b = {
+        id: nextBelegId(), vendor: name, subtitle: 'Manuell hochgeladen', date: today,
+        amount: null, icon: cam, channel: 'Upload', status: 'neu', statusLabel: 'Neu',
+        items: [], konto: 'SKR03 · 3400 Wareneinkauf', confidence: 90,
+        fileURL: isImg ? URL.createObjectURL(f) : null,
+        fileType: isImg ? 'image' : (f.type==='application/pdf' ? 'pdf' : null),
+        pending: true
+      };
+      belege.unshift(b);
+      return b;
+    });
+    const n = added.length;
+    document.querySelectorAll('#belege-tabs .tab').forEach(t=>{ t.classList.toggle('on', t.dataset.status==='neu'); });
+    refreshBelegCounts();
+    renderBelege('neu');
+    closeModal();
+    toast(n===1 ? '1 Beleg hinzugefügt — Agent liest das Dokument …' : n+' Belege hinzugefügt — Agent liest die Dokumente …');
+    added.forEach((b,i)=>setTimeout(()=>simulateExtraction(b), 1100 + i*450));
+  });
+})();
+
+function simulateExtraction(b){
+  const guesses = [
+    {item:'Wareneinkauf', vat:19, konto:'SKR03 · 3400 Wareneinkauf'},
+    {item:'Lebensmittel', vat:7, konto:'SKR03 · 3000 Wareneinkauf 7%'},
+    {item:'Dienstleistung', vat:19, konto:'SKR03 · 4900 Sonstige Kosten'},
+    {item:'Bewirtung', vat:19, konto:'SKR03 · 4650 Bewirtungskosten'},
+  ];
+  const g = guesses[Math.floor(Math.random()*guesses.length)];
+  const amount = Math.round((15 + Math.random()*280)*100)/100;
+  b.items = [{desc:g.item, amount, vat:g.vat}];
+  b.amount = amount;
+  b.konto = g.konto;
+  b.confidence = 74 + Math.round(Math.random()*20);
+  b.pending = false;
+  const activeTab = document.querySelector('#belege-tabs .tab.on');
+  renderBelege(activeTab ? activeTab.dataset.status : 'neu');
+  if(currentBelegId===b.id) renderDetailScreen(b.id);
+  window.toast && window.toast('Agent hat "'+b.vendor+'" gelesen: '+belegFmtEUR(amount)+' erkannt.');
+}
+
+function refreshBelegCounts(){
+  ['neu','pruef','ver','esk'].forEach(s=>{
+    const el = document.querySelector('#belege-tabs .tab[data-status="'+s+'"] .cnt');
+    if(el) el.textContent = belege.filter(b=>b.status===s).length;
+  });
+}
+
+/* ===================== BELEG-DETAIL (editierbar) ===================== */
+(function(){
+  const vendorEl = document.getElementById('bd-vendor');
+  const dateEl = document.getElementById('bd-date');
+  const itemsEl = document.getElementById('bd-items');
+  if(!vendorEl || !itemsEl) return;
+  const toast = window.toast || function(){};
+
+  function itemRow(it, idx){
+    return `<div class="lpos-edit" data-idx="${idx}">
+      <input class="li-desc" data-idx="${idx}" value="${it.desc}" placeholder="Position">
+      <input class="li-amt" data-idx="${idx}" type="number" step="0.01" value="${it.amount}">
+      <select class="li-vat" data-idx="${idx}">
+        <option value="19" ${it.vat===19?'selected':''}>19 %</option>
+        <option value="7" ${it.vat===7?'selected':''}>7 %</option>
+        <option value="0" ${it.vat===0?'selected':''}>0 %</option>
+      </select>
+      <span class="li-rm" data-idx="${idx}">✕</span>
+    </div>`;
+  }
+
+  function recompute(b){
+    const total = b.items.reduce((a,it)=>a+(parseFloat(it.amount)||0), 0);
+    b.amount = b.items.length ? Math.round(total*100)/100 : null;
+    const rates = [...new Set(b.items.map(it=>it.vat))].sort((a,b2)=>a-b2);
+    document.getElementById('bd-amount').textContent = b.amount!=null ? belegFmtEUR(b.amount) : '—';
+    document.getElementById('bd-ust').innerHTML = rates.length ? rates.map(r=>r+' %').join(' / ') : '—';
+    const escal = document.getElementById('bd-escal');
+    if(b.pending){
+      escal.style.display = 'flex';
+      document.getElementById('bd-escal-t').textContent = 'Agent liest das Dokument …';
+      document.getElementById('bd-escal-d').textContent = 'Lieferant, Datum, Betrag und USt-Sätze werden automatisch erkannt und gleich eingetragen.';
+    } else if(rates.length > 1){
+      escal.style.display = 'flex';
+      document.getElementById('bd-escal-t').textContent = 'Agent unsicher — kurz prüfen';
+      document.getElementById('bd-escal-d').textContent = 'Beleg enthält gemischte USt-Sätze ('+rates.map(r=>r+' %').join(' & ')+'). Aufteilung wurde vorgeschlagen, bitte Kontierung bestätigen.';
+    } else {
+      escal.style.display = 'none';
+    }
+  }
+
+  function renderItems(b){
+    itemsEl.innerHTML = b.items.map(itemRow).join('') || '<div class="muted" style="font-size:13px;padding:6px 0;">Noch keine Positionen.</div>';
+    itemsEl.querySelectorAll('.li-desc').forEach(el=>el.addEventListener('input', ()=>{ b.items[el.dataset.idx].desc = el.value; }));
+    itemsEl.querySelectorAll('.li-amt').forEach(el=>el.addEventListener('input', ()=>{ b.items[el.dataset.idx].amount = parseFloat(el.value)||0; recompute(b); }));
+    itemsEl.querySelectorAll('.li-vat').forEach(el=>el.addEventListener('change', ()=>{ b.items[el.dataset.idx].vat = parseInt(el.value,10); recompute(b); }));
+    itemsEl.querySelectorAll('.li-rm').forEach(el=>el.addEventListener('click', ()=>{ b.items.splice(el.dataset.idx,1); renderItems(b); recompute(b); }));
+  }
+
+  function renderPreview(b){
+    const el = document.getElementById('bd-preview');
+    if(b.fileType==='image' && b.fileURL){
+      el.innerHTML = `<img src="${b.fileURL}" style="max-width:100%;border-radius:10px;display:block;">`;
+    } else if(b.fileType==='pdf' && b.fileURL){
+      el.innerHTML = `<embed src="${b.fileURL}" type="application/pdf" style="width:100%;height:440px;border-radius:10px;border:1px solid var(--line);">`;
+    } else {
+      const rows = b.items.map(it=>`<div class="rrow"><span>${it.desc||'—'}</span><span>${belegFmtEUR(parseFloat(it.amount)||0)} <span class="rsmall">· ${it.vat}%</span></span></div>`).join('')
+        || '<div class="rrow"><span class="muted">Noch keine Positionen erfasst</span><span></span></div>';
+      el.innerHTML = `<div class="receipt">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div><div class="rco">${b.vendor||'—'}</div><div class="rmeta">${b.subtitle||''}</div></div>
+          <div style="text-align:right;" class="rmeta">${belegDeDate(b.date)}</div>
+        </div>
+        <div style="margin:16px 0 6px;" class="rsmall">POSITIONEN</div>
+        ${rows}
+        <div class="rrow tot"><span>Gesamt brutto</span><span>${b.amount!=null?belegFmtEUR(b.amount):'—'}</span></div>
+      </div>`;
+    }
+  }
+
+  window.renderDetailScreen = function(id){
+    const b = findBeleg(id);
+    if(!b) return;
+    vendorEl.value = b.vendor;
+    dateEl.value = b.date || '';
+    document.getElementById('bd-pending-note').textContent = b.pending ? '· wird analysiert' : '';
+    document.getElementById('bd-konto').textContent = b.konto;
+    document.getElementById('bd-conf-bar').style.setProperty('--w', (b.pending?0:b.confidence)+'%');
+    document.getElementById('bd-conf-pct').textContent = b.pending ? '—' : b.confidence+' %';
+    document.getElementById('bd-conf-sub').textContent = b.pending ? 'Der Agent liest gerade den Beleg ein.' : 'Vorschlag basiert auf ähnlichen früheren Belegen.';
+    renderItems(b);
+    recompute(b);
+    renderPreview(b);
+  };
+
+  vendorEl.addEventListener('input', ()=>{ const b=findBeleg(currentBelegId); if(b) b.vendor = vendorEl.value; });
+  dateEl.addEventListener('input', ()=>{ const b=findBeleg(currentBelegId); if(b) b.date = dateEl.value; });
+
+  document.getElementById('bd-add-item')?.addEventListener('click', ()=>{
+    const b = findBeleg(currentBelegId); if(!b) return;
+    b.items.push({desc:'', amount:0, vat:19});
+    renderItems(b); recompute(b);
+  });
+
+  function persistAndRefreshList(b){
+    const activeTab = document.querySelector('#belege-tabs .tab.on');
+    renderBelege(activeTab ? activeTab.dataset.status : 'neu');
+    refreshBelegCounts();
+    renderPreview(b);
+  }
+
+  document.getElementById('bd-save')?.addEventListener('click', ()=>{
+    const b = findBeleg(currentBelegId); if(!b) return;
+    persistAndRefreshList(b);
+    toast('Änderungen gespeichert.');
+  });
+
+  document.getElementById('bd-confirm')?.addEventListener('click', ()=>{
+    const b = findBeleg(currentBelegId); if(!b) return;
+    b.status = 'ver'; b.statusLabel = 'Verbucht'; b.pending = false;
+    persistAndRefreshList(b);
+    toast('Beleg verbucht ✓ Der Agent lernt aus deiner Bestätigung.');
+    go('belege');
+  });
+})();
 
 document.getElementById('cat-rows').innerHTML = cats.map(c=>`
   <div class="cat-row">
