@@ -61,15 +61,16 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .sidebar.collapsed{width:76px;overflow:visible;}
 .sidebar.collapsed .brand>*:not(:first-child),
 .sidebar.collapsed .nav-item>*:not(:first-child),
-.sidebar.collapsed .user-row>*:not(:first-child),
+.sidebar.collapsed .user-row>*:not(:first-child):not(.side-toggle),
 .sidebar.collapsed .nav-label,
 .sidebar.collapsed .subnav,
 .sidebar.collapsed .locked-note{display:none;}
 .sidebar.collapsed .nav-item{justify-content:center;}
+.sidebar.collapsed .user-row{flex-direction:column;gap:8px;}
 .side-toggle{
-  position:absolute;top:16px;right:-12px;width:26px;height:26px;border-radius:50%;
+  margin-left:auto;flex:none;width:26px;height:26px;border-radius:50%;
   background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;color:var(--ink-3);transition:transform .2s,background .15s;z-index:5;box-shadow:var(--sh-sm);
+  cursor:pointer;color:var(--ink-3);transition:background .15s;box-shadow:var(--sh-sm);
 }
 .side-toggle:hover{background:var(--surface-2);}
 .sidebar.collapsed .side-toggle{color:var(--fin);}
@@ -659,9 +660,6 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 
   <!-- ===================== SIDEBAR ===================== -->
   <aside class="sidebar">
-    <button class="side-toggle" id="side-toggle" title="Seitenleiste ein-/ausklappen">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="3"/><path d="M9 3v18"/></svg>
-    </button>
     <div class="brand">
       <div class="brand-mark">M</div>
       <div>
@@ -735,6 +733,9 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div class="nm">David Krause</div>
           <div class="rl">Inhaber · Bistro Sonneneck</div>
         </div>
+        <button class="side-toggle" id="side-toggle" title="Seitenleiste ein-/ausklappen">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="3"/><path d="M9 3v18"/></svg>
+        </button>
       </div>
     </div>
   </aside>
