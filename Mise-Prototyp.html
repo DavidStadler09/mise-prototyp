@@ -2207,7 +2207,7 @@ bindNav();
     e.stopPropagation();
     setSidebarCollapsed(!sidebarEl.classList.contains('collapsed'));
   });
-  try{ if(localStorage.getItem('mise_sidebar_collapsed')==='1') setSidebarCollapsed(true); }catch(e){}
+  try{ if(localStorage.getItem('mise_sidebar_collapsed')!=='0') setSidebarCollapsed(true); }catch(e){ setSidebarCollapsed(true); }
 
   function setSubnavCollapsed(chev, collapsed){
     const sub = document.getElementById(chev.dataset.target);
