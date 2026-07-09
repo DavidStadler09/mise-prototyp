@@ -2128,7 +2128,7 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
     else if(act==='xml') exportXml(find(id));
   });
   app.addEventListener('input', ()=>{ if(state.view==='edit'){ syncForm(); const tot=document.getElementById('ar-tot'); if(tot) tot.innerHTML=totalsHtml(calc(state.draft),state.draft); updateLineTotals(); } });
-  app.addEventListener('change', e=>{ if(state.view==='edit' && e.target.id==='ar-cust-select'){ const c=db.customers.find(x=>x.name===e.target.value); if(c){ setVal('ar-f-name',c.name); setVal('ar-f-addr',c.addr); setVal('ar-f-vat',c.vat); setVal('ar-f-email',c.email); syncForm(); } } }); });
+  app.addEventListener('change', e=>{ if(state.view==='edit' && e.target.id==='ar-cust-select'){ const c=db.customers.find(x=>x.name===e.target.value); if(c){ setVal('ar-f-name',c.name); setVal('ar-f-addr',c.addr); setVal('ar-f-vat',c.vat); setVal('ar-f-email',c.email); syncForm(); } } });
 
   window.ARApp = { showList:function(){ state.view='list'; state.draft=null; render(); } };
   document.querySelectorAll('[data-nav="ausgangsrechnungen"]').forEach(el=>el.addEventListener('click', ()=>setTimeout(()=>{ if(window.ARApp) window.ARApp.showList(); },0)));
@@ -2156,8 +2156,8 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
     set('k2d', z>0?'Zahllast ans Finanzamt':'Vorsteuer-Erstattung'); cls('k2d','delta '+(z>0?'flat':'up'));
     set('k3l','EÜR-Ergebnis · Juni'); set('k3v',eur(euer.result));
     set('k3d',(euer.marginPct!=null?euer.marginPct+' % Marge':'Einnahmen − Ausgaben')); cls('k3d','delta '+(euer.result>=0?'up':'warn'));
-    var lb=document.getElementById('fin-live'); if(lb) lb.style.display='inline-block';
-    set('fin-sub','Live aus dem Buchhaltungs-Kern · Juni 2026 · GoBD-Journal, EÜR & USt in Echtzeit');
+    document.querySelectorAll('[id="fin-live"]').forEach(function(e){e.style.display='inline-block';});
+    document.querySelectorAll('[id="fin-sub"]').forEach(function(e){e.textContent='Live aus dem Buchhaltungs-Kern · Juni 2026 · GoBD-Journal, EÜR & USt in Echtzeit';});
     var rl=document.getElementById('recent-list');
     if(rl && bk && bk.length){
       var rows=bk.filter(function(b){return !b.stornoed;}).slice(-6).reverse();
