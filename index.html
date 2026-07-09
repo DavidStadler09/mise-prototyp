@@ -56,25 +56,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   width:262px;flex:none;display:flex;flex-direction:column;gap:2px;
   padding:18px 14px 16px;background:rgba(251,248,242,.72);
   backdrop-filter:blur(8px);border-right:1px solid var(--line);overflow-y:auto;
-  position:relative;transition:width .2s ease;
 }
-.sidebar.collapsed{width:76px;overflow:visible;}
-.sidebar.collapsed .brand>*:not(:first-child),
-.sidebar.collapsed .nav-item>*:not(:first-child),
-.sidebar.collapsed .user-row>*:not(:first-child):not(.side-toggle),
-.sidebar.collapsed .nav-label,
-.sidebar.collapsed .subnav,
-.sidebar.collapsed .locked-note{display:none;}
-.sidebar.collapsed .nav-item{justify-content:center;}
-.sidebar.collapsed .user-row{flex-direction:column;gap:8px;}
-.side-toggle{
-  margin-left:auto;flex:none;width:34px;height:34px;border-radius:11px;
-  background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;color:var(--ink-2);transition:background .15s,border-color .15s,color .15s;box-shadow:var(--sh-sm);
-}
-.side-toggle svg{width:17px;height:17px;}
-.side-toggle:hover{background:var(--fin-soft);border-color:var(--fin);color:var(--fin-deep);}
-.sidebar.collapsed .side-toggle{color:var(--fin);}
 .brand{display:flex;align-items:center;gap:11px;padding:6px 8px 18px;}
 .brand-mark{
   width:38px;height:38px;flex:none;border-radius:11px;
@@ -99,23 +81,16 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .nav-item .lock{margin-left:auto;color:var(--ink-4);}
 .agent-dot{width:8px;height:8px;border-radius:50%;flex:none;}
 
-.subnav{display:flex;flex-direction:column;gap:1px;margin:3px 0 4px 26px;padding-left:13px;border-left:1.5px solid var(--line);flex-shrink:0;}
-.subnav.collapsed{display:none;}
+.subnav{display:flex;flex-direction:column;gap:1px;margin:3px 0 4px 26px;padding-left:13px;border-left:1.5px solid var(--line);}
 .subnav .nav-item{padding:7px 11px;font-size:14px;border-radius:9px;}
 .subnav .nav-item.active{background:var(--fin-soft);color:var(--fin-deep);font-weight:600;}
 .subnav .nav-item.active::before{content:"";position:absolute;left:-14.5px;top:50%;transform:translateY(-50%);width:2px;height:16px;background:var(--fin);border-radius:2px;}
 .subnav .nav-item .badge{background:#dfeee7;color:var(--fin-deep);}
-.nav-item .chev{margin-left:auto;width:26px;height:26px;margin-right:-6px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;color:var(--ink-4);transition:transform .15s,background .15s;}
-.nav-item .chev:hover{background:rgba(0,0,0,.06);}
-.nav-item .chev.chev-collapsed{transform:rotate(-90deg);}
 
 .locked-note{display:flex;justify-content:flex-end;padding:2px 6px 6px;}
 .pill-ghost{font-size:10.5px;color:var(--ink-3);background:transparent;border:1px dashed var(--line);border-radius:20px;padding:2px 9px;}
 .spacer{flex:1;}
-.side-foot{
-  border-top:1px solid var(--line);margin-top:6px;padding-top:8px;padding-bottom:4px;
-  position:sticky;bottom:0;background:rgba(251,248,242,.92);backdrop-filter:blur(8px);z-index:2;
-}
+.side-foot{border-top:1px solid var(--line);margin-top:6px;padding-top:8px;}
 .user-row{display:flex;align-items:center;gap:10px;padding:8px 8px;border-radius:11px;cursor:pointer;transition:background .15s;}
 .user-row:hover{background:rgba(0,0,0,.035);}
 .avatar{width:34px;height:34px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:#fff;background:linear-gradient(140deg,#3b7d63,#1c5a40);}
@@ -287,19 +262,6 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .modal p{color:var(--ink-2);font-size:14px;margin:0 0 6px;}
 .scan{width:88px;height:88px;border-radius:50%;background:var(--fin-soft);display:flex;align-items:center;justify-content:center;margin:16px auto;color:var(--fin);}
 .modal .btn{width:100%;justify-content:center;margin-top:8px;}
-.dropzone{border:2px dashed var(--line);border-radius:14px;padding:32px 18px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s,color .15s;color:var(--ink-3);}
-.dropzone:hover{background:var(--surface-2);}
-.dropzone.dragover{border-color:var(--fin);background:var(--fin-soft);color:var(--fin-deep);}
-.dropzone .dz-icon{margin:0 auto 10px;width:42px;height:42px;border-radius:12px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--ink-3);}
-.dropzone.dragover .dz-icon{background:#fff;color:var(--fin);}
-.dropzone .dz-t{font-weight:600;color:var(--ink);font-size:14.5px;}
-.dropzone .dz-s{font-size:12.5px;margin-top:3px;}
-.dz-filelist{display:flex;flex-direction:column;gap:6px;margin-top:14px;max-height:180px;overflow-y:auto;text-align:left;}
-.dz-file{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:13px;}
-.dz-file .fn{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.dz-file .fsz{color:var(--ink-3);font-size:12px;flex:none;}
-.dz-file .frm{cursor:pointer;color:var(--ink-3);font-weight:700;flex:none;padding:0 2px;}
-.dz-file .frm:hover{color:#b0432c;}
 /* generic data tables (parity screens) */
 .dgrid{display:grid;gap:12px;align-items:center;}
 .dt-head{padding:12px 20px;border-bottom:1px solid var(--line);font-size:11.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;font-weight:600;}
@@ -377,15 +339,8 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .receipt-card{padding:16px;}
 .rc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
 .rc-tools{display:flex;gap:4px;}
-.rc-tool{width:30px;height:30px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-3);cursor:pointer;user-select:none;transition:background .15s,color .15s;}
-.rc-tool:hover{background:var(--fin-soft);color:var(--fin-deep);}
-.rc-tool.disabled{opacity:.4;cursor:not-allowed;}
-.rc-tool.disabled:hover{background:var(--surface-2);color:var(--ink-3);}
-.receipt-photo-bg{background:repeating-linear-gradient(135deg,#e4e0d6,#e4e0d6 2px,#dcd7ca 2px,#dcd7ca 4px);border-radius:12px;padding:26px 14px;display:flex;justify-content:center;}
-.receipt{background:#fffdf8;border:1px solid var(--line);border-radius:4px;padding:26px 26px 22px;font-size:13px;color:#3a352c;box-shadow:0 14px 28px rgba(30,26,18,.22), 0 3px 8px rgba(30,26,18,.14), inset 0 0 0 1px #fff;width:100%;max-width:340px;}
-.receipt.photo-tilt{transform:rotate(-1.4deg);}
-.receipt.mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;}
-.receipt.mono .rco{font-family:inherit;letter-spacing:.02em;}
+.rc-tool{width:30px;height:30px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-3);}
+.receipt{background:#fffdf8;border:1px solid var(--line);border-radius:10px;padding:26px 26px 22px;font-size:13px;color:#3a352c;box-shadow:inset 0 0 0 1px #fff, var(--sh-sm);}
 .receipt .rco{font-family:var(--font-d);font-size:20px;font-weight:600;}
 .receipt .rmeta{color:#8b8474;font-size:11.5px;margin-top:2px;}
 .rrow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed #e6ddcb;}
@@ -403,15 +358,6 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .lpos{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line-2);font-size:13.5px;}
 .lpos:last-child{border-bottom:none;}
 .lpos .tax{color:var(--ink-3);font-size:12px;}
-.fv-input{border:none;border-bottom:1.5px solid var(--line);padding:5px 0;font-weight:600;font:inherit;color:var(--ink);background:none;width:100%;}
-.fv-input:focus{outline:none;border-color:var(--fin);}
-.lpos-edit{display:grid;grid-template-columns:1fr 92px 74px 20px;gap:8px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line-2);}
-.lpos-edit:last-child{border-bottom:none;}
-.lpos-edit input,.lpos-edit select{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:7px;padding:5px 7px;background:var(--surface);color:var(--ink);width:100%;}
-.lpos-edit input.unknown{border-color:var(--warn);background:var(--warn-soft);color:var(--warn);}
-.lpos-edit input.unknown::placeholder{color:var(--warn);opacity:.8;}
-.lpos-edit .li-rm{cursor:pointer;color:var(--ink-3);text-align:center;font-weight:700;}
-.lpos-edit .li-rm:hover{color:#b0432c;}
 .konto{padding:18px 20px;}
 .konto-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
 .acct{font-size:13px;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:4px 10px;}
@@ -603,61 +549,15 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .flow-ic{width:30px;height:30px;flex:none;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--surface-3);border:1px solid var(--line);}
 
 @media (max-width:1080px){
-  .cols2,.tri{grid-template-columns:minmax(0,1fr);}
-  .kpis{grid-template-columns:repeat(2,minmax(0,1fr));}
-  .feat-grid,.modes{grid-template-columns:minmax(0,1fr);}
-  .detail-grid,.auto-grid,.chat-layout,.set-grid{grid-template-columns:minmax(0,1fr);}
+  .cols2,.tri{grid-template-columns:1fr;}
+  .kpis{grid-template-columns:repeat(2,1fr);}
+  .feat-grid,.modes{grid-template-columns:1fr;}
+  .detail-grid,.auto-grid,.chat-layout,.set-grid{grid-template-columns:1fr;}
   .chat-layout{height:auto;}
-}
-
-/* ---------- Mobile layout ---------- */
-.mobile-menu-btn{display:none;}
-.sidebar-backdrop{display:none;}
-@media (max-width:860px){
-  .mobile-menu-btn{display:flex;}
-  .side-toggle{display:none;}
-  .sidebar{
-    position:fixed;top:0;left:0;bottom:0;z-index:200;
-    width:84vw;max-width:300px;
-    transform:translateX(-100%);transition:transform .25s ease;
-    box-shadow:0 0 40px rgba(20,17,12,.3);
-  }
-  .sidebar.mobile-open{transform:translateX(0);}
-  .sidebar-backdrop.show{
-    display:block;position:fixed;inset:0;background:rgba(20,17,12,.45);
-    z-index:190;animation:fadeUp .2s ease both;
-  }
-  .topbar{padding:0 12px;gap:8px;}
-  .search{max-width:none;}
-  .search kbd{display:none;}
-  .rest-switch .rest-name,.rest-switch .rest-meta{display:none;}
-  .rest-switch{padding:6px;gap:0;}
-  .content{padding:18px 14px 40px;}
-  .h1{font-size:28px;}
-  .page-head{flex-wrap:wrap;}
-  .table{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-  .thead,.trow{min-width:620px;}
-  .dt-head,.dt-row{min-width:520px;}
-  .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;margin-left:-14px;margin-right:-14px;padding:0 14px;}
-  .tab{flex:none;white-space:nowrap;}
-  .filters{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;margin-left:-14px;margin-right:-14px;padding:0 14px 4px;}
-  .fchip{flex:none;white-space:nowrap;}
-  .ar-form2,.ar-form3{grid-template-columns:1fr;}
-  .ar-lines-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-  .ar-li-head,.ar-li{min-width:520px;}
-  .receipt-card{overflow:hidden;}
-  .rc-head{flex-wrap:wrap;gap:8px;}
-  .actions{flex-direction:column;}
-  .actions .btn{width:100%;justify-content:center;}
-  .grid[style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr) !important;}
-  .kpis{grid-template-columns:minmax(0,1fr) !important;}
-  .insight{flex-wrap:wrap;}
-  .insight .cta{flex-basis:100%;margin-left:0;text-align:center;margin-top:6px;}
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 <div class="app">
@@ -684,7 +584,6 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
     <div class="nav-item parent" data-nav="dashboard">
       <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9 20v-6h6v6"/></svg></span>
       <span>Finanzen</span>
-      <span class="chev" data-target="fin-sub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
     </div>
 
     <div class="subnav" id="fin-sub">
@@ -705,22 +604,18 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
       <div class="nav-item" data-nav="autonomie"><span>Autonomie</span></div>
     </div>
 
-    <div class="nav-item parent" data-nav="sales">
-      <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sales)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span>
+    <div class="nav-item" data-nav="sales">
+      <span class="ico"><span class="agent-dot" style="background:var(--sales)"></span></span>
       <span>Sales</span>
       <span class="lock"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
-      <span class="chev" data-target="sales-sub" style="margin-left:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-    </div>
-    <div class="subnav" id="sales-sub">
-      <div class="nav-item" data-nav="vertraege"><span>Verträge</span></div>
     </div>
     <div class="nav-item" data-nav="marketing">
-      <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--mkt)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+      <span class="ico"><span class="agent-dot" style="background:var(--mkt)"></span></span>
       <span>Marketing</span>
       <span class="lock"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
     </div>
     <div class="nav-item" data-nav="hr">
-      <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--hr)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+      <span class="ico"><span class="agent-dot" style="background:var(--hr)"></span></span>
       <span>HR &amp; Personal</span>
       <span class="lock"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
     </div>
@@ -737,20 +632,13 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div class="nm">David Krause</div>
           <div class="rl">Inhaber · Bistro Sonneneck</div>
         </div>
-        <button class="side-toggle" id="side-toggle" title="Seitenleiste ein-/ausklappen">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="3"/><path d="M9 3v18"/></svg>
-        </button>
       </div>
     </div>
   </aside>
-  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
   <!-- ===================== MAIN ===================== -->
   <div class="main">
     <header class="topbar">
-      <button class="icon-btn mobile-menu-btn" id="mobile-menu-btn" title="Menü öffnen">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
       <label class="search">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9a978f" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
         <input placeholder="Belege, Lieferanten, Beträge durchsuchen…">
@@ -842,11 +730,11 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
       <section class="screen" data-screen="dashboard">
         <div class="page-head anim" style="--d:.02s">
           <div>
-            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent · aktiv</div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent · aktiv<span id="fin-live" style="display:none;margin-left:9px;padding:2px 9px;border-radius:999px;background:#e6f4ec;color:#1C7A54;font-size:11px;font-weight:700;letter-spacing:.01em;vertical-align:middle;">● Live-Daten</span></div>
             <div class="h1">Finanzen</div>
-            <div class="sub">Übersicht · Juni 2026 · zuletzt synchronisiert vor 4 Min.</div>
+            <div class="sub" id="fin-sub">Übersicht · Juni 2026 · zuletzt synchronisiert vor 4 Min.</div>
           </div>
-          <button class="btn btn-primary beleg-add-trigger">
+          <button class="btn btn-primary">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Belege hinzufügen
           </button>
@@ -864,21 +752,21 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
         <div class="grid kpis">
           <div class="card kpi anim" style="--d:.10s">
             <div class="ring"></div>
-            <div class="lab">Offene Belege</div>
-            <div class="val num">12</div>
-            <div class="delta warn">▲ +3 seit gestern</div>
+            <div class="lab" id="k1l">Offene Belege</div>
+            <div class="val num" id="k1v">12</div>
+            <div class="delta warn" id="k1d">▲ +3 seit gestern</div>
           </div>
           <div class="card kpi anim" style="--d:.14s">
             <div class="ring"></div>
-            <div class="lab">Diesen Monat verbucht</div>
-            <div class="val num">€ 8.420</div>
-            <div class="delta up">86 Belege · 96 % autom.</div>
+            <div class="lab" id="k2l">Diesen Monat verbucht</div>
+            <div class="val num" id="k2v">€ 8.420</div>
+            <div class="delta up" id="k2d">86 Belege · 96 % autom.</div>
           </div>
           <div class="card kpi anim" style="--d:.18s">
             <div class="ring"></div>
-            <div class="lab">USt-Vorschau</div>
-            <div class="val num">€ 1.240</div>
-            <div class="delta flat">fällig 10.07.</div>
+            <div class="lab" id="k3l">USt-Vorschau</div>
+            <div class="val num" id="k3v">€ 1.240</div>
+            <div class="delta flat" id="k3d">fällig 10.07.</div>
           </div>
           <div class="card kpi anim" style="--d:.22s">
             <div class="lab" style="margin-bottom:10px;">Ausgaben nach Kategorie</div>
@@ -932,7 +820,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Belegeingang</div>
             <div class="sub">Zentraler Posteingang — Foto, E-Mail, Kassensystem &amp; Lieferdienste laufen automatisch hier ein.</div>
           </div>
-          <button class="btn btn-primary beleg-add-trigger">
+          <button class="btn btn-primary">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Belege hinzufügen
           </button>
@@ -965,11 +853,11 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> Zurück zum Belegeingang
         </div>
 
-        <div class="escal anim" style="--d:.05s" id="bd-escal">
+        <div class="escal anim" style="--d:.05s">
           <div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
           <div style="flex:1;">
-            <div class="t" id="bd-escal-t">Agent unsicher — kurz prüfen</div>
-            <div class="d" id="bd-escal-d">Beleg enthält gemischte USt-Sätze. Aufteilung wurde vorgeschlagen, bitte Kontierung bestätigen.</div>
+            <div class="t">Agent unsicher — kurz prüfen</div>
+            <div class="d">Beleg enthält gemischte USt-Sätze (7 % &amp; 19 %). Aufteilung wurde vorgeschlagen, bitte Kontierung bestätigen.</div>
           </div>
         </div>
 
@@ -978,45 +866,57 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="rc-head">
               <div class="section-title">Beleg-Vorschau</div>
               <div class="rc-tools">
-                <div class="rc-tool" id="bd-zoom-out" title="Verkleinern">−</div>
-                <div class="rc-tool" id="bd-zoom-in" title="Vergrößern">+</div>
-                <div class="rc-tool" id="bd-zoom-reset" title="Zoom zurücksetzen"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg></div>
+                <div class="rc-tool">−</div><div class="rc-tool">+</div>
+                <div class="rc-tool"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg></div>
               </div>
             </div>
-            <div id="bd-preview-scroll" style="overflow:auto;max-height:560px;">
-              <div id="bd-preview" style="transform-origin:top center;transition:transform .15s ease;"></div>
+            <div class="receipt">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <div>
+                  <div class="rco">METRO Großmarkt</div>
+                  <div class="rmeta">Berlin-Friedrichshain · USt-IdNr. DE811…</div>
+                </div>
+                <div style="text-align:right;" class="rmeta">Rechnung 0614<br>14.06.2026</div>
+              </div>
+              <div style="margin:16px 0 6px;" class="rsmall">POSITIONEN</div>
+              <div class="rrow"><span>Getränke (Großgebinde)</span><span>€ 96,00 <span class="rsmall">· 19%</span></span></div>
+              <div class="rrow"><span>Lebensmittel</span><span class="hl">€ 118,50 <span class="rsmall">· 7%</span></span></div>
+              <div class="rrow"><span>Verpackung &amp; Einweg</span><span>€ 34,00 <span class="rsmall">· 19%</span></span></div>
+              <div class="rrow tot"><span>Gesamt brutto</span><span>€ 248,50</span></div>
+              <div style="margin-top:14px;" class="rsmall">Zahlung: EC-Karte · Beleg-Nr. 0614 · Danke für Ihren Einkauf</div>
             </div>
           </div>
 
           <div style="display:flex;flex-direction:column;gap:16px;">
             <div class="card fields-card anim" style="--d:.12s">
-              <div class="section-title" style="margin-bottom:14px;">Vom Agent erkannt <span class="muted" id="bd-pending-note" style="font-weight:400;font-size:12px;"></span></div>
+              <div class="section-title" style="margin-bottom:14px;">Vom Agent erkannt</div>
               <div class="field-grid">
-                <div class="field"><div class="fl">Lieferant</div><input class="fv-input" id="bd-vendor" placeholder="Lieferant"></div>
-                <div class="field"><div class="fl">Datum</div><input type="date" class="fv-input" id="bd-date"></div>
-                <div class="field"><div class="fl">Betrag (brutto)</div><div class="fv" id="bd-amount">—</div></div>
-                <div class="field flag"><div class="fl">USt-Sätze</div><div class="fv" id="bd-ust">—</div></div>
+                <div class="field"><div class="fl">Lieferant</div><div class="fv">Metro Großmarkt</div></div>
+                <div class="field"><div class="fl">Datum</div><div class="fv">14.06.2026</div></div>
+                <div class="field"><div class="fl">Betrag (brutto)</div><div class="fv">€ 248,50</div></div>
+                <div class="field flag"><div class="fl">USt-Sätze</div><div class="fv">7 % / 19 % <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg></div></div>
               </div>
               <div class="linehd">Einzelpositionen</div>
-              <div id="bd-items"></div>
-              <button class="btn btn-ghost" id="bd-add-item" style="margin-top:10px;font-size:13px;padding:8px 12px;width:auto;">+ Position hinzufügen</button>
+              <div class="lpos"><span>Getränke (Großgebinde)</span><span>€ 96,00 <span class="tax">· 19 %</span></span></div>
+              <div class="lpos"><span>Lebensmittel</span><span>€ 118,50 <span class="tax">· 7 %</span></span></div>
+              <div class="lpos"><span>Verpackung &amp; Einweg</span><span>€ 34,00 <span class="tax">· 19 %</span></span></div>
             </div>
 
             <div class="card konto anim" style="--d:.16s">
               <div class="konto-head">
                 <div class="section-title">Kontierungs-Vorschlag</div>
-                <div class="acct" id="bd-konto">—</div>
+                <div class="acct">SKR03 · 3400 Wareneinkauf</div>
               </div>
               <div class="conf">
-                <div class="bar"><i id="bd-conf-bar" style="--w:0%"></i></div>
-                <div class="pc num" id="bd-conf-pct">—</div>
+                <div class="bar"><i style="--w:92%"></i></div>
+                <div class="pc num">92 %</div>
               </div>
-              <div class="sub" style="margin-top:8px;font-size:13px;" id="bd-conf-sub"></div>
+              <div class="sub" style="margin-top:8px;font-size:13px;">Hohe Übereinstimmung mit 24 früheren Metro-Belegen.</div>
             </div>
 
             <div class="actions anim" style="--d:.20s">
-              <button class="btn btn-accent" id="bd-confirm">Bestätigen &amp; verbuchen</button>
-              <button class="btn btn-ghost" id="bd-save">Änderungen speichern</button>
+              <button class="btn btn-accent" onclick="toast('Beleg verbucht ✓ Der Agent lernt aus deiner Bestätigung.')">Bestätigen &amp; buchen</button>
+              <button class="btn btn-ghost" onclick="toast('Korrekturmodus geöffnet.')">Korrigieren</button>
             </div>
           </div>
         </div>
@@ -1526,12 +1426,15 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Kontakte</div>
             <div class="sub">Kunden und Lieferanten an einem Ort — Stammdaten, Umsätze und offene Posten.</div>
           </div>
-          <button class="btn btn-primary" id="kontakt-anlegen-btn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Kontakt anlegen</button>
+          <button class="btn btn-primary"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Kontakt anlegen</button>
         </div>
         <div class="seg anim" style="--d:.06s; margin-bottom:16px;"><span class="on">Kunden</span><span>Lieferanten</span></div>
         <div class="card table anim" style="--d:.10s">
-          <div class="dgrid dt-head" style="grid-template-columns:1.5fr .9fr .9fr .9fr .8fr;"><div>Name</div><div>Typ</div><div class="r">Umsatz (bezahlt)</div><div class="r">Offen</div><div></div></div>
-          <div id="kontakte-rows"></div>
+          <div class="dgrid dt-head" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div>Name</div><div>Typ</div><div class="r">Umsatz (Jahr)</div><div class="r">Offen</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div style="display:flex;align-items:center;gap:11px;"><div class="merch">M</div><div class="tname">Müller &amp; Partner GmbH</div></div><div><span class="chip ok"><span class="cdot"></span>Stammkunde</span></div><div class="r num">€ 14.200</div><div class="r num" style="color:var(--warn);">€ 2.212</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div style="display:flex;align-items:center;gap:11px;"><div class="merch">E</div><div class="tname">Eventhaus Lux</div></div><div><span class="muted">Kunde</span></div><div class="r num">€ 3.400</div><div class="r num" style="color:var(--warn);">€ 1.180</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div style="display:flex;align-items:center;gap:11px;"><div class="merch">S</div><div class="tname">Stadtbüro Catering</div></div><div><span class="muted">Kunde</span></div><div class="r num">€ 2.100</div><div class="r muted">—</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.7fr 1fr 1fr 1fr;"><div style="display:flex;align-items:center;gap:11px;"><div class="merch">P</div><div class="tname">Praxis Dr. Wendt</div></div><div><span class="muted">Kunde</span></div><div class="r num">€ 1.260</div><div class="r muted">—</div></div>
         </div>
       </section>
 
@@ -1584,21 +1487,6 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
         <div class="preview-foot anim" style="--d:.20s">
           <div><div class="pf-t">Auf der Roadmap — Q4 2026</div><div class="pf-d">Nutzt dieselbe Datengrundlage wie der Finanz-Agent: ein Ökosystem, ein Kontext.</div></div>
           <button class="btn btn-primary" onclick="toast('Du stehst auf der Early-Access-Liste für den Sales-Agent ✓')">Early Access sichern</button>
-        </div>
-      </section>
-
-      <!-- ============ VERTRÄGE (Sales) ============ -->
-      <section class="screen" data-screen="vertraege">
-        <div class="page-head anim" style="--d:.02s">
-          <div>
-            <div class="eyebrow"><span class="agent-dot" style="background:var(--sales)"></span>Sales</div>
-            <div class="h1">Verträge</div>
-            <div class="sub">Aus Vorlagen erzeugt, mit Kunden aus der zentralen Datenbank verknüpft. Neue Verträge legst du über "Vertrag" bei einem Kunden in den Kontakten an.</div>
-          </div>
-        </div>
-        <div class="card table anim" style="--d:.10s">
-          <div class="dgrid dt-head" style="grid-template-columns:1.7fr 1.3fr 1.1fr 1fr;"><div>Titel</div><div>Kunde</div><div>Status</div><div class="r">Wert</div></div>
-          <div id="vertraege-rows"></div>
         </div>
       </section>
 
@@ -1737,77 +1625,9 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   </div>
 </div>
 
-<div class="modal-bg" id="kontakt-modal">
-  <div class="modal" style="text-align:left;width:440px;">
-    <div class="mtag">Zentrale Kunden-DB</div>
-    <h3 style="margin-bottom:14px;">Kontakt anlegen</h3>
-    <div class="ar-form2" style="margin-bottom:12px;">
-      <div class="ar-field"><label>Name / Firma *</label><input id="kt-name" placeholder="Firmenname"></div>
-      <div class="ar-field"><label>Typ</label><select id="kt-typ"><option value="kunde">Kunde</option><option value="lieferant">Lieferant</option></select></div>
-    </div>
-    <div class="ar-form2" style="margin-bottom:12px;">
-      <div class="ar-field"><label>E-Mail</label><input id="kt-email" placeholder="kontakt@example.de"></div>
-      <div class="ar-field"><label>Telefon</label><input id="kt-tel" placeholder="+49 …"></div>
-    </div>
-    <div class="ar-field" style="margin-bottom:12px;"><label>Anschrift</label><input id="kt-addr" placeholder="Straße · PLZ Ort"></div>
-    <div class="ar-field" style="margin-bottom:18px;"><label>USt-IdNr. (optional)</label><input id="kt-vat" placeholder="DE…"></div>
-    <button class="btn btn-accent" id="kt-save">Speichern</button>
-    <button class="btn btn-ghost" id="kt-cancel">Abbrechen</button>
-  </div>
-</div>
-
-<div class="modal-bg" id="vertrag-modal">
-  <div class="modal" style="text-align:left;width:560px;max-width:94vw;">
-    <div class="mtag">Zentrale Kunden-DB</div>
-    <h3 style="margin-bottom:14px;">Vertrag erstellen — <span id="vt-kunde-label"></span></h3>
-    <div class="ar-form2" style="margin-bottom:12px;">
-      <div class="ar-field"><label>Vorlage</label><select id="vt-vorlage"></select></div>
-      <div class="ar-field"><label>Titel</label><input id="vt-titel" placeholder="z. B. Catering-Vertrag 2026"></div>
-    </div>
-    <div class="ar-field" style="margin-bottom:12px;"><label>Leistung</label><input id="vt-leistung" placeholder="z. B. Wöchentliches Büro-Catering für 20 Personen"></div>
-    <div class="ar-form2" style="margin-bottom:12px;">
-      <div class="ar-field"><label>Vertragswert</label><input id="vt-wert" placeholder="z. B. 1.200 € / Monat"></div>
-      <div class="ar-field"><label>Laufzeit (Text)</label><input id="vt-laufzeit" placeholder="z. B. 12 Monate" value="12 Monate"></div>
-    </div>
-    <div class="ar-form2" style="margin-bottom:12px;">
-      <div class="ar-field"><label>Gültig von</label><input type="date" id="vt-von"></div>
-      <div class="ar-field"><label>Gültig bis</label><input type="date" id="vt-bis"></div>
-    </div>
-    <label style="font-size:12.5px;color:var(--ink-3);display:block;margin-bottom:6px;">Vorschau</label>
-    <textarea id="vt-preview" readonly style="width:100%;min-height:180px;font-family:monospace;font-size:11.5px;line-height:1.5;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);margin-bottom:16px;resize:vertical;"></textarea>
-    <button class="btn btn-accent" id="vt-save">PDF erstellen &amp; Vertrag speichern</button>
-    <button class="btn btn-ghost" id="vt-cancel">Abbrechen</button>
-  </div>
-</div>
-
-<div class="modal-bg" id="beleg-upload-modal">
-  <div class="modal" style="text-align:left;width:460px;max-width:94vw;">
-    <div class="mtag">Belegeingang</div>
-    <h3 style="margin-bottom:14px;">Belege hinzufügen</h3>
-    <div class="dropzone" id="beleg-dropzone">
-      <div class="dz-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M7 8l5-5 5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-      </div>
-      <div class="dz-t">Belege hierher ziehen</div>
-      <div class="dz-s">oder klicken, um Dateien auszuwählen (Foto, PDF, Scan)</div>
-    </div>
-    <input type="file" id="beleg-file-input" multiple accept="image/*,.pdf" style="display:none;">
-    <div class="dz-filelist" id="beleg-filelist"></div>
-    <button class="btn btn-accent" id="beleg-upload-save">Belege hochladen</button>
-    <button class="btn btn-ghost" id="beleg-upload-cancel">Abbrechen</button>
-  </div>
-</div>
-
 <div id="toast" style="position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:#211e18;color:#f3efe6;padding:13px 20px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:var(--sh-lg);opacity:0;pointer-events:none;transition:all .3s;z-index:10000;"></div>
 
 <script>
-/* ===================== ZENTRALE KUNDEN-DB (Supabase) ===================== */
-/* Gemeinsame Datenquelle für Finanzen/Sales/Marketing. RLS ist während der
-   Prototyp-Phase noch deaktiviert (siehe db/policies.sql für den geplanten Zustand). */
-const MISE_SUPABASE_URL = 'https://tosayjehwpfiazahhgyp.supabase.co';
-const MISE_SUPABASE_KEY = 'sb_publishable_QBlOBQwbtwvaWYXGmYlGLg_9eISpfWb';
-window.miseDB = window.supabase ? window.supabase.createClient(MISE_SUPABASE_URL, MISE_SUPABASE_KEY) : null;
-
 /* ===================== DATA ===================== */
 const recent = [
   ['M','Metro Großmarkt','14.06.2026','€ 248,50'],
@@ -1820,34 +1640,21 @@ const recent = [
 const cam = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a877f" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3l2-2h8l2 2h3v11H3z"/><circle cx="12" cy="13" r="3.2"/></svg>';
 const mail = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a877f" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
 const pos = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a877f" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>';
-const STAT_LABEL = { neu:'Neu', pruef:'In Prüfung', ver:'Verbucht', esk:'Eskaliert' };
-let belegSeq = 1;
-const nextBelegId = () => 'bl' + (belegSeq++);
-function mkBeleg(vendor, subtitle, date, amount, icon, channel, status, items, konto, confidence){
-  return {
-    id: nextBelegId(), vendor, subtitle, date, amount, icon, channel,
-    status, statusLabel: STAT_LABEL[status],
-    items: items || (amount!=null ? [{desc:subtitle, amount, vat:19}] : []),
-    konto: konto || 'SKR03 · 3400 Wareneinkauf', confidence: confidence!=null ? confidence : 90,
-    fileURL: null, fileType: null, pending:false
-  };
-}
 const belege = [
-  mkBeleg('Metro Großmarkt','Großmarkt · Rechnung','2026-06-14',248.50,cam,'Foto','neu',[{desc:'Getränke (Großgebinde)',amount:96,vat:19},{desc:'Lebensmittel',amount:118.50,vat:7},{desc:'Verpackung & Einweg',amount:34,vat:19}],'SKR03 · 3400 Wareneinkauf',92),
-  mkBeleg('Stadtwerke','Strom & Wasser','2026-06-14',182.00,mail,'E-Mail','neu'),
-  mkBeleg('Coca-Cola GmbH','Getränkelieferung','2026-06-13',312.90,pos,'Kassensystem','neu'),
-  mkBeleg('Bäckerei Konrad','Backwaren täglich','2026-06-13',64.20,cam,'Foto','neu'),
-  mkBeleg('Lieferando','Provisionsabrechnung','2026-06-12',540.00,mail,'E-Mail','neu'),
-  mkBeleg('Gastro-Reinigung Berlin','Dienstleistung','2026-06-11',210.00,mail,'E-Mail','pruef'),
-  mkBeleg('Weinhandel Veltlin','Wein-Sortiment','2026-06-10',388.40,cam,'Foto','pruef'),
-  mkBeleg('Frische Fisch GmbH','Wareneinkauf','2026-06-10',174.90,mail,'E-Mail','pruef'),
-  mkBeleg('Telekom','Internet & Telefon','2026-06-09',79.99,mail,'E-Mail','ver'),
-  mkBeleg('Restaurant Bedarf24','Verbrauchsmaterial','2026-06-08',156.40,cam,'Foto','ver'),
-  mkBeleg('Kaffeerösterei Süd','Kaffee-Abo','2026-06-07',98.00,pos,'Kassensystem','ver'),
-  mkBeleg('Unbekannter Lieferant','Betrag unklar','2026-06-12',null,cam,'Foto','esk',[{desc:'Position (Betrag unklar)',amount:null,vat:19}],'SKR03 · 3400 Wareneinkauf',35),
-  mkBeleg('Parkschein Anlieferung','Kein Beleg-Foto','2026-06-11',12.00,cam,'Foto','esk'),
+  ['M','Metro Großmarkt','Großmarkt · Rechnung','14.06.2026','€ 248,50',cam,'Foto','neu','Neu'],
+  ['S','Stadtwerke','Strom & Wasser','14.06.2026','€ 182,00',mail,'E-Mail','neu','Neu'],
+  ['C','Coca-Cola GmbH','Getränkelieferung','13.06.2026','€ 312,90',pos,'Kassensystem','neu','Neu'],
+  ['B','Bäckerei Konrad','Backwaren täglich','13.06.2026','€ 64,20',cam,'Foto','neu','Neu'],
+  ['L','Lieferando','Provisionsabrechnung','12.06.2026','€ 540,00',mail,'E-Mail','neu','Neu'],
+  ['G','Gastro-Reinigung Berlin','Dienstleistung','11.06.2026','€ 210,00',mail,'E-Mail','pruef','In Prüfung'],
+  ['W','Weinhandel Veltlin','Wein-Sortiment','10.06.2026','€ 388,40',cam,'Foto','pruef','In Prüfung'],
+  ['F','Frische Fisch GmbH','Wareneinkauf','10.06.2026','€ 174,90',mail,'E-Mail','pruef','In Prüfung'],
+  ['T','Telekom','Internet & Telefon','09.06.2026','€ 79,99',mail,'E-Mail','ver','Verbucht'],
+  ['R','Restaurant Bedarf24','Verbrauchsmaterial','08.06.2026','€ 156,40',cam,'Foto','ver','Verbucht'],
+  ['K','Kaffeerösterei Süd','Kaffee-Abo','07.06.2026','€ 98,00',pos,'Kassensystem','ver','Verbucht'],
+  ['U','Unbekannter Lieferant','Betrag unklar','12.06.2026','€ ?',cam,'Foto','esk','Eskaliert'],
+  ['P','Parkschein Anlieferung','Kein Beleg-Foto','11.06.2026','€ 12,00',cam,'Foto','esk','Eskaliert'],
 ];
-let currentBelegId = null;
 const cats = [
   ['Wareneinkauf','Halb-autonom','€ 500'],
   ['Bewirtung','Assistiert','—'],
@@ -1864,298 +1671,19 @@ document.getElementById('recent-list').innerHTML = recent.map(r=>`
     <div style="flex:1;"><div class="mn">${r[1]}</div><div class="md">${r[2]}</div></div>
     <div class="ma num">${r[3]}<span class="tick">✓</span></div></div>`).join('');
 
-const belegDeDate = iso => { if(!iso) return '—'; const p=iso.split('-'); return p.length===3 ? p[2]+'.'+p[1]+'.'+p[0] : iso; };
-const belegFmtEUR = n => '€ ' + n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});
-function findBeleg(id){ return belege.find(b=>b.id===id); }
-
 function renderBelege(status){
-  document.getElementById('belege-rows').innerHTML = belege.filter(b=>b.status===status).map(b=>`
-    <div class="trow" data-nav="detail" data-id="${b.id}">
-      <div class="tprev">${b.icon}</div>
-      <div><div class="tname">${b.vendor}</div><div class="tsub">${b.subtitle}</div></div>
-      <div class="muted">${belegDeDate(b.date)}</div>
-      <div class="tname num">${b.pending ? '<span class="muted">Wird gelesen…</span>' : (b.amount!=null ? belegFmtEUR(b.amount) : '<span style="color:var(--warn);" title="Betrag unbekannt — bitte ergänzen">€ ? · bitte ergänzen</span>')}</div>
-      <div class="chan">${b.icon} ${b.channel}</div>
-      <div><span class="chip ${b.status}"><span class="cdot"></span>${b.statusLabel}</span></div>
+  document.getElementById('belege-rows').innerHTML = belege.filter(b=>b[7]===status).map(b=>`
+    <div class="trow" data-nav="detail">
+      <div class="tprev">${b[5]}</div>
+      <div><div class="tname">${b[1]}</div><div class="tsub">${b[2]}</div></div>
+      <div class="muted">${b[3]}</div>
+      <div class="tname num">${b[4]}</div>
+      <div class="chan">${b[5]} ${b[6]}</div>
+      <div><span class="chip ${b[7]}"><span class="cdot"></span>${b[8]}</span></div>
     </div>`).join('');
-  document.querySelectorAll('#belege-rows .trow').forEach(row=>row.addEventListener('click', ()=>{ currentBelegId = row.dataset.id; renderDetailScreen(currentBelegId); }));
   bindNav();
 }
 renderBelege('neu');
-
-/* ===================== BELEGE HINZUFÜGEN (Drag & Drop) ===================== */
-(function(){
-  const modal = document.getElementById('beleg-upload-modal');
-  const dropzone = document.getElementById('beleg-dropzone');
-  const fileInput = document.getElementById('beleg-file-input');
-  const fileListEl = document.getElementById('beleg-filelist');
-  if(!modal || !dropzone) return;
-  const toast = window.toast || function(){};
-  let queued = [];
-
-  function fmtSize(bytes){
-    if(bytes < 1024) return bytes + ' B';
-    if(bytes < 1024*1024) return Math.round(bytes/1024) + ' KB';
-    return (bytes/1024/1024).toFixed(1) + ' MB';
-  }
-  function renderFileList(){
-    fileListEl.innerHTML = queued.map((f,i)=>`
-      <div class="dz-file">
-        <span class="fn">${f.name}</span>
-        <span class="fsz">${fmtSize(f.size)}</span>
-        <span class="frm" data-idx="${i}">✕</span>
-      </div>`).join('');
-    fileListEl.querySelectorAll('.frm').forEach(el=>el.addEventListener('click', e=>{
-      e.stopPropagation();
-      queued.splice(Number(el.dataset.idx), 1);
-      renderFileList();
-    }));
-  }
-  function addFiles(fileArr){
-    [...fileArr].forEach(f=>queued.push(f));
-    renderFileList();
-  }
-
-  function openModal(){
-    queued = [];
-    renderFileList();
-    modal.classList.add('show');
-  }
-  function closeModal(){ modal.classList.remove('show'); }
-
-  document.querySelectorAll('.beleg-add-trigger').forEach(btn=>btn.addEventListener('click', openModal));
-  document.getElementById('beleg-upload-cancel')?.addEventListener('click', closeModal);
-
-  dropzone.addEventListener('click', ()=>fileInput.click());
-  fileInput.addEventListener('change', ()=>{ addFiles(fileInput.files); fileInput.value=''; });
-
-  ['dragenter','dragover'].forEach(evt=>dropzone.addEventListener(evt, e=>{
-    e.preventDefault(); e.stopPropagation(); dropzone.classList.add('dragover');
-  }));
-  ['dragleave','dragend'].forEach(evt=>dropzone.addEventListener(evt, e=>{
-    e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('dragover');
-  }));
-  dropzone.addEventListener('drop', e=>{
-    e.preventDefault(); e.stopPropagation();
-    dropzone.classList.remove('dragover');
-    if(e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
-  });
-
-  document.getElementById('beleg-upload-save')?.addEventListener('click', ()=>{
-    if(!queued.length){ toast('Bitte mindestens einen Beleg auswählen.'); return; }
-    const today = new Date().toISOString().slice(0,10);
-    const added = queued.map(f=>{
-      const name = f.name.replace(/\.[^.]+$/, '').replace(/[_-]+/g,' ');
-      const isImg = f.type.startsWith('image/');
-      const b = {
-        id: nextBelegId(), vendor: name, subtitle: 'Manuell hochgeladen', date: today,
-        amount: null, icon: cam, channel: 'Upload', status: 'neu', statusLabel: 'Neu',
-        items: [], konto: 'SKR03 · 3400 Wareneinkauf', confidence: 90,
-        fileURL: isImg ? URL.createObjectURL(f) : null,
-        fileType: isImg ? 'image' : (f.type==='application/pdf' ? 'pdf' : null),
-        pending: true
-      };
-      belege.unshift(b);
-      return b;
-    });
-    const n = added.length;
-    document.querySelectorAll('#belege-tabs .tab').forEach(t=>{ t.classList.toggle('on', t.dataset.status==='neu'); });
-    refreshBelegCounts();
-    renderBelege('neu');
-    closeModal();
-    toast(n===1 ? '1 Beleg hinzugefügt — Agent liest das Dokument …' : n+' Belege hinzugefügt — Agent liest die Dokumente …');
-    added.forEach((b,i)=>setTimeout(()=>simulateExtraction(b), 1100 + i*450));
-  });
-})();
-
-function simulateExtraction(b){
-  const guesses = [
-    {item:'Wareneinkauf', vat:19, konto:'SKR03 · 3400 Wareneinkauf'},
-    {item:'Lebensmittel', vat:7, konto:'SKR03 · 3000 Wareneinkauf 7%'},
-    {item:'Dienstleistung', vat:19, konto:'SKR03 · 4900 Sonstige Kosten'},
-    {item:'Bewirtung', vat:19, konto:'SKR03 · 4650 Bewirtungskosten'},
-  ];
-  const g = guesses[Math.floor(Math.random()*guesses.length)];
-  const unclear = Math.random() < 0.3;
-  if(unclear){
-    b.items = [{desc:g.item, amount:null, vat:g.vat}];
-    b.amount = null;
-    b.konto = g.konto;
-    b.confidence = 30 + Math.round(Math.random()*15);
-  } else {
-    const amount = Math.round((15 + Math.random()*280)*100)/100;
-    b.items = [{desc:g.item, amount, vat:g.vat}];
-    b.amount = amount;
-    b.konto = g.konto;
-    b.confidence = 74 + Math.round(Math.random()*20);
-  }
-  b.pending = false;
-  const activeTab = document.querySelector('#belege-tabs .tab.on');
-  renderBelege(activeTab ? activeTab.dataset.status : 'neu');
-  if(currentBelegId===b.id) renderDetailScreen(b.id);
-  window.toast && window.toast(unclear
-    ? 'Agent konnte den Betrag bei "'+b.vendor+'" nicht sicher lesen — bitte prüfen und ergänzen.'
-    : 'Agent hat "'+b.vendor+'" gelesen: '+belegFmtEUR(b.amount)+' erkannt.');
-}
-
-function refreshBelegCounts(){
-  ['neu','pruef','ver','esk'].forEach(s=>{
-    const el = document.querySelector('#belege-tabs .tab[data-status="'+s+'"] .cnt');
-    if(el) el.textContent = belege.filter(b=>b.status===s).length;
-  });
-}
-
-/* ===================== BELEG-DETAIL (editierbar) ===================== */
-(function(){
-  const vendorEl = document.getElementById('bd-vendor');
-  const dateEl = document.getElementById('bd-date');
-  const itemsEl = document.getElementById('bd-items');
-  if(!vendorEl || !itemsEl) return;
-  const toast = window.toast || function(){};
-
-  function itemRow(it, idx){
-    const unknown = it.amount===null || it.amount==='';
-    return `<div class="lpos-edit" data-idx="${idx}">
-      <input class="li-desc" data-idx="${idx}" value="${it.desc}" placeholder="Position">
-      <input class="li-amt${unknown?' unknown':''}" data-idx="${idx}" type="number" step="0.01" value="${unknown?'':it.amount}" placeholder="Betrag ?">
-      <select class="li-vat" data-idx="${idx}">
-        <option value="19" ${it.vat===19?'selected':''}>19 %</option>
-        <option value="7" ${it.vat===7?'selected':''}>7 %</option>
-        <option value="0" ${it.vat===0?'selected':''}>0 %</option>
-      </select>
-      <span class="li-rm" data-idx="${idx}">✕</span>
-    </div>`;
-  }
-
-  function recompute(b){
-    const hasUnknown = b.items.some(it=>it.amount===null || it.amount==='');
-    const total = b.items.reduce((a,it)=>a+(parseFloat(it.amount)||0), 0);
-    b.amount = (!hasUnknown && b.items.length) ? Math.round(total*100)/100 : null;
-    const rates = [...new Set(b.items.filter(it=>it.vat!=null).map(it=>it.vat))].sort((a,b2)=>a-b2);
-    const amountEl = document.getElementById('bd-amount');
-    if(b.amount!=null){
-      amountEl.innerHTML = belegFmtEUR(b.amount);
-      amountEl.style.color = '';
-    } else {
-      amountEl.innerHTML = '€ ? <span style="font-weight:600;font-size:12px;">— bitte ergänzen</span>';
-      amountEl.style.color = 'var(--warn)';
-    }
-    document.getElementById('bd-ust').innerHTML = rates.length ? rates.map(r=>r+' %').join(' / ') : '—';
-    const escal = document.getElementById('bd-escal');
-    if(b.pending){
-      escal.style.display = 'flex';
-      document.getElementById('bd-escal-t').textContent = 'Agent liest das Dokument …';
-      document.getElementById('bd-escal-d').textContent = 'Lieferant, Datum, Betrag und USt-Sätze werden automatisch erkannt und gleich eingetragen.';
-    } else if(hasUnknown){
-      escal.style.display = 'flex';
-      document.getElementById('bd-escal-t').textContent = 'Betrag unbekannt — bitte ergänzen';
-      document.getElementById('bd-escal-d').textContent = 'Der Agent konnte den Betrag auf diesem Beleg nicht sicher erkennen (markiert mit "?"). Bitte trage ihn manuell bei der betroffenen Position ein.';
-    } else if(rates.length > 1){
-      escal.style.display = 'flex';
-      document.getElementById('bd-escal-t').textContent = 'Agent unsicher — kurz prüfen';
-      document.getElementById('bd-escal-d').textContent = 'Beleg enthält gemischte USt-Sätze ('+rates.map(r=>r+' %').join(' & ')+'). Aufteilung wurde vorgeschlagen, bitte Kontierung bestätigen.';
-    } else {
-      escal.style.display = 'none';
-    }
-  }
-
-  function renderItems(b){
-    itemsEl.innerHTML = b.items.map(itemRow).join('') || '<div class="muted" style="font-size:13px;padding:6px 0;">Noch keine Positionen.</div>';
-    itemsEl.querySelectorAll('.li-desc').forEach(el=>el.addEventListener('input', ()=>{ b.items[el.dataset.idx].desc = el.value; }));
-    itemsEl.querySelectorAll('.li-amt').forEach(el=>el.addEventListener('input', ()=>{ b.items[el.dataset.idx].amount = el.value===''?null:parseFloat(el.value); recompute(b); el.classList.toggle('unknown', el.value===''); }));
-    itemsEl.querySelectorAll('.li-vat').forEach(el=>el.addEventListener('change', ()=>{ b.items[el.dataset.idx].vat = parseInt(el.value,10); recompute(b); }));
-    itemsEl.querySelectorAll('.li-rm').forEach(el=>el.addEventListener('click', ()=>{ b.items.splice(el.dataset.idx,1); renderItems(b); recompute(b); }));
-  }
-
-  function renderPreview(b){
-    const el = document.getElementById('bd-preview');
-    if(b.fileType==='image' && b.fileURL){
-      el.innerHTML = `<img src="${b.fileURL}" style="max-width:100%;border-radius:10px;display:block;">`;
-    } else if(b.fileType==='pdf' && b.fileURL){
-      el.innerHTML = `<embed src="${b.fileURL}" type="application/pdf" style="width:100%;height:440px;border-radius:10px;border:1px solid var(--line);">`;
-    } else {
-      const rows = b.items.map(it=>{
-        const unknown = it.amount===null || it.amount==='';
-        const amtHtml = unknown ? '<span style="color:var(--warn);font-weight:600;">€ ?</span>' : belegFmtEUR(parseFloat(it.amount));
-        return `<div class="rrow"><span>${it.desc||'—'}</span><span>${amtHtml} <span class="rsmall">· ${it.vat}%</span></span></div>`;
-      }).join('')
-        || '<div class="rrow"><span class="muted">Noch keine Positionen erfasst</span><span></span></div>';
-      const isPhysical = b.channel==='Foto' || b.channel==='Kassensystem' || b.channel==='Upload';
-      const captions = { Foto:'📷 Foto-Beleg · kein Original-Scan hinterlegt', Kassensystem:'🖨 Kassenbon · kein Original-Scan hinterlegt', Upload:'📎 Hochgeladen · keine Originaldatei zur Anzeige hinterlegt' };
-      const receiptHtml = `<div class="receipt${isPhysical?' photo-tilt mono':''}"${isPhysical?'':' style="max-width:360px;margin:0 auto;"'}>
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-          <div><div class="rco">${b.vendor||'—'}</div><div class="rmeta">${b.subtitle||''}</div></div>
-          <div style="text-align:right;" class="rmeta">${belegDeDate(b.date)}</div>
-        </div>
-        <div style="margin:16px 0 6px;" class="rsmall">POSITIONEN</div>
-        ${rows}
-        <div class="rrow tot"><span>Gesamt brutto</span><span>${b.amount!=null?belegFmtEUR(b.amount):'<span style="color:var(--warn);">€ ? · bitte ergänzen</span>'}</span></div>
-        ${isPhysical?'<div style="margin-top:14px;" class="rsmall">'+esc(captions[b.channel]||'')+'</div>':''}
-      </div>`;
-      el.innerHTML = isPhysical ? `<div class="receipt-photo-bg">${receiptHtml}</div>` : receiptHtml;
-    }
-  }
-
-  window.renderDetailScreen = function(id){
-    const b = findBeleg(id);
-    if(!b) return;
-    vendorEl.value = b.vendor;
-    dateEl.value = b.date || '';
-    document.getElementById('bd-pending-note').textContent = b.pending ? '· wird analysiert' : '';
-    document.getElementById('bd-konto').textContent = b.konto;
-    document.getElementById('bd-conf-bar').style.setProperty('--w', (b.pending?0:b.confidence)+'%');
-    document.getElementById('bd-conf-pct').textContent = b.pending ? '—' : b.confidence+' %';
-    document.getElementById('bd-conf-sub').textContent = b.pending ? 'Der Agent liest gerade den Beleg ein.' : 'Vorschlag basiert auf ähnlichen früheren Belegen.';
-    renderItems(b);
-    recompute(b);
-    renderPreview(b);
-    resetZoom();
-  };
-
-  vendorEl.addEventListener('input', ()=>{ const b=findBeleg(currentBelegId); if(b) b.vendor = vendorEl.value; });
-  dateEl.addEventListener('input', ()=>{ const b=findBeleg(currentBelegId); if(b) b.date = dateEl.value; });
-
-  // ---- Beleg-Vorschau: Zoom ----
-  const ZOOM_MIN = 0.6, ZOOM_MAX = 2.2, ZOOM_STEP = 0.15;
-  let zoomLevel = 1;
-  function applyZoom(){
-    const preview = document.getElementById('bd-preview');
-    if(preview) preview.style.transform = 'scale('+zoomLevel.toFixed(2)+')';
-    document.getElementById('bd-zoom-out')?.classList.toggle('disabled', zoomLevel<=ZOOM_MIN+0.001);
-    document.getElementById('bd-zoom-in')?.classList.toggle('disabled', zoomLevel>=ZOOM_MAX-0.001);
-  }
-  function resetZoom(){ zoomLevel = 1; applyZoom(); }
-  document.getElementById('bd-zoom-in')?.addEventListener('click', ()=>{ zoomLevel = Math.min(ZOOM_MAX, Math.round((zoomLevel+ZOOM_STEP)*100)/100); applyZoom(); });
-  document.getElementById('bd-zoom-out')?.addEventListener('click', ()=>{ zoomLevel = Math.max(ZOOM_MIN, Math.round((zoomLevel-ZOOM_STEP)*100)/100); applyZoom(); });
-  document.getElementById('bd-zoom-reset')?.addEventListener('click', resetZoom);
-
-  document.getElementById('bd-add-item')?.addEventListener('click', ()=>{
-    const b = findBeleg(currentBelegId); if(!b) return;
-    b.items.push({desc:'', amount:0, vat:19});
-    renderItems(b); recompute(b);
-  });
-
-  function persistAndRefreshList(b){
-    const activeTab = document.querySelector('#belege-tabs .tab.on');
-    renderBelege(activeTab ? activeTab.dataset.status : 'neu');
-    refreshBelegCounts();
-    renderPreview(b);
-  }
-
-  document.getElementById('bd-save')?.addEventListener('click', ()=>{
-    const b = findBeleg(currentBelegId); if(!b) return;
-    persistAndRefreshList(b);
-    toast('Änderungen gespeichert.');
-  });
-
-  document.getElementById('bd-confirm')?.addEventListener('click', ()=>{
-    const b = findBeleg(currentBelegId); if(!b) return;
-    b.status = 'ver'; b.statusLabel = 'Verbucht'; b.pending = false;
-    persistAndRefreshList(b);
-    toast('Beleg verbucht ✓ Der Agent lernt aus deiner Bestätigung.');
-    go('belege');
-  });
-})();
 
 document.getElementById('cat-rows').innerHTML = cats.map(c=>`
   <div class="cat-row">
@@ -2174,20 +1702,15 @@ function go(screen){
 
   // sidebar active states
   const finScreens = ['dashboard','belege','detail','chat','autonomie','rechnungspruefung','ausgangsrechnungen','angebote','kassenbuch','zahlungslauf','liquiditaet','ustva','auswertungen','kontakte','inventar','lieferanten'];
-  const salesScreens = ['vertraege'];
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.querySelector('.nav-item.parent[data-nav="dashboard"]').classList.toggle('active', finScreens.includes(screen));
-  document.querySelector('.nav-item.parent[data-nav="sales"]').classList.toggle('active', salesScreens.includes(screen));
+  document.querySelector('.nav-item.parent').classList.toggle('active', finScreens.includes(screen));
   let subKey = screen==='detail' ? 'belege' : screen;
   document.querySelectorAll('#fin-sub .nav-item').forEach(n=>{
     n.classList.toggle('active', n.dataset.nav===subKey);
   });
-  document.querySelectorAll('#sales-sub .nav-item').forEach(n=>{
-    n.classList.toggle('active', n.dataset.nav===screen);
-  });
-  if(!finScreens.includes(screen) && !salesScreens.includes(screen)){
+  if(!finScreens.includes(screen)){
     document.querySelectorAll('.nav-item').forEach(n=>{
-      if(n.dataset.nav===screen && !n.closest('#fin-sub') && !n.closest('#sales-sub')) n.classList.add('active');
+      if(n.dataset.nav===screen && !n.closest('#fin-sub')) n.classList.add('active');
     });
   }
 }
@@ -2198,57 +1721,6 @@ function bindNav(){
   });
 }
 bindNav();
-
-/* ===================== SIDEBAR: ein-/ausklappen & Untermenüs ===================== */
-(function(){
-  const sidebarEl = document.querySelector('.sidebar');
-  const sideToggle = document.getElementById('side-toggle');
-
-  function setSidebarCollapsed(collapsed){
-    sidebarEl.classList.toggle('collapsed', collapsed);
-    try{ localStorage.setItem('mise_sidebar_collapsed', collapsed ? '1' : '0'); }catch(e){}
-  }
-  sideToggle?.addEventListener('click', e=>{
-    e.stopPropagation();
-    setSidebarCollapsed(!sidebarEl.classList.contains('collapsed'));
-  });
-  try{ if(localStorage.getItem('mise_sidebar_collapsed')!=='0') setSidebarCollapsed(true); }catch(e){ setSidebarCollapsed(true); }
-
-  function setSubnavCollapsed(chev, collapsed){
-    const sub = document.getElementById(chev.dataset.target);
-    if(!sub) return;
-    sub.classList.toggle('collapsed', collapsed);
-    chev.classList.toggle('chev-collapsed', collapsed);
-    try{ localStorage.setItem('mise_subnav_'+chev.dataset.target, collapsed ? '1' : '0'); }catch(e){}
-  }
-  document.querySelectorAll('.chev[data-target]').forEach(chev=>{
-    chev.addEventListener('click', e=>{
-      e.stopPropagation();
-      const sub = document.getElementById(chev.dataset.target);
-      setSubnavCollapsed(chev, sub && !sub.classList.contains('collapsed'));
-    });
-    try{ if(localStorage.getItem('mise_subnav_'+chev.dataset.target)==='1') setSubnavCollapsed(chev, true); }catch(e){}
-  });
-
-  // ---- Mobil: Off-Canvas-Menü ----
-  const menuBtn = document.getElementById('mobile-menu-btn');
-  const backdrop = document.getElementById('sidebar-backdrop');
-  function openMobileMenu(){
-    sidebarEl.classList.remove('collapsed');
-    sidebarEl.classList.add('mobile-open');
-    backdrop.classList.add('show');
-  }
-  function closeMobileMenu(){
-    sidebarEl.classList.remove('mobile-open');
-    backdrop.classList.remove('show');
-  }
-  menuBtn?.addEventListener('click', e=>{ e.stopPropagation(); openMobileMenu(); });
-  backdrop?.addEventListener('click', closeMobileMenu);
-  sidebarEl.querySelectorAll('[data-nav]').forEach(el=>{
-    el.addEventListener('click', ()=>{ if(window.innerWidth<=860) closeMobileMenu(); });
-  });
-  window.addEventListener('resize', ()=>{ if(window.innerWidth>860) closeMobileMenu(); });
-})();
 
 /* ===================== BELEGE TABS ===================== */
 document.querySelectorAll('#belege-tabs .tab').forEach(t=>{
@@ -2383,25 +1855,6 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
 
   function load(){ try{ const r=localStorage.getItem(KEY); if(r){ const d=JSON.parse(r); if(d&&d.invoices) return d; } }catch(e){} return seed(); }
   function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(db)); }catch(e){} }
-
-  // Zentrale Kunden-DB (Supabase) statt nur lokaler Mock-Liste — geteilt mit Sales/Marketing.
-  async function syncCustomersFromCentralDB(){
-    if(!window.miseDB) return;
-    try{
-      const { data, error } = await window.miseDB.from('kunden').select('id,name,adresse,ust_id,email').order('name');
-      if(error || !data || !data.length) return;
-      db.customers = data.map(k=>({ id:k.id, name:k.name, addr:k.adresse||'', vat:k.ust_id||'', email:k.email||'' }));
-      persist();
-      render();
-    }catch(e){ console.warn('Kunden-Sync mit zentraler DB fehlgeschlagen, nutze lokalen Stand.', e); }
-  }
-  function pushCustomerToCentralDB(c){
-    if(!window.miseDB) return;
-    window.miseDB.from('kunden').insert({ name:c.name, adresse:c.addr||null, ust_id:c.vat||null, email:c.email||null, erstellt_von:'finanz-agent' }).then(({error})=>{
-      if(error) console.warn('Neuer Kunde konnte nicht in zentraler DB gespeichert werden.', error);
-    });
-  }
-  syncCustomersFromCentralDB();
   function seed(){
     const customers = [
       {name:'Müller & Partner GmbH', addr:'Friedrichstraße 12 · 10117 Berlin', vat:'DE811111111', email:'buchhaltung@mueller-partner.de'},
@@ -2495,8 +1948,8 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
       +'<div class="ar-field" style="margin-bottom:16px;"><label>Anschrift</label><input id="ar-f-addr" value="'+esc(d.custAddr)+'" placeholder="Straße · PLZ Ort"></div>'
       +'<div class="ar-form3" style="margin-bottom:20px;"><div class="ar-field"><label>Rechnungsdatum</label><input type="date" id="ar-f-date" value="'+d.date+'"></div><div class="ar-field"><label>Leistungsdatum</label><input type="date" id="ar-f-service" value="'+d.serviceDate+'"></div><div class="ar-field"><label>Fällig bis</label><input type="date" id="ar-f-due" value="'+d.dueDate+'"></div></div>'
       +'<div class="section-title" style="margin-bottom:10px;">Positionen</div>'
-      +'<div class="ar-lines-scroll"><div class="ar-li-head"><div>Beschreibung</div><div>Menge</div><div>Einheit</div><div class="r">Einzel €</div><div>USt %</div><div class="r">Gesamt</div><div></div></div>'
-      +'<div id="ar-lines">'+lines+'</div></div>'
+      +'<div class="ar-li-head"><div>Beschreibung</div><div>Menge</div><div>Einheit</div><div class="r">Einzel €</div><div>USt %</div><div class="r">Gesamt</div><div></div></div>'
+      +'<div id="ar-lines">'+lines+'</div>'
       +'<div class="ar-addline" data-act="addline">+ Position hinzufügen</div>'
       +'<div class="ar-form2" style="margin-top:20px;"><div class="ar-field"><label>Einleitungstext (optional)</label><textarea id="ar-f-header" rows="2" placeholder="z. B. vielen Dank für Ihren Auftrag …">'+esc(d.headerText)+'</textarea></div><div class="ar-field"><label>Fußtext / Hinweis (optional)</label><textarea id="ar-f-note" rows="2" placeholder="z. B. Zahlbar innerhalb 14 Tagen ohne Abzug.">'+esc(d.note)+'</textarea></div></div>'
       +'<label class="ar-check" style="margin-top:14px;"><input type="checkbox" id="ar-f-klein"'+(d.klein?' checked':'')+'> Kleinunternehmer nach §19 UStG (keine Umsatzsteuer ausweisen)</label>'
@@ -2557,7 +2010,7 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
     syncForm(); const d=state.draft;
     if(!d.custName.trim()){ toast('Bitte einen Kunden angeben.'); return; }
     if(!d.items.some(it=>String(it.desc).trim())){ toast('Bitte mindestens eine Position mit Beschreibung.'); return; }
-    if(d.custName.trim() && !db.customers.some(c=>c.name===d.custName.trim())){ const newCust={name:d.custName.trim(),addr:d.custAddr,vat:d.custVat,email:d.custEmail}; db.customers.push(newCust); pushCustomerToCentralDB(newCust); }
+    if(d.custName.trim() && !db.customers.some(c=>c.name===d.custName.trim())) db.customers.push({name:d.custName.trim(),addr:d.custAddr,vat:d.custVat,email:d.custEmail});
     if(finalize){ if(!d.number){ const yr=(d.date||TODAY).slice(0,4); d.number=yr+'-'+pad(db.next); db.next++; } d.status='offen'; }
     const ix=db.invoices.findIndex(i=>i.id===d.id);
     if(ix>=0) db.invoices[ix]=d; else db.invoices.push(d);
@@ -2675,217 +2128,51 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
     else if(act==='xml') exportXml(find(id));
   });
   app.addEventListener('input', ()=>{ if(state.view==='edit'){ syncForm(); const tot=document.getElementById('ar-tot'); if(tot) tot.innerHTML=totalsHtml(calc(state.draft),state.draft); updateLineTotals(); } });
-  app.addEventListener('change', e=>{ if(state.view==='edit' && e.target.id==='ar-cust-select'){ const c=db.customers.find(x=>x.name===e.target.value); if(c){ setVal('ar-f-name',c.name); setVal('ar-f-addr',c.addr); setVal('ar-f-vat',c.vat); setVal('ar-f-email',c.email); syncForm(); } } });
-
-  // Für das Kontakte-Modul: reale Umsatz-/Offen-Posten-Zahlen je Kunde aus den Rechnungen.
-  window.miseGetCustomerInvoiceSummary = function(name){
-    const inv = db.invoices.filter(i=>i.custName===name);
-    const sum = arr => arr.reduce((a,i)=>a+calc(i).gross,0);
-    return {
-      umsatz: sum(inv.filter(i=>i.status==='bezahlt')),
-      offen: sum(inv.filter(i=>['offen','ueberfaellig'].includes(effStatus(i))))
-    };
-  };
+  app.addEventListener('change', e=>{ if(state.view==='edit' && e.target.id==='ar-cust-select'){ const c=db.customers.find(x=>x.name===e.target.value); if(c){ setVal('ar-f-name',c.name); setVal('ar-f-addr',c.addr); setVal('ar-f-vat',c.vat); setVal('ar-f-email',c.email); syncForm(); } } }); });
 
   window.ARApp = { showList:function(){ state.view='list'; state.draft=null; render(); } };
   document.querySelectorAll('[data-nav="ausgangsrechnungen"]').forEach(el=>el.addEventListener('click', ()=>setTimeout(()=>{ if(window.ARApp) window.ARApp.showList(); },0)));
   render();
 })();
+</script>
 
-/* ===================== KONTAKTE (zentrale Kunden-DB) ===================== */
+<!-- ===== LIVE-ANBINDUNG: Finanz-Kern (mise-finanz-demo.vercel.app) ===== -->
+<script>
 (function(){
-  const rowsEl = document.getElementById('kontakte-rows');
-  if(!rowsEl) return;
-  const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  const fmt = n => '€ ' + Math.round(n||0).toLocaleString('de-DE');
-  const deDate = d => { if(!d) return '—'; const p=String(d).split('-'); return p.length===3 ? p[2]+'.'+p[1]+'.'+p[0] : d; };
-  const toast = window.toast || function(){};
-  const STATUS = { stammkunde:['Stammkunde','ok'], neukunde:['Kunde',''], inaktiv:['Inaktiv','esk'] };
-  let kunden = [];
-
-  function row(k){
-    const [label, cls] = STATUS[k.status] || ['Kunde',''];
-    const chip = cls ? '<span class="chip '+cls+'"><span class="cdot"></span>'+label+'</span>' : '<span class="muted">'+label+'</span>';
-    const fin = window.miseGetCustomerInvoiceSummary ? window.miseGetCustomerInvoiceSummary(k.name) : {umsatz:0,offen:0};
-    return '<div class="dgrid dt-row" style="grid-template-columns:1.5fr .9fr .9fr .9fr .8fr;">'
-      +'<div style="display:flex;align-items:center;gap:11px;"><div class="merch">'+esc((k.name||'?').charAt(0).toUpperCase())+'</div><div class="tname">'+esc(k.name)+'</div></div>'
-      +'<div>'+chip+'</div>'
-      +'<div class="r num">'+(fin.umsatz ? fmt(fin.umsatz) : '<span class="muted">—</span>')+'</div>'
-      +'<div class="r num"'+(fin.offen ? ' style="color:var(--warn);"' : '')+'>'+(fin.offen ? fmt(fin.offen) : '<span class="muted">—</span>')+'</div>'
-      +'<div class="r"><button class="btn btn-ghost vt-open" data-id="'+esc(k.id)+'" style="padding:6px 12px;font-size:12.5px;">Vertrag</button></div>'
-      +'</div>';
-  }
-
-  async function load(){
-    if(!window.miseDB){ rowsEl.innerHTML = '<div class="dgrid dt-row"><div class="muted">Keine Verbindung zur zentralen Kunden-Datenbank.</div></div>'; return; }
-    const { data, error } = await window.miseDB.from('kunden').select('id,name,status,typ,adresse,ust_id,email').eq('typ','kunde').order('name');
-    if(error){ rowsEl.innerHTML = '<div class="dgrid dt-row"><div class="muted">Kunden konnten nicht geladen werden.</div></div>'; return; }
-    kunden = data || [];
-    rowsEl.innerHTML = kunden.map(row).join('') || '<div class="dgrid dt-row"><div class="muted">Noch keine Kunden angelegt.</div></div>';
-    rowsEl.querySelectorAll('.vt-open').forEach(btn=>btn.addEventListener('click', ()=>openVertragModal(btn.dataset.id)));
-  }
-
-  document.querySelectorAll('[data-nav="kontakte"]').forEach(el=>el.addEventListener('click', ()=>setTimeout(load,0)));
-  document.querySelectorAll('[data-nav="vertraege"]').forEach(el=>el.addEventListener('click', ()=>setTimeout(loadVertraege,0)));
-  load();
-
-  // ---- Kontakt anlegen (schreibt direkt in die zentrale kunden-Tabelle) ----
-  const modalBg = document.getElementById('kontakt-modal');
-  const openBtn = document.getElementById('kontakt-anlegen-btn');
-  const fieldIds = ['kt-name','kt-email','kt-tel','kt-addr','kt-vat'];
-
-  function openModal(){
-    fieldIds.forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
-    document.getElementById('kt-typ').value = 'kunde';
-    modalBg.classList.add('show');
-    document.getElementById('kt-name').focus();
-  }
-  function closeModal(){ modalBg.classList.remove('show'); }
-
-  openBtn?.addEventListener('click', openModal);
-  document.getElementById('kt-cancel')?.addEventListener('click', closeModal);
-  document.getElementById('kt-save')?.addEventListener('click', async ()=>{
-    const name = document.getElementById('kt-name').value.trim();
-    if(!name){ toast('Bitte einen Namen angeben.'); return; }
-    if(!window.miseDB){ toast('Keine Verbindung zur zentralen Datenbank.'); return; }
-    const payload = {
-      name,
-      typ: document.getElementById('kt-typ').value,
-      email: document.getElementById('kt-email').value.trim() || null,
-      telefon: document.getElementById('kt-tel').value.trim() || null,
-      adresse: document.getElementById('kt-addr').value.trim() || null,
-      ust_id: document.getElementById('kt-vat').value.trim() || null,
-      erstellt_von: 'kontakte-modul'
-    };
-    const { error } = await window.miseDB.from('kunden').insert(payload);
-    if(error){ toast('Fehler beim Speichern: '+error.message); return; }
-    closeModal();
-    toast('Kontakt angelegt.');
-    load();
-  });
-
-  // ---- Verträge: Übersicht ----
-  const vertraegeRowsEl = document.getElementById('vertraege-rows');
-  const V_STATUS = { entwurf:['Entwurf','draft'], versendet:['Versendet','sent'], unterschrieben:['Unterschrieben','ver'], aktiv:['Aktiv','ok'], beendet:['Beendet','esk'] };
-
-  function vertragRow(v){
-    const cls = (V_STATUS[v.status] || ['—','draft'])[1];
-    const options = Object.keys(V_STATUS).map(key=>'<option value="'+key+'"'+(key===v.status?' selected':'')+'>'+V_STATUS[key][0]+'</option>').join('');
-    return '<div class="dgrid dt-row" style="grid-template-columns:1.7fr 1.3fr 1.1fr 1fr;">'
-      +'<div class="tname">'+esc(v.titel)+'</div>'
-      +'<div>'+esc((v.kunden && v.kunden.name) || '—')+'</div>'
-      +'<div><select class="vt-status chip '+cls+'" data-id="'+esc(v.id)+'" style="border:none;font:inherit;font-weight:600;cursor:pointer;">'+options+'</select></div>'
-      +'<div class="r num">'+(v.wert ? fmt(v.wert) : '<span class="muted">—</span>')+'</div>'
-      +'</div>';
-  }
-
-  async function loadVertraege(){
-    if(!vertraegeRowsEl || !window.miseDB) return;
-    const { data, error } = await window.miseDB.from('vertraege').select('id,titel,status,wert,kunden(name)').order('created_at',{ascending:false});
-    if(error){ vertraegeRowsEl.innerHTML = '<div class="dgrid dt-row"><div class="muted">Verträge konnten nicht geladen werden.</div></div>'; return; }
-    vertraegeRowsEl.innerHTML = (data||[]).map(vertragRow).join('') || '<div class="dgrid dt-row"><div class="muted">Noch keine Verträge erstellt.</div></div>';
-    vertraegeRowsEl.querySelectorAll('.vt-status').forEach(sel=>{
-      sel.dataset.prev = sel.value;
-      sel.addEventListener('change', async ()=>{
-        const newStatus = sel.value, prevStatus = sel.dataset.prev;
-        const { error } = await window.miseDB.from('vertraege').update({status:newStatus}).eq('id', sel.dataset.id);
-        if(error){ toast('Status konnte nicht geändert werden: '+error.message); sel.value = prevStatus; return; }
-        sel.classList.remove(V_STATUS[prevStatus][1]);
-        sel.classList.add(V_STATUS[newStatus][1]);
-        sel.dataset.prev = newStatus;
-        toast('Status geändert: '+V_STATUS[newStatus][0]);
-      });
-    });
-  }
-  loadVertraege();
-
-  // ---- Vertrag erstellen (Vorlage + Kunde -> Vorschau -> DB-Eintrag + PDF) ----
-  const vtModal = document.getElementById('vertrag-modal');
-  const vtFieldIds = ['vt-titel','vt-leistung','vt-wert','vt-von','vt-bis'];
-  let vorlagen = [];
-  let currentKunde = null;
-
-  async function ensureVorlagen(){
-    if(vorlagen.length || !window.miseDB) return;
-    const { data, error } = await window.miseDB.from('vertrag_vorlagen').select('id,name,inhalt').order('name');
-    if(!error) vorlagen = data || [];
-  }
-
-  function mergedText(){
-    const v = vorlagen.find(x=>x.id===document.getElementById('vt-vorlage').value);
-    if(!v || !currentKunde) return '';
-    const ustZeile = currentKunde.ust_id ? (', USt-IdNr. '+currentKunde.ust_id) : '';
-    const heute = new Date().toLocaleDateString('de-DE');
-    return v.inhalt
-      .replaceAll('{{kunde_name}}', currentKunde.name || '')
-      .replaceAll('{{kunde_adresse}}', currentKunde.adresse || '—')
-      .replaceAll('{{ust_id_zeile}}', ustZeile)
-      .replaceAll('{{leistung}}', document.getElementById('vt-leistung').value || '—')
-      .replaceAll('{{vertragswert}}', document.getElementById('vt-wert').value || '—')
-      .replaceAll('{{laufzeit}}', document.getElementById('vt-laufzeit').value || '—')
-      .replaceAll('{{datum}}', heute);
-  }
-
-  function refreshPreview(){ document.getElementById('vt-preview').value = mergedText(); }
-
-  async function openVertragModal(kundeId){
-    currentKunde = kunden.find(k=>k.id===kundeId);
-    if(!currentKunde) return;
-    await ensureVorlagen();
-    document.getElementById('vt-kunde-label').textContent = currentKunde.name;
-    document.getElementById('vt-vorlage').innerHTML = vorlagen.map(v=>'<option value="'+v.id+'">'+esc(v.name)+'</option>').join('');
-    vtFieldIds.forEach(id=>{ const el=document.getElementById(id); if(el && el.type!=='date') el.value=''; });
-    document.getElementById('vt-titel').value = vorlagen[0] ? (vorlagen[0].name+' — '+currentKunde.name) : '';
-    document.getElementById('vt-laufzeit').value = '12 Monate';
-    const today = new Date().toISOString().slice(0,10);
-    document.getElementById('vt-von').value = today;
-    document.getElementById('vt-bis').value = today;
-    refreshPreview();
-    vtModal.classList.add('show');
-  }
-  function closeVertragModal(){ vtModal.classList.remove('show'); }
-
-  document.getElementById('vt-cancel')?.addEventListener('click', closeVertragModal);
-  ['vt-vorlage','vt-leistung','vt-wert','vt-laufzeit'].forEach(id=>{
-    document.getElementById(id)?.addEventListener('input', refreshPreview);
-    document.getElementById(id)?.addEventListener('change', refreshPreview);
-  });
-
-  function downloadVertragPdf(titel, text){
-    const ns = window.jspdf;
-    if(!ns || !ns.jsPDF){ toast('PDF-Bibliothek nicht verfügbar.'); return; }
-    const doc = new ns.jsPDF({unit:'pt', format:'a4'});
-    const M = 48, W = doc.internal.pageSize.getWidth();
-    doc.setFont('helvetica','normal'); doc.setFontSize(10);
-    const lines = doc.splitTextToSize(text, W - 2*M);
-    doc.text(lines, M, 64);
-    doc.save((titel||'Vertrag').replace(/[^\w\-]+/g,'_')+'.pdf');
-  }
-
-  document.getElementById('vt-save')?.addEventListener('click', async ()=>{
-    if(!currentKunde){ return; }
-    const titel = document.getElementById('vt-titel').value.trim();
-    if(!titel){ toast('Bitte einen Titel angeben.'); return; }
-    const vorlageId = document.getElementById('vt-vorlage').value;
-    if(!window.miseDB){ toast('Keine Verbindung zur zentralen Datenbank.'); return; }
-    const wertRaw = document.getElementById('vt-wert').value.replace(/[^\d,\.]/g,'').replace(',','.');
-    const payload = {
-      kunde_id: currentKunde.id,
-      vorlage_id: vorlageId || null,
-      titel,
-      status: 'entwurf',
-      gueltig_von: document.getElementById('vt-von').value || null,
-      gueltig_bis: document.getElementById('vt-bis').value || null,
-      wert: wertRaw ? parseFloat(wertRaw) : null,
-      erstellt_von: 'kontakte-modul'
-    };
-    const { error } = await window.miseDB.from('vertraege').insert(payload);
-    if(error){ toast('Fehler beim Speichern: '+error.message); return; }
-    downloadVertragPdf(titel, mergedText());
-    closeVertragModal();
-    toast('Vertrag gespeichert, PDF wird heruntergeladen.');
-    loadVertraege();
-  });
+  var API='https://mise-finanz-demo.vercel.app';
+  function eur(c){return (c/100).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';}
+  function set(id,txt){var e=document.getElementById(id); if(e) e.textContent=txt;}
+  function cls(id,c){var e=document.getElementById(id); if(e) e.className=c;}
+  function j(u){return fetch(API+u).then(function(r){ if(!r.ok) throw 0; return r.json(); });}
+  Promise.all([j('/api/invoices'),j('/api/ustva?period=2026-06'),j('/api/euer?from=2026-06-01&to=2026-06-30'),j('/api/bookings')])
+  .then(function(res){
+    var inv=res[0], ust=res[1], euer=res[2], bk=res[3];
+    var openInv=inv.filter(function(i){return !i.paid;});
+    var openSum=openInv.reduce(function(s,i){return s+i.gross;},0);
+    set('k1l','Offene Forderungen'); set('k1v',eur(openSum));
+    set('k1d',openInv.length+' offene Rechnung'+(openInv.length===1?'':'en')); cls('k1d','delta warn');
+    var z=ust.kz83_zahllast;
+    set('k2l','USt-Voranmeldung · Juni'); set('k2v',eur(Math.abs(z)));
+    set('k2d', z>0?'Zahllast ans Finanzamt':'Vorsteuer-Erstattung'); cls('k2d','delta '+(z>0?'flat':'up'));
+    set('k3l','EÜR-Ergebnis · Juni'); set('k3v',eur(euer.result));
+    set('k3d',(euer.marginPct!=null?euer.marginPct+' % Marge':'Einnahmen − Ausgaben')); cls('k3d','delta '+(euer.result>=0?'up':'warn'));
+    var lb=document.getElementById('fin-live'); if(lb) lb.style.display='inline-block';
+    set('fin-sub','Live aus dem Buchhaltungs-Kern · Juni 2026 · GoBD-Journal, EÜR & USt in Echtzeit');
+    var rl=document.getElementById('recent-list');
+    if(rl && bk && bk.length){
+      var rows=bk.filter(function(b){return !b.stornoed;}).slice(-6).reverse();
+      rl.innerHTML=rows.map(function(b){
+        var name=b.belegRef||b.categoryLabel||'Buchung';
+        var init=(name.charAt(0)||'•').toUpperCase();
+        var d=(b.bookingDate||'').split('-').reverse().join('.');
+        var sign=(b.kind==='expense'?'− ':'+ ');
+        return '<div class="recent-row"><div class="merch">'+init+'</div>'+
+          '<div style="flex:1;"><div class="mn">'+name+'</div><div class="md">'+b.categoryLabel+' · '+d+'</div></div>'+
+          '<div class="ma num">'+sign+eur(b.gross)+'<span class="tick">✓</span></div></div>';
+      }).join('');
+    }
+  })
+  .catch(function(){ /* API nicht erreichbar -> Mock-Werte bleiben */ });
 })();
 </script>
 </body>
