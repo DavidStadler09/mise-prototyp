@@ -732,7 +732,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div>
             <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent · aktiv<span id="fin-live" style="display:none;margin-left:9px;padding:2px 9px;border-radius:999px;background:#e6f4ec;color:#1C7A54;font-size:11px;font-weight:700;letter-spacing:.01em;vertical-align:middle;">● Live-Daten</span></div>
             <div class="h1">Finanzen</div>
-            <div class="sub" id="fin-sub">Übersicht · Juni 2026 · zuletzt synchronisiert vor 4 Min.</div>
+            <div class="sub">Übersicht · Juni 2026 · zuletzt synchronisiert vor 4 Min.</div>
           </div>
           <button class="btn btn-primary">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -2157,7 +2157,6 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
     set('k3l','EÜR-Ergebnis · Juni'); set('k3v',eur(euer.result));
     set('k3d',(euer.marginPct!=null?euer.marginPct+' % Marge':'Einnahmen − Ausgaben')); cls('k3d','delta '+(euer.result>=0?'up':'warn'));
     document.querySelectorAll('[id="fin-live"]').forEach(function(e){e.style.display='inline-block';});
-    document.querySelectorAll('[id="fin-sub"]').forEach(function(e){e.textContent='Live aus dem Buchhaltungs-Kern · Juni 2026 · GoBD-Journal, EÜR & USt in Echtzeit';});
     var rl=document.getElementById('recent-list');
     if(rl && bk && bk.length){
       var rows=bk.filter(function(b){return !b.stornoed;}).slice(-6).reverse();
