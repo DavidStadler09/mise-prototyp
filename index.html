@@ -1978,9 +1978,9 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <button class="btn btn-primary" onclick="toast('Jahresabschluss — ausgeführt.')">Jahresabschluss</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
-          <div class="card kpi"><div class="ring"></div><div class="lab">Bilanzsumme</div><div class="val num">€ 96.480</div><div class="delta flat">30.06.2026</div></div>
-          <div class="card kpi"><div class="ring"></div><div class="lab">Eigenkapitalquote</div><div class="val num">38 %</div><div class="delta up">▲ +3 %</div></div>
-          <div class="card kpi"><div class="ring"></div><div class="lab">Jahresüberschuss</div><div class="val num">€ 21.340</div><div class="delta up">kumuliert</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Bilanzsumme</div><div class="val num" id="bz-summe">€ 96.480</div><div class="delta flat" id="bz-stichtag">30.06.2026</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Eigenkapitalquote</div><div class="val num" id="bz-ekq">38 %</div><div class="delta up" id="bz-ekq-d">▲ +3 %</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Jahresüberschuss</div><div class="val num" id="bz-ergebnis">€ 21.340</div><div class="delta up" id="bz-ergebnis-d">kumuliert</div></div>
           <div class="card kpi"><div class="ring"></div><div class="lab">E-Bilanz</div><div class="val num">bereit</div><div class="delta up">XBRL für ELSTER</div></div>
         </div>
         <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
@@ -1988,7 +1988,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">Bilanz oder EÜR — der Agent kennt den Unterschied</div><div class="d">Kleinunternehmen rechnen per EÜR (Zufluss/Abfluss), GmbHs bilanzieren periodengerecht. Dein Betrieb ist als bilanzierend eingestuft; beide Sichten laufen auf demselben Journal.</div></div>
           <button class="cta" onclick="toast('Einstufung geöffnet.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="bz-table" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:2fr 1fr 2fr 1fr;"><div>Aktiva</div><div>Betrag</div><div>Passiva</div><div>Betrag</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:2fr 1fr 2fr 1fr;"><div class="tname">A. Anlagevermögen</div><div class="tname num">€ 42.180</div><div class="tname">A. Eigenkapital</div><div class="tname num">€ 36.660</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:2fr 1fr 2fr 1fr;"><div class="muted">&nbsp;&nbsp;Sachanlagen</div><div class="muted">€ 42.180</div><div class="muted">&nbsp;&nbsp;Gezeichnetes Kapital</div><div class="muted">€ 25.000</div></div>
@@ -2748,6 +2748,37 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
   function set(id,txt){var e=document.getElementById(id); if(e) e.textContent=txt;}
   function cls(id,c){var e=document.getElementById(id); if(e) e.className=c;}
   function j(u){return fetch(API+u).then(function(r){ if(!r.ok) throw 0; return r.json(); });}
+
+  // --- Bilanz & GuV live ---
+  Promise.all([j('/api/bilanz?stichtag=2026-06-30'), j('/api/guv?from=2026-01-01&to=2026-06-30')])
+  .then(function(r){
+    var bz=r[0], gv=r[1];
+    set('bz-summe', eur(bz.summeAktiva));
+    set('bz-stichtag', 'Stichtag 30.06.2026' + (bz.ausgeglichen ? ' · ausgeglichen ✓' : ' · PRÜFEN'));
+    set('bz-ergebnis', eur(gv.jahresueberschuss));
+    set('bz-ergebnis-d', 'Umsatz ' + eur(gv.umsatzerloese));
+    var ek = bz.passiva.filter(function(x){return x.label==='Jahresüberschuss'||x.label==='Gezeichnetes Kapital';})
+                       .reduce(function(a,x){return a+x.amount;},0);
+    set('bz-ekq', bz.summeAktiva ? Math.round(ek/bz.summeAktiva*100)+' %' : '—');
+    set('bz-ekq-d', 'Eigenkapital ' + eur(ek));
+    var t=document.getElementById('bz-table');
+    if(t){
+      var g='grid-template-columns:2fr 1fr 2fr 1fr;';
+      var h='<div class="dgrid dt-head" style="'+g+'"><div>Aktiva</div><div>Betrag</div><div>Passiva</div><div>Betrag</div></div>';
+      var n=Math.max(bz.aktiva.length,bz.passiva.length), rows='';
+      for(var i=0;i<n;i++){
+        var a=bz.aktiva[i], q=bz.passiva[i];
+        rows+='<div class="dgrid dt-row" style="'+g+'">'+
+          '<div class="tname">'+(a?a.label:'')+'</div><div class="tname num">'+(a?eur(a.amount):'')+'</div>'+
+          '<div class="tname">'+(q?q.label:'')+'</div><div class="tname num">'+(q?eur(q.amount):'')+'</div></div>';
+      }
+      rows+='<div class="dgrid dt-row" style="'+g+'"><div class="tname">Bilanzsumme</div><div class="tname num">'+eur(bz.summeAktiva)+
+            '</div><div class="tname">Bilanzsumme</div><div class="tname num">'+eur(bz.summePassiva)+'</div></div>';
+      t.innerHTML=h+rows;
+    }
+  })
+  .catch(function(){ /* Mock bleibt */ });
+
   Promise.all([j('/api/invoices'),j('/api/ustva?period=2026-06'),j('/api/euer?from=2026-06-01&to=2026-06-30'),j('/api/bookings')])
   .then(function(res){
     var inv=res[0], ust=res[1], euer=res[2], bk=res[3];
