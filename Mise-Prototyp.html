@@ -83,6 +83,8 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 
 .subnav{display:flex;flex-direction:column;gap:1px;margin:3px 0 4px 26px;padding-left:13px;border-left:1.5px solid var(--line);}
 .subnav .nav-item{padding:7px 11px;font-size:14px;border-radius:9px;}
+.subnav-label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);font-weight:700;margin:11px 0 3px 11px;opacity:.75;}
+.subnav-label:first-child{margin-top:2px;}
 .subnav .nav-item.active{background:var(--fin-soft);color:var(--fin-deep);font-weight:600;}
 .subnav .nav-item.active::before{content:"";position:absolute;left:-14.5px;top:50%;transform:translateY(-50%);width:2px;height:16px;background:var(--fin);border-radius:2px;}
 .subnav .nav-item .badge{background:#dfeee7;color:var(--fin-deep);}
@@ -587,21 +589,48 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
     </div>
 
     <div class="subnav" id="fin-sub">
+      <div class="subnav-label">Übersicht</div>
       <div class="nav-item" data-nav="dashboard"><span>Dashboard</span></div>
+      <div class="nav-item" data-nav="chat"><span>Agent-Chat</span></div>
+      <div class="nav-item" data-nav="autonomie"><span>Autonomie</span></div>
+      <div class="subnav-label">Verkauf</div>
+      <div class="nav-item" data-nav="angebote"><span>Angebote</span></div>
+      <div class="nav-item" data-nav="auftraege"><span>Aufträge</span></div>
+      <div class="nav-item" data-nav="lieferscheine"><span>Lieferscheine</span></div>
+      <div class="nav-item" data-nav="ausgangsrechnungen"><span>Ausgangsrechnungen</span></div>
+      <div class="nav-item" data-nav="wiederkehrend"><span>Wiederkehrend</span></div>
+      <div class="nav-item" data-nav="gutschriften"><span>Gutschriften</span></div>
+      <div class="nav-item" data-nav="mahnwesen"><span>Mahnwesen</span><span class="badge">2</span></div>
+      <div class="subnav-label">Einkauf</div>
       <div class="nav-item" data-nav="belege"><span>Belegeingang</span><span class="badge">12</span></div>
       <div class="nav-item" data-nav="rechnungspruefung"><span>Rechnungsprüfung</span><span class="badge">2</span></div>
-      <div class="nav-item" data-nav="ausgangsrechnungen"><span>Ausgangsrechnungen</span></div>
-      <div class="nav-item" data-nav="angebote"><span>Angebote</span></div>
+      <div class="nav-item" data-nav="bestellungen"><span>Bestellungen</span></div>
+      <div class="nav-item" data-nav="lieferanten"><span>Lieferanten</span></div>
+      <div class="subnav-label">Bank & Kasse</div>
+      <div class="nav-item" data-nav="banking"><span>Bankkonten</span></div>
       <div class="nav-item" data-nav="kassenbuch"><span>Kassenbuch</span></div>
       <div class="nav-item" data-nav="zahlungslauf"><span>Zahlungslauf</span></div>
       <div class="nav-item" data-nav="liquiditaet"><span>Liquidität</span></div>
+      <div class="subnav-label">Buchhaltung</div>
+      <div class="nav-item" data-nav="journal"><span>Buchungsjournal</span></div>
+      <div class="nav-item" data-nav="offeneposten"><span>Offene Posten</span></div>
+      <div class="nav-item" data-nav="kontenrahmen"><span>Kontenrahmen</span></div>
+      <div class="nav-item" data-nav="anlagen"><span>Anlagen & AfA</span></div>
       <div class="nav-item" data-nav="ustva"><span>USt-Voranmeldung</span></div>
-      <div class="nav-item" data-nav="auswertungen"><span>Auswertungen</span></div>
-      <div class="nav-item" data-nav="kontakte"><span>Kontakte</span></div>
+      <div class="nav-item" data-nav="bilanz"><span>Bilanz & GuV</span></div>
+      <div class="nav-item" data-nav="datev"><span>DATEV & Kanzlei</span></div>
+      <div class="nav-item" data-nav="archiv"><span>GoBD-Archiv</span></div>
+      <div class="subnav-label">Warenwirtschaft</div>
+      <div class="nav-item" data-nav="artikel"><span>Artikel</span></div>
       <div class="nav-item" data-nav="inventar"><span>Inventar</span></div>
-      <div class="nav-item" data-nav="lieferanten"><span>Lieferanten</span></div>
-      <div class="nav-item" data-nav="chat"><span>Agent-Chat</span></div>
-      <div class="nav-item" data-nav="autonomie"><span>Autonomie</span></div>
+      <div class="nav-item" data-nav="stuecklisten"><span>Stücklisten</span></div>
+      <div class="nav-item" data-nav="inventur"><span>Inventur</span></div>
+      <div class="subnav-label">Auswertungen</div>
+      <div class="nav-item" data-nav="auswertungen"><span>Berichte & BWA</span></div>
+      <div class="subnav-label">Stammdaten</div>
+      <div class="nav-item" data-nav="kontakte"><span>Kontakte</span></div>
+      <div class="nav-item" data-nav="benutzer"><span>Benutzer & Rollen</span></div>
+      <div class="nav-item" data-nav="integrationen"><span>Integrationen</span></div>
     </div>
 
     <div class="nav-item" data-nav="sales">
@@ -1604,6 +1633,581 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- ============ AUFTRAEGE ============ -->
+      <section class="screen" data-screen="auftraege">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Aufträge</div>
+            <div class="sub">Angenommene Angebote werden automatisch zu Auftragsbestätigungen — inkl. Termin- und Materialplanung.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Neuer Auftrag — Entwurf angelegt.')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neuer Auftrag</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Offene Aufträge</div><div class="val num">€ 9.840</div><div class="delta flat">6 in Arbeit</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Diesen Monat bestätigt</div><div class="val num">€ 14.200</div><div class="delta up">▲ +18 %</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Ø Auftragswert</div><div class="val num">€ 1.640</div><div class="delta flat">letzte 30 Tage</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Termine diese Woche</div><div class="val num">4</div><div class="delta warn">2 kritisch</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Auftrag „Stadtfest" braucht Materialbestellung</div><div class="d">Der Agent hat 3 Positionen erkannt, die nicht auf Lager sind — Bestellvorschlag liegt bereit.</div></div>
+          <button class="cta" onclick="toast('Bestellvorschlag geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div>Nr.</div><div>Kunde</div><div>Betrag</div><div>Liefertermin</div><div>Status</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-AB021</div><div class="tname">Continental AG</div><div class="tname num">€ 4.500</div><div class="muted">28.06.</div><div><span class="chip ver"><span class="cdot"></span>Bestätigt</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-AB020</div><div class="tname">Familie Berger</div><div class="tname num">€ 6.200</div><div class="muted">14.06.</div><div><span class="chip ok"><span class="cdot"></span>Geliefert</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-AB019</div><div class="tname">Stadtfest Orga</div><div class="tname num">€ 4.200</div><div class="muted">05.07.</div><div><span class="chip pruef"><span class="cdot"></span>In Arbeit</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-AB018</div><div class="tname">Kanzlei Voss</div><div class="tname num">€ 3.800</div><div class="muted">10.06.</div><div><span class="chip ok"><span class="cdot"></span>Geliefert</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ LIEFERSCHEINE ============ -->
+      <section class="screen" data-screen="lieferscheine">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Lieferscheine</div>
+            <div class="sub">Lieferscheine entstehen aus dem Auftrag; nach Lieferung erzeugt der Agent die Rechnung automatisch.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Neuer Lieferschein — Entwurf angelegt.')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neuer Lieferschein</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Offen</div><div class="val num">3</div><div class="delta flat">warten auf Lieferung</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Diese Woche geliefert</div><div class="val num">11</div><div class="delta up">▲ +4</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Nicht abgerechnet</div><div class="val num">€ 5.310</div><div class="delta warn">2 Lieferscheine</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Ø Lieferzeit</div><div class="val num">1,8 Tage</div><div class="delta up">▼ −0,3</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">2 Lieferscheine sind noch nicht abgerechnet</div><div class="d">Der Agent kann daraus sofort Sammelrechnungen erzeugen.</div></div>
+          <button class="cta" onclick="toast('Sammelrechnung vorbereitet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1.2fr 1fr 1.2fr;"><div>Nr.</div><div>Empfänger</div><div>Auftrag</div><div>Datum</div><div>Status</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1.2fr 1fr 1.2fr;"><div class="muted">2026-LS044</div><div class="tname">Continental AG</div><div class="muted">2026-AB021</div><div class="muted">20.06.</div><div><span class="chip sent"><span class="cdot"></span>Versendet</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1.2fr 1fr 1.2fr;"><div class="muted">2026-LS043</div><div class="tname">Familie Berger</div><div class="muted">2026-AB020</div><div class="muted">14.06.</div><div><span class="chip ok"><span class="cdot"></span>Geliefert</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1.2fr 1fr 1.2fr;"><div class="muted">2026-LS042</div><div class="tname">Kanzlei Voss</div><div class="muted">2026-AB018</div><div class="muted">10.06.</div><div><span class="chip draft"><span class="cdot"></span>Entwurf</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ WIEDERKEHREND ============ -->
+      <section class="screen" data-screen="wiederkehrend">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Wiederkehrende Rechnungen</div>
+            <div class="sub">Abos und Daueraufträge — der Agent stellt sie termingerecht aus, versendet und überwacht den Eingang.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Neues Intervall — Entwurf angelegt.')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neues Intervall</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Aktive Intervalle</div><div class="val num">7</div><div class="delta flat">monatlich & jährlich</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Wiederkehrender Umsatz</div><div class="val num">€ 4.180</div><div class="delta up">pro Monat (MRR)</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Nächster Lauf</div><div class="val num">01.07.</div><div class="delta flat">5 Rechnungen</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Ausfallquote</div><div class="val num">1,2 %</div><div class="delta up">▼ −0,4 %</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Preisanpassung für 3 Verträge fällig</div><div class="d">Die Indexklausel greift zum 01.07. — der Agent hat die neuen Beträge berechnet.</div></div>
+          <button class="cta" onclick="toast('Preisanpassung geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;"><div>Kunde</div><div>Betrag</div><div>Intervall</div><div>Nächste</div><div>Status</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;"><div class="tname">Kanzlei Voss & Kollegen</div><div class="tname num">€ 380</div><div class="muted">monatlich</div><div class="muted">01.07.</div><div><span class="chip ver"><span class="cdot"></span>Aktiv</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;"><div class="tname">Continental AG</div><div class="tname num">€ 1.200</div><div class="muted">monatlich</div><div class="muted">01.07.</div><div><span class="chip ver"><span class="cdot"></span>Aktiv</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;"><div class="tname">Praxis Dr. Wendt</div><div class="tname num">€ 240</div><div class="muted">quartalsweise</div><div class="muted">01.07.</div><div><span class="chip ver"><span class="cdot"></span>Aktiv</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;"><div class="tname">Eventhaus Lux</div><div class="tname num">€ 2.360</div><div class="muted">jährlich</div><div class="muted">01.01.</div><div><span class="chip pruef"><span class="cdot"></span>Pausiert</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ GUTSCHRIFTEN ============ -->
+      <section class="screen" data-screen="gutschriften">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Gutschriften & Storno</div>
+            <div class="sub">Korrekturen GoBD-konform: Rechnungen werden nie gelöscht, sondern sauber storniert oder gutgeschrieben.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Neue Gutschrift — Entwurf angelegt.')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neue Gutschrift</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Gutschriften (Juni)</div><div class="val num">€ 640</div><div class="delta flat">3 Vorgänge</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Stornoquote</div><div class="val num">1,8 %</div><div class="delta up">▼ −0,5 %</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Offene Erstattungen</div><div class="val num">€ 240</div><div class="delta warn">1 Vorgang</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Ø Bearbeitung</div><div class="val num">4 Std.</div><div class="delta up">vollautomatisch</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Jede Korrektur bleibt im Journal nachvollziehbar</div><div class="d">Storno erzeugt einen Gegenbuchungssatz — die Ursprungsrechnung bleibt unverändert erhalten (GoBD).</div></div>
+          <button class="cta" onclick="toast('Journal-Eintrag geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1fr 1.4fr 1.2fr;"><div>Nr.</div><div>Kunde</div><div>Betrag</div><div>Bezug</div><div>Status</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1.4fr 1.2fr;"><div class="muted">2026-G007</div><div class="tname">Eventhaus Lux</div><div class="tname num">− € 240</div><div class="muted">Rg. 2026-0144</div><div><span class="chip sent"><span class="cdot"></span>Versendet</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1.4fr 1.2fr;"><div class="muted">2026-G006</div><div class="tname">Müller & Partner</div><div class="tname num">− € 180</div><div class="muted">Rg. 2026-0143</div><div><span class="chip ok"><span class="cdot"></span>Erstattet</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1.4fr 1.2fr;"><div class="muted">2026-S003</div><div class="tname">Galerie Nord</div><div class="tname num">− € 220</div><div class="muted">Storno 2026-0149</div><div><span class="chip ver"><span class="cdot"></span>Gebucht</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ MAHNWESEN ============ -->
+      <section class="screen" data-screen="mahnwesen">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Mahnwesen</div>
+            <div class="sub">Mehrstufig und automatisch: Zahlungserinnerung, 1. und 2. Mahnung — mit Fristen, Gebühren und Verzugszinsen.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Mahnlauf starten — Entwurf angelegt.')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Mahnlauf starten</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Überfällig gesamt</div><div class="val num">€ 4.046</div><div class="delta warn">2 Rechnungen</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">In Mahnstufe</div><div class="val num">1</div><div class="delta flat">Zahlungserinnerung</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Ø Zahlungsverzug</div><div class="val num">6,4 Tage</div><div class="delta up">▼ −1,8</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Mahnerfolg</div><div class="val num">88 %</div><div class="delta up">nach Stufe 1</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">1 Rechnung erreicht morgen Mahnstufe 1</div><div class="d">Eventhaus Lux · € 1.190 · 14 Tage überfällig. Der Agent hat den Entwurf inkl. Verzugszinsen vorbereitet.</div></div>
+          <button class="cta" onclick="toast('Mahnung geprüft.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div>Rechnung</div><div>Kunde</div><div>Betrag</div><div>Überfällig</div><div>Stufe</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-0144</div><div class="tname">Eventhaus Lux</div><div class="tname num">€ 1.190</div><div class="muted">14 Tage</div><div><span class="chip pruef"><span class="cdot"></span>Erinnerung</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-0149</div><div class="tname">Galerie Nord</div><div class="tname num">€ 2.856</div><div class="muted">3 Tage</div><div><span class="chip neu"><span class="cdot"></span>Fällig</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ ARTIKEL ============ -->
+      <section class="screen" data-screen="artikel">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Artikel & Leistungen</div>
+            <div class="sub">Stammdaten für Produkte und Dienstleistungen — Preise, Steuersätze und Konten zentral gepflegt.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Neuer Artikel — Entwurf angelegt.')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neuer Artikel</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Artikel gesamt</div><div class="val num">148</div><div class="delta flat">62 Leistungen</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Ø Marge</div><div class="val num">41 %</div><div class="delta up">▲ +2 %</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Unter Mindestbestand</div><div class="val num">5</div><div class="delta warn">Nachbestellung nötig</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Meistverkauft</div><div class="val num">Menü Sommer</div><div class="delta up">214 × im Juni</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">5 Artikel unter Mindestbestand</div><div class="d">Der Agent hat einen Sammel-Bestellvorschlag bei 2 Lieferanten erstellt.</div></div>
+          <button class="cta" onclick="toast('Bestellvorschlag geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1fr 1.8fr 1fr .8fr 1fr 1fr;"><div>Nr.</div><div>Bezeichnung</div><div>VK netto</div><div>USt</div><div>Bestand</div><div>Konto</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.8fr 1fr .8fr 1fr 1fr;"><div class="muted">A-1001</div><div class="tname">Catering-Menü „Sommer"</div><div class="tname num">€ 35,00</div><div class="muted">7 %</div><div class="muted">—</div><div class="muted">REV_7</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.8fr 1fr .8fr 1fr 1fr;"><div class="muted">A-1002</div><div class="tname">Getränkepauschale</div><div class="tname num">€ 360,00</div><div class="muted">19 %</div><div class="muted">—</div><div class="muted">REV_19</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.8fr 1fr .8fr 1fr 1fr;"><div class="muted">A-2001</div><div class="tname">Weißwein Grüner Veltliner</div><div class="tname num">€ 24,00</div><div class="muted">19 %</div><div class="muted">38 Fl.</div><div class="muted">REV_19</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.8fr 1fr .8fr 1fr 1fr;"><div class="muted">A-2002</div><div class="tname">Kaffeebohnen 1 kg</div><div class="tname num">€ 18,50</div><div class="muted">7 %</div><div class="muted">4 kg</div><div class="muted">REV_7</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.8fr 1fr .8fr 1fr 1fr;"><div class="muted">A-3001</div><div class="tname">Service & Personal (Std.)</div><div class="tname num">€ 42,00</div><div class="muted">19 %</div><div class="muted">—</div><div class="muted">REV_19</div></div>
+        </div>
+      </section>
+
+      <!-- ============ BANKING ============ -->
+      <section class="screen" data-screen="banking">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Bankkonten & Abgleich</div>
+            <div class="sub">Konten per PSD2 zentral angebunden — der Agent ordnet Zahlungen automatisch den offenen Posten zu.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Konto verbinden — ausgeführt.')">Konto verbinden</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Saldo gesamt</div><div class="val num">€ 18.420</div><div class="delta flat">3 Konten</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Automatisch zugeordnet</div><div class="val num">96 %</div><div class="delta up">▲ +4 %</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Offen zuzuordnen</div><div class="val num">2</div><div class="delta warn">€ 1.430</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Letzter Abruf</div><div class="val num">vor 8 Min.</div><div class="delta up">PSD2 · finAPI</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">2 Zahlungseingänge ohne eindeutigen Treffer</div><div class="d">Der Agent schlägt Rg. 2026-0144 (€ 1.190) mit 91 % Sicherheit vor.</div></div>
+          <button class="cta" onclick="toast('Zuordnung geprüft.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1fr 1.8fr 1fr 1fr 1.2fr;"><div>Datum</div><div>Verwendungszweck</div><div>Betrag</div><div>Konto</div><div>Zuordnung</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.8fr 1fr 1fr 1.2fr;"><div class="muted">24.06.</div><div class="tname">Kanzlei Voss · Rg 2026-0146</div><div class="tname num">+ € 4.066</div><div class="muted">Geschäft</div><div><span class="chip ok"><span class="cdot"></span>Zugeordnet</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.8fr 1fr 1fr 1.2fr;"><div class="muted">20.06.</div><div class="tname">Überweisung Eventhaus</div><div class="tname num">+ € 1.190</div><div class="muted">Geschäft</div><div><span class="chip pruef"><span class="cdot"></span>Vorschlag 91 %</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.8fr 1fr 1fr 1.2fr;"><div class="muted">19.06.</div><div class="tname">TechConf GmbH · Rg 2026-0147</div><div class="tname num">+ € 9.996</div><div class="muted">Geschäft</div><div><span class="chip ok"><span class="cdot"></span>Zugeordnet</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.8fr 1fr 1fr 1.2fr;"><div class="muted">14.06.</div><div class="tname">METRO SB Warenhaus</div><div class="tname num">− € 3.332</div><div class="muted">Geschäft</div><div><span class="chip ok"><span class="cdot"></span>Zugeordnet</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.8fr 1fr 1fr 1.2fr;"><div class="muted">12.06.</div><div class="tname">SEPA Lastschrift Lieferando</div><div class="tname num">− € 642,60</div><div class="muted">Geschäft</div><div><span class="chip neu"><span class="cdot"></span>Offen</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ JOURNAL ============ -->
+      <section class="screen" data-screen="journal">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Buchungsjournal</div>
+            <div class="sub">Jede Buchung unveränderbar und lückenlos — hash-verkettet, revisionssicher, GoBD-konform.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Journal exportieren — ausgeführt.')">Journal exportieren</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Buchungen (Juni)</div><div class="val num">17</div><div class="delta flat">fortlaufend</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Hash-Kette</div><div class="val num">intakt</div><div class="delta up">✓ verifiziert</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Festgeschrieben</div><div class="val num">bis 31.05.</div><div class="delta up">unveränderbar</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Stornos</div><div class="val num">0</div><div class="delta flat">keine Korrekturen</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Die Unveränderbarkeit ist technisch erzwungen</div><div class="d">Jeder Eintrag enthält den Hash des Vorgängers. Nachträgliches Ändern würde die Kette brechen und sofort auffallen.</div></div>
+          <button class="cta" onclick="toast('Prüfprotokoll geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:.6fr 1fr 1.6fr 1fr 1fr 1fr;"><div>#</div><div>Datum</div><div>Buchungstext</div><div>Soll</div><div>Haben</div><div>Betrag</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:.6fr 1fr 1.6fr 1fr 1fr 1fr;"><div class="muted">17</div><div class="muted">28.06.</div><div class="tname">Lohnlauf Juni</div><div class="muted">Personal</div><div class="muted">Bank</div><div class="tname num">€ 8.500,00</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:.6fr 1fr 1.6fr 1fr 1fr 1fr;"><div class="muted">16</div><div class="muted">24.06.</div><div class="tname">Zahlungseingang Rg 2026-0146</div><div class="muted">Bank</div><div class="muted">Erlöse 7 %</div><div class="tname num">€ 4.066,00</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:.6fr 1fr 1.6fr 1fr 1fr 1fr;"><div class="muted">15</div><div class="muted">19.06.</div><div class="tname">Zahlungseingang Rg 2026-0147</div><div class="muted">Bank</div><div class="muted">Erlöse 19 %</div><div class="tname num">€ 9.996,00</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:.6fr 1fr 1.6fr 1fr 1fr 1fr;"><div class="muted">14</div><div class="muted">18.06.</div><div class="tname">Meta Ads Juni</div><div class="muted">Marketing</div><div class="muted">Bank</div><div class="tname num">€ 476,00</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:.6fr 1fr 1.6fr 1fr 1fr 1fr;"><div class="muted">13</div><div class="muted">14.06.</div><div class="tname">Metro Rg 0614</div><div class="muted">Wareneinkauf</div><div class="muted">Bank</div><div class="tname num">€ 3.332,00</div></div>
+        </div>
+      </section>
+
+      <!-- ============ OFFENEPOSTEN ============ -->
+      <section class="screen" data-screen="offeneposten">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Offene Posten</div>
+            <div class="sub">Debitoren und Kreditoren auf einen Blick — mit Fälligkeiten, Altersstruktur und Mahnstufe.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('OP-Liste exportieren — ausgeführt.')">OP-Liste exportieren</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Forderungen (Debitoren)</div><div class="val num">€ 4.046</div><div class="delta warn">2 Rechnungen</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Verbindlichkeiten</div><div class="val num">€ 2.190</div><div class="delta flat">3 Rechnungen</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Überfällig > 30 Tage</div><div class="val num">€ 0</div><div class="delta up">sauber</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">DSO</div><div class="val num">11,4 Tage</div><div class="delta up">▼ −2,1</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Liquiditätslücke am 10.07. erkannt</div><div class="d">USt-Zahllast und Miete treffen zusammen. Der Agent schlägt vor, eine Lieferantenzahlung um 5 Tage zu schieben — Skonto bleibt erhalten.</div></div>
+          <button class="cta" onclick="toast('Vorschlag geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div>Beleg</div><div>Partner</div><div>Betrag</div><div>Fällig</div><div>Status</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-0144</div><div class="tname">Eventhaus Lux</div><div class="tname num">€ 1.190</div><div class="muted">24.06.</div><div><span class="chip pruef"><span class="cdot"></span>Überfällig</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-0149</div><div class="tname">Galerie Nord</div><div class="tname num">€ 2.856</div><div class="muted">11.07.</div><div><span class="chip neu"><span class="cdot"></span>Offen</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">ER-2231</div><div class="tname">Frische Fisch GmbH</div><div class="tname num">− € 1.428</div><div class="muted">02.07.</div><div><span class="chip neu"><span class="cdot"></span>Offen</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">ER-4471</div><div class="tname">Weinhandel Veltlin</div><div class="tname num">− € 2.142</div><div class="muted">05.07.</div><div><span class="chip ok"><span class="cdot"></span>Skonto 2 %</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ KONTENRAHMEN ============ -->
+      <section class="screen" data-screen="kontenrahmen">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Kontenrahmen</div>
+            <div class="sub">SKR03 und SKR04 hinterlegt — der Agent bebucht automatisch das passende Konto, du kannst jederzeit übersteuern.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Konto anlegen — ausgeführt.')">Konto anlegen</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Aktiver Rahmen</div><div class="val num">SKR04</div><div class="delta flat">GmbH · bilanzierend</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Bebuchte Konten</div><div class="val num">34</div><div class="delta flat">von 812</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Auto-Kontierung</div><div class="val num">96 %</div><div class="delta up">▲ +3 %</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Regeln</div><div class="val num">18</div><div class="delta up">selbst gelernt</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">SKR03 oder SKR04 — der Agent stellt automatisch um</div><div class="d">Kleinunternehmen mit EÜR laufen meist auf SKR03, bilanzierende GmbHs auf SKR04. Die Umstellung ändert nur die Kontenzuordnung, nicht deine Buchungen.</div></div>
+          <button class="cta" onclick="toast('Zuordnung geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1fr 2fr 1.2fr 1fr 1fr;"><div>Konto</div><div>Bezeichnung</div><div>Typ</div><div>USt</div><div>Buchungen</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 2fr 1.2fr 1fr 1fr;"><div class="muted">4400</div><div class="tname">Erlöse 19 % USt</div><div class="muted">Ertrag</div><div class="muted">19 %</div><div class="tname num">9</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 2fr 1.2fr 1fr 1fr;"><div class="muted">4300</div><div class="tname">Erlöse 7 % USt</div><div class="muted">Ertrag</div><div class="muted">7 %</div><div class="tname num">6</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 2fr 1.2fr 1fr 1fr;"><div class="muted">5200</div><div class="tname">Wareneingang 19 %</div><div class="muted">Aufwand</div><div class="muted">19 %</div><div class="tname num">4</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 2fr 1.2fr 1fr 1fr;"><div class="muted">6200</div><div class="tname">Löhne & Gehälter</div><div class="muted">Aufwand</div><div class="muted">—</div><div class="tname num">1</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 2fr 1.2fr 1fr 1fr;"><div class="muted">6310</div><div class="tname">Miete unbewegliche WG</div><div class="muted">Aufwand</div><div class="muted">19 %</div><div class="tname num">1</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 2fr 1.2fr 1fr 1fr;"><div class="muted">1800</div><div class="tname">Bank</div><div class="muted">Aktiv</div><div class="muted">—</div><div class="tname num">17</div></div>
+        </div>
+      </section>
+
+      <!-- ============ ANLAGEN ============ -->
+      <section class="screen" data-screen="anlagen">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Anlagevermögen & AfA</div>
+            <div class="sub">Anlagegüter mit automatischer Abschreibung — linear, GWG oder Sammelposten, inkl. Anlagenspiegel.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Anlagegut erfassen — ausgeführt.')">Anlagegut erfassen</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Buchwert gesamt</div><div class="val num">€ 42.180</div><div class="delta flat">14 Güter</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">AfA laufendes Jahr</div><div class="val num">€ 6.840</div><div class="delta flat">€ 570 / Monat</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">GWG (Sofortabzug)</div><div class="val num">€ 1.240</div><div class="delta up">7 Güter</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Nächste Abgänge</div><div class="val num">1</div><div class="delta flat">Nov. 2026</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Die AfA-Buchung läuft monatlich automatisch</div><div class="d">Der Agent bucht € 570 pro Monat und erstellt zum Jahresende den Anlagenspiegel für deinen Steuerberater.</div></div>
+          <button class="cta" onclick="toast('Anlagenspiegel geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr 1fr;"><div>Anlagegut</div><div>Anschaffung</div><div>AHK</div><div>Nutzung</div><div>AfA/Jahr</div><div>Buchwert</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr 1fr;"><div class="tname">Kombidämpfer Rational</div><div class="muted">03/2024</div><div class="tname num">€ 18.900</div><div class="muted">10 J.</div><div class="tname num">€ 1.890</div><div class="tname num">€ 14.647</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr 1fr;"><div class="tname">Kühlzelle</div><div class="muted">07/2023</div><div class="tname num">€ 12.400</div><div class="muted">10 J.</div><div class="tname num">€ 1.240</div><div class="tname num">€ 8.780</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr 1fr;"><div class="tname">Kassensystem + TSE</div><div class="muted">01/2025</div><div class="tname num">€ 3.200</div><div class="muted">5 J.</div><div class="tname num">€ 640</div><div class="tname num">€ 2.240</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr 1fr;"><div class="tname">Geschirrspüler</div><div class="muted">05/2022</div><div class="tname num">€ 6.800</div><div class="muted">8 J.</div><div class="tname num">€ 850</div><div class="tname num">€ 3.258</div></div>
+        </div>
+      </section>
+
+      <!-- ============ BILANZ ============ -->
+      <section class="screen" data-screen="bilanz">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Bilanz & GuV</div>
+            <div class="sub">Für bilanzierungspflichtige Betriebe: doppelte Buchführung, Bilanz nach § 266 HGB und GuV nach § 275 HGB.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Jahresabschluss — ausgeführt.')">Jahresabschluss</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Bilanzsumme</div><div class="val num">€ 96.480</div><div class="delta flat">30.06.2026</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Eigenkapitalquote</div><div class="val num">38 %</div><div class="delta up">▲ +3 %</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Jahresüberschuss</div><div class="val num">€ 21.340</div><div class="delta up">kumuliert</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">E-Bilanz</div><div class="val num">bereit</div><div class="delta up">XBRL für ELSTER</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Bilanz oder EÜR — der Agent kennt den Unterschied</div><div class="d">Kleinunternehmen rechnen per EÜR (Zufluss/Abfluss), GmbHs bilanzieren periodengerecht. Dein Betrieb ist als bilanzierend eingestuft; beide Sichten laufen auf demselben Journal.</div></div>
+          <button class="cta" onclick="toast('Einstufung geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:2fr 1fr 2fr 1fr;"><div>Aktiva</div><div>Betrag</div><div>Passiva</div><div>Betrag</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:2fr 1fr 2fr 1fr;"><div class="tname">A. Anlagevermögen</div><div class="tname num">€ 42.180</div><div class="tname">A. Eigenkapital</div><div class="tname num">€ 36.660</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:2fr 1fr 2fr 1fr;"><div class="muted">&nbsp;&nbsp;Sachanlagen</div><div class="muted">€ 42.180</div><div class="muted">&nbsp;&nbsp;Gezeichnetes Kapital</div><div class="muted">€ 25.000</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:2fr 1fr 2fr 1fr;"><div class="tname">B. Umlaufvermögen</div><div class="tname num">€ 54.300</div><div class="muted">&nbsp;&nbsp;Jahresüberschuss</div><div class="muted">€ 21.340</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:2fr 1fr 2fr 1fr;"><div class="muted">&nbsp;&nbsp;Vorräte</div><div class="muted">€ 8.640</div><div class="tname">B. Rückstellungen</div><div class="tname num">€ 4.200</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:2fr 1fr 2fr 1fr;"><div class="muted">&nbsp;&nbsp;Forderungen L+L</div><div class="muted">€ 4.046</div><div class="tname">C. Verbindlichkeiten</div><div class="tname num">€ 55.620</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:2fr 1fr 2fr 1fr;"><div class="muted">&nbsp;&nbsp;Bank & Kasse</div><div class="muted">€ 41.614</div><div class="muted">&nbsp;&nbsp;aus L+L</div><div class="muted">€ 2.190</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:2fr 1fr 2fr 1fr;"><div class="tname">Bilanzsumme</div><div class="tname num">€ 96.480</div><div class="tname">Bilanzsumme</div><div class="tname num">€ 96.480</div></div>
+        </div>
+      </section>
+
+      <!-- ============ DATEV ============ -->
+      <section class="screen" data-screen="datev">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">DATEV & Steuerberater</div>
+            <div class="sub">Ein Klick statt Schuhkarton: Buchungsstapel, Belegbilder und Stammdaten gehen direkt an die Kanzlei.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Export erzeugen — ausgeführt.')">Export erzeugen</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Letzter Export</div><div class="val num">01.06.2026</div><div class="delta flat">Mai-Stapel</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Belege verknüpft</div><div class="val num">100 %</div><div class="delta up">Bild + Buchung</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Kanzlei-Zugang</div><div class="val num">aktiv</div><div class="delta up">Lesend + Kommentar</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Rückfragen offen</div><div class="val num">1</div><div class="delta warn">seit 2 Tagen</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Deine Kanzlei hat eine Rückfrage zu Beleg #14</div><div class="d">„Meta Ads Juni — bitte Nachweis der betrieblichen Veranlassung." Der Agent hat den Kampagnen-Report bereits angehängt.</div></div>
+          <button class="cta" onclick="toast('Rückfrage geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1.4fr 1.4fr 1fr 1fr 1.2fr;"><div>Zeitraum</div><div>Format</div><div>Buchungen</div><div>Belege</div><div>Status</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.4fr 1.4fr 1fr 1fr 1.2fr;"><div class="tname">Juni 2026</div><div class="muted">DATEV EXTF (CSV)</div><div class="tname num">17</div><div class="tname num">10</div><div><span class="chip draft"><span class="cdot"></span>Bereit</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.4fr 1.4fr 1fr 1fr 1.2fr;"><div class="tname">Mai 2026</div><div class="muted">DATEV EXTF (CSV)</div><div class="tname num">82</div><div class="tname num">54</div><div><span class="chip ok"><span class="cdot"></span>Übertragen</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.4fr 1.4fr 1fr 1fr 1.2fr;"><div class="tname">April 2026</div><div class="muted">DATEV EXTF (CSV)</div><div class="tname num">76</div><div class="tname num">49</div><div><span class="chip ok"><span class="cdot"></span>Übertragen</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ ARCHIV ============ -->
+      <section class="screen" data-screen="archiv">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">GoBD-Archiv</div>
+            <div class="sub">Revisionssichere Ablage für 10 Jahre — unveränderbar, jederzeit auffindbar, prüfungsbereit für die Betriebsprüfung.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Verfahrensdoku — ausgeführt.')">Verfahrensdoku</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Archivierte Belege</div><div class="val num">12.840</div><div class="delta flat">seit 2022</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Aufbewahrung</div><div class="val num">10 Jahre</div><div class="delta flat">bis 2036</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Integrität</div><div class="val num">100 %</div><div class="delta up">✓ Hash geprüft</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Prüfer-Export</div><div class="val num">Z3 / GDPdU</div><div class="delta up">bereit</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Betriebsprüfung? Ein Klick genügt</div><div class="d">Der Agent erzeugt den Datenträgerüberlassungs-Export (Z3) inkl. Verfahrensdokumentation und Index — genau das, was der Prüfer verlangt.</div></div>
+          <button class="cta" onclick="toast('Prüfer-Export vorbereitet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1.4fr 1fr 1fr 1.4fr 1.2fr;"><div>Jahr</div><div>Belege</div><div>Größe</div><div>Letzte Prüfung</div><div>Status</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.4fr 1fr 1fr 1.4fr 1.2fr;"><div class="tname">2026 (laufend)</div><div class="tname num">1.284</div><div class="muted">412 MB</div><div class="muted">heute</div><div><span class="chip ver"><span class="cdot"></span>Aktiv</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.4fr 1fr 1fr 1.4fr 1.2fr;"><div class="tname">2025</div><div class="tname num">4.120</div><div class="muted">1,4 GB</div><div class="muted">01.01.2026</div><div><span class="chip ok"><span class="cdot"></span>Versiegelt</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.4fr 1fr 1fr 1.4fr 1.2fr;"><div class="tname">2024</div><div class="tname num">3.980</div><div class="muted">1,3 GB</div><div class="muted">01.01.2025</div><div><span class="chip ok"><span class="cdot"></span>Versiegelt</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.4fr 1fr 1fr 1.4fr 1.2fr;"><div class="tname">2023</div><div class="tname num">3.456</div><div class="muted">1,1 GB</div><div class="muted">01.01.2024</div><div><span class="chip ok"><span class="cdot"></span>Versiegelt</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ BESTELLUNGEN ============ -->
+      <section class="screen" data-screen="bestellungen">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Bestellwesen</div>
+            <div class="sub">Der Agent erkennt Bedarf aus Aufträgen und Mindestbeständen und bereitet Bestellungen bei deinen Lieferanten vor.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Neue Bestellung — ausgeführt.')">Neue Bestellung</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Offene Bestellungen</div><div class="val num">4</div><div class="delta flat">€ 3.860</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Erwartete Lieferungen</div><div class="val num">2</div><div class="delta flat">bis Freitag</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Eingespart (Juni)</div><div class="val num">€ 420</div><div class="delta up">durch Preisvergleich</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Ø Lieferzeit</div><div class="val num">2,4 Tage</div><div class="delta up">▼ −0,6</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Bestellvorschlag aus 5 Artikeln unter Mindestbestand</div><div class="d">Der Agent hat bei 2 Lieferanten die Preise verglichen — Veltlin ist bei Wein € 0,80/Fl. günstiger.</div></div>
+          <button class="cta" onclick="toast('Bestellvorschlag geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div>Nr.</div><div>Lieferant</div><div>Betrag</div><div>Lieferung</div><div>Status</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-B112</div><div class="tname">Metro Großmarkt</div><div class="tname num">€ 1.840</div><div class="muted">26.06.</div><div><span class="chip sent"><span class="cdot"></span>Bestellt</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-B111</div><div class="tname">Weinhandel Veltlin</div><div class="tname num">€ 960</div><div class="muted">27.06.</div><div><span class="chip draft"><span class="cdot"></span>Vorschlag</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-B110</div><div class="tname">Frische Fisch GmbH</div><div class="tname num">€ 640</div><div class="muted">25.06.</div><div><span class="chip ok"><span class="cdot"></span>Geliefert</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-B109</div><div class="tname">Bäckerei Konrad</div><div class="tname num">€ 420</div><div class="muted">täglich</div><div><span class="chip ver"><span class="cdot"></span>Dauerauftrag</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ STUECKLISTEN ============ -->
+      <section class="screen" data-screen="stuecklisten">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Stücklisten</div>
+            <div class="sub">Rezepturen und Baugruppen: Der Agent rechnet Wareneinsatz, Marge und Lagerabgang pro verkaufter Einheit aus.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Neue Stückliste — ausgeführt.')">Neue Stückliste</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Stücklisten</div><div class="val num">32</div><div class="delta flat">aktiv gepflegt</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Ø Wareneinsatz</div><div class="val num">29 %</div><div class="delta up">▼ −2 %</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Marge Top-Artikel</div><div class="val num">71 %</div><div class="delta up">Getränke</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Preisalarm</div><div class="val num">3</div><div class="delta warn">Einkauf gestiegen</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Wareneinsatz beim Menü „Sommer" um 4 % gestiegen</div><div class="d">Fischpreis +12 % seit Mai. Bei gleichem VK sinkt die Marge auf 58 % — der Agent schlägt € 37 statt € 35 vor.</div></div>
+          <button class="cta" onclick="toast('Kalkulation geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr;"><div>Stückliste</div><div>Komponenten</div><div>Wareneinsatz</div><div>VK netto</div><div>Marge</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr;"><div class="tname">Catering-Menü „Sommer"</div><div class="tname num">9</div><div class="tname num">€ 14,70</div><div class="tname num">€ 35,00</div><div><span class="chip ok"><span class="cdot"></span>58 %</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr;"><div class="tname">Getränkepauschale</div><div class="tname num">6</div><div class="tname num">€ 104,40</div><div class="tname num">€ 360,00</div><div><span class="chip ok"><span class="cdot"></span>71 %</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr;"><div class="tname">Hochzeitsmenü</div><div class="tname num">14</div><div class="tname num">€ 2.150</div><div class="tname num">€ 5.000</div><div><span class="chip ok"><span class="cdot"></span>57 %</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr;"><div class="tname">Business-Lunch</div><div class="tname num">7</div><div class="tname num">€ 1.596</div><div class="tname num">€ 3.800</div><div><span class="chip ok"><span class="cdot"></span>58 %</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ INVENTUR ============ -->
+      <section class="screen" data-screen="inventur">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Inventur</div>
+            <div class="sub">Stichtags- oder permanente Inventur — der Agent vergleicht Soll und Ist und bucht Differenzen sauber aus.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Inventur starten — ausgeführt.')">Inventur starten</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Letzte Inventur</div><div class="val num">31.12.2025</div><div class="delta flat">Stichtag</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Bestandswert</div><div class="val num">€ 8.640</div><div class="delta flat">142 Positionen</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Differenz</div><div class="val num">− € 180</div><div class="delta warn">2,1 % Schwund</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Nächste fällig</div><div class="val num">31.12.2026</div><div class="delta flat">geplant</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Schwund liegt über deinem Branchenschnitt</div><div class="d">2,1 % gegenüber 1,3 % üblich in der Gastronomie. Größte Abweichung bei Wein — der Agent empfiehlt eine Zwischenzählung.</div></div>
+          <button class="cta" onclick="toast('Analyse geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1.2fr;"><div>Artikel</div><div>Soll</div><div>Ist</div><div>Differenz</div><div>Wert</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1.2fr;"><div class="tname">Weißwein Grüner Veltliner</div><div class="tname num">42 Fl.</div><div class="tname num">38 Fl.</div><div class="tname num">− 4</div><div><span class="chip esk"><span class="cdot"></span>− € 96</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1.2fr;"><div class="tname">Kaffeebohnen 1 kg</div><div class="tname num">5 kg</div><div class="tname num">4 kg</div><div class="tname num">− 1</div><div><span class="chip pruef"><span class="cdot"></span>− € 18</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1.2fr;"><div class="tname">Rindfleisch (kg)</div><div class="tname num">12</div><div class="tname num">12</div><div class="tname num">0</div><div><span class="chip ok"><span class="cdot"></span>€ 0</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1.2fr;"><div class="tname">Serviceartikel</div><div class="tname num">220</div><div class="tname num">217</div><div class="tname num">− 3</div><div><span class="chip pruef"><span class="cdot"></span>− € 66</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ BENUTZER ============ -->
+      <section class="screen" data-screen="benutzer">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Benutzer & Rollen</div>
+            <div class="sub">Wer darf was — vom Inhaber über die Buchhaltung bis zum lesenden Steuerberater-Zugang.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Nutzer einladen — ausgeführt.')">Nutzer einladen</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Aktive Nutzer</div><div class="val num">5</div><div class="delta flat">2 Rollen</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Externe Zugänge</div><div class="val num">1</div><div class="delta flat">Steuerberater</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Freigabepflichtig</div><div class="val num">ab € 500</div><div class="delta up">Zahlungen</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">2-Faktor</div><div class="val num">5 / 5</div><div class="delta up">vollständig</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Vier-Augen-Prinzip für Zahlungen ab € 500 aktiv</div><div class="d">Der Agent bereitet vor, ein Mensch gibt frei. Jede Freigabe landet im Audit-Trail.</div></div>
+          <button class="cta" onclick="toast('Regeln geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1.6fr 1.4fr 1.4fr 1fr 1.2fr;"><div>Name</div><div>Rolle</div><div>Bereich</div><div>2FA</div><div>Status</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1.4fr 1.4fr 1fr 1.2fr;"><div class="tname">David Krause</div><div class="muted">Inhaber</div><div class="muted">Alle Bereiche</div><div class="muted">✓</div><div><span class="chip ver"><span class="cdot"></span>Aktiv</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1.4fr 1.4fr 1fr 1.2fr;"><div class="tname">Sabine Ott</div><div class="muted">Buchhaltung</div><div class="muted">Finanzen</div><div class="muted">✓</div><div><span class="chip ver"><span class="cdot"></span>Aktiv</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1.4fr 1.4fr 1fr 1.2fr;"><div class="tname">Kanzlei Weber</div><div class="muted">Steuerberater</div><div class="muted">Lesend + Kommentar</div><div class="muted">✓</div><div><span class="chip ok"><span class="cdot"></span>Extern</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1.4fr 1.4fr 1fr 1.2fr;"><div class="tname">Tim Lorenz</div><div class="muted">Betriebsleiter</div><div class="muted">Cockpit, Einkauf</div><div class="muted">✓</div><div><span class="chip ver"><span class="cdot"></span>Aktiv</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ INTEGRATIONEN ============ -->
+      <section class="screen" data-screen="integrationen">
+        <div class="page-head anim" style="--d:.02s">
+          <div>
+            <div class="eyebrow"><span class="agent-dot"></span>Finanz-Agent</div>
+            <div class="h1">Integrationen</div>
+            <div class="sub">Standard-Dienste sind zentral über Mise angebunden — du klickst nur „verbinden". Eigene Konten bindest du selbst ein.</div>
+          </div>
+          <button class="btn btn-primary" onclick="toast('Dienst verbinden — ausgeführt.')">Dienst verbinden</button>
+        </div>
+        <div class="grid kpis anim" style="--d:.06s">
+          <div class="card kpi"><div class="ring"></div><div class="lab">Zentral über Mise</div><div class="val num">3</div><div class="delta up">sofort nutzbar</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Eigene Konten</div><div class="val num">2</div><div class="delta flat">von dir verbunden</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Verfügbar</div><div class="val num">6</div><div class="delta flat">weitere Dienste</div></div>
+          <div class="card kpi"><div class="ring"></div><div class="lab">Störungen</div><div class="val num">0</div><div class="delta up">alle Systeme grün</div></div>
+        </div>
+        <div class="insight anim" style="--d:.10s; margin-bottom:16px;">
+          <div class="ai">✦</div>
+          <div><div class="t">Warum manches über uns läuft und manches nicht</div><div class="d">Infrastruktur wie Belegerkennung, Bankabruf und ELSTER bündeln wir zentral — dafür bekäme ein einzelner Betrieb keinen Vertrag. Alles, wo dein Geld fließt (Zahlungsanbieter, Kasse), bleibt bewusst auf deinen eigenen Konten.</div></div>
+          <button class="cta" onclick="toast('Details geöffnet.')">Ansehen →</button>
+        </div>
+        <div class="card table anim" style="--d:.14s">
+          <div class="dgrid dt-head" style="grid-template-columns:1.6fr 1.6fr 1.4fr 1.4fr;"><div>Dienst</div><div>Zweck</div><div>Betrieb</div><div>Status</div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1.6fr 1.4fr 1.4fr;"><div class="tname">Beleg-OCR</div><div class="muted">Belege automatisch auslesen</div><div><span class="chip ver"><span class="cdot"></span>Zentral über Mise</span></div><div><span class="chip ok"><span class="cdot"></span>Aktiv</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1.6fr 1.4fr 1.4fr;"><div class="tname">Bank (PSD2)</div><div class="muted">Kontoabruf & Abgleich</div><div><span class="chip ver"><span class="cdot"></span>Zentral über Mise</span></div><div><span class="chip ok"><span class="cdot"></span>2 Konten verbunden</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1.6fr 1.4fr 1.4fr;"><div class="tname">ELSTER</div><div class="muted">USt-VA & E-Bilanz senden</div><div><span class="chip ver"><span class="cdot"></span>Zentral über Mise</span></div><div><span class="chip ok"><span class="cdot"></span>Zertifikat hinterlegt</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1.6fr 1.4fr 1.4fr;"><div class="tname">Stripe / PayPal</div><div class="muted">Online-Zahlung deiner Kunden</div><div><span class="chip low"><span class="cdot"></span>Dein eigenes Konto</span></div><div><span class="chip ok"><span class="cdot"></span>Verbunden</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1.6fr 1.4fr 1.4fr;"><div class="tname">Kasse & TSE</div><div class="muted">Kassendaten & Fiskalsignatur</div><div><span class="chip low"><span class="cdot"></span>Dein eigenes Konto</span></div><div><span class="chip ok"><span class="cdot"></span>fiskaly verbunden</span></div></div>
+          <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1.6fr 1.4fr 1.4fr;"><div class="tname">DATEV / Kanzlei</div><div class="muted">Export an Steuerberater</div><div><span class="chip low"><span class="cdot"></span>Dein eigener Zugang</span></div><div><span class="chip neu"><span class="cdot"></span>Nicht verbunden</span></div></div>
         </div>
       </section>
 
