@@ -483,6 +483,27 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .mtab div{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;color:var(--ink-4);}
 .mtab div.on{color:var(--fin);}
 
+
+/* ---------- CRUD: Modal & Formulare ---------- */
+.mask{position:fixed;inset:0;background:rgba(20,18,14,.44);backdrop-filter:blur(2px);z-index:80;display:flex;align-items:center;justify-content:center;padding:24px;}
+.mask[hidden]{display:none;}
+.modal{background:var(--bg-1);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.28);width:min(560px,100%);max-height:86vh;overflow:auto;padding:24px 26px;}
+.modal h3{font-family:var(--font-d);font-size:23px;font-weight:600;margin:0 0 3px;letter-spacing:-.01em;}
+.modal .msub{font-size:13px;color:var(--ink-3);margin-bottom:16px;}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fld{display:flex;flex-direction:column;gap:5px;}
+.fld.full{grid-column:1/-1;}
+.fld label{font-size:12px;color:var(--ink-3);font-weight:600;}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:14px;padding:9px 11px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg-0);color:var(--ink);}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--fin);}
+.fld .err{font-size:11.5px;color:var(--danger,#b4442f);}
+.mact{display:flex;gap:9px;justify-content:flex-end;margin-top:18px;}
+.row-act{display:flex;gap:6px;justify-content:flex-end;}
+.mini{font-size:12px;padding:5px 9px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg-0);cursor:pointer;color:var(--ink-2);}
+.mini:hover{border-color:var(--fin);color:var(--fin-deep);}
+.mini.danger:hover{border-color:#c4614c;color:#b4442f;}
+.empty{padding:34px;text-align:center;color:var(--ink-3);font-size:14px;}
+
 /* ---------- Cockpit / Betriebsleiter ---------- */
 .cockpit-item{color:var(--ink);font-weight:600;}
 .cockpit-item .ico{color:#a9863f;}
@@ -1298,7 +1319,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Angebote</div>
             <div class="sub">Vom Angebot zum Auftrag zur Rechnung — der Agent erstellt Angebote und wandelt angenommene automatisch in Rechnungen um.</div>
           </div>
-          <button class="btn btn-primary"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neues Angebot</button>
+          <button class="btn btn-primary" onclick="MiseApp.create('angebote')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neues Angebot</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
           <div class="card kpi"><div class="ring"></div><div class="lab">Offene Angebote</div><div class="val num">€ 3.560</div><div class="delta flat">4 Angebote</div></div>
@@ -1311,7 +1332,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">1 Angebot vom Sales-Agent wartet auf Freigabe</div><div class="d">Catering-Anfrage „Stadtfest" — Entwurf über € 4.200 liegt bereit.</div></div>
           <button class="cta" onclick="toast('Angebot zur Prüfung geöffnet.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="tbl-angebote" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div>Nr.</div><div>Kunde</div><div>Betrag</div><div>Datum</div><div>Status</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-A058</div><div class="tname">Müller &amp; Partner GmbH</div><div class="tname num">€ 2.380</div><div class="muted">20.06.</div><div><span class="chip sent"><span class="cdot"></span>Versendet</span></div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-A057</div><div class="tname">Eventhaus Lux</div><div class="tname num">€ 1.180</div><div class="muted">19.06.</div><div><span class="chip ver"><span class="cdot"></span>Angenommen</span></div></div>
@@ -1644,7 +1665,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Aufträge</div>
             <div class="sub">Angenommene Angebote werden automatisch zu Auftragsbestätigungen — inkl. Termin- und Materialplanung.</div>
           </div>
-          <button class="btn btn-primary" onclick="toast('Neuer Auftrag — Entwurf angelegt.')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neuer Auftrag</button>
+          <button class="btn btn-primary" onclick="MiseApp.create('auftraege')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neuer Auftrag</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
           <div class="card kpi"><div class="ring"></div><div class="lab">Offene Aufträge</div><div class="val num">€ 9.840</div><div class="delta flat">6 in Arbeit</div></div>
@@ -1657,7 +1678,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">Auftrag „Stadtfest" braucht Materialbestellung</div><div class="d">Der Agent hat 3 Positionen erkannt, die nicht auf Lager sind — Bestellvorschlag liegt bereit.</div></div>
           <button class="cta" onclick="toast('Bestellvorschlag geöffnet.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="tbl-auftraege" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div>Nr.</div><div>Kunde</div><div>Betrag</div><div>Liefertermin</div><div>Status</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-AB021</div><div class="tname">Continental AG</div><div class="tname num">€ 4.500</div><div class="muted">28.06.</div><div><span class="chip ver"><span class="cdot"></span>Bestätigt</span></div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-AB020</div><div class="tname">Familie Berger</div><div class="tname num">€ 6.200</div><div class="muted">14.06.</div><div><span class="chip ok"><span class="cdot"></span>Geliefert</span></div></div>
@@ -1674,7 +1695,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Lieferscheine</div>
             <div class="sub">Lieferscheine entstehen aus dem Auftrag; nach Lieferung erzeugt der Agent die Rechnung automatisch.</div>
           </div>
-          <button class="btn btn-primary" onclick="toast('Neuer Lieferschein — Entwurf angelegt.')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neuer Lieferschein</button>
+          <button class="btn btn-primary" onclick="MiseApp.create('lieferscheine')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neuer Lieferschein</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
           <div class="card kpi"><div class="ring"></div><div class="lab">Offen</div><div class="val num">3</div><div class="delta flat">warten auf Lieferung</div></div>
@@ -1687,7 +1708,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">2 Lieferscheine sind noch nicht abgerechnet</div><div class="d">Der Agent kann daraus sofort Sammelrechnungen erzeugen.</div></div>
           <button class="cta" onclick="toast('Sammelrechnung vorbereitet.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="tbl-lieferscheine" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1.2fr 1fr 1.2fr;"><div>Nr.</div><div>Empfänger</div><div>Auftrag</div><div>Datum</div><div>Status</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1.2fr 1fr 1.2fr;"><div class="muted">2026-LS044</div><div class="tname">Continental AG</div><div class="muted">2026-AB021</div><div class="muted">20.06.</div><div><span class="chip sent"><span class="cdot"></span>Versendet</span></div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1.2fr 1fr 1.2fr;"><div class="muted">2026-LS043</div><div class="tname">Familie Berger</div><div class="muted">2026-AB020</div><div class="muted">14.06.</div><div><span class="chip ok"><span class="cdot"></span>Geliefert</span></div></div>
@@ -1703,7 +1724,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Wiederkehrende Rechnungen</div>
             <div class="sub">Abos und Daueraufträge — der Agent stellt sie termingerecht aus, versendet und überwacht den Eingang.</div>
           </div>
-          <button class="btn btn-primary" onclick="toast('Neues Intervall — Entwurf angelegt.')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neues Intervall</button>
+          <button class="btn btn-primary" onclick="MiseApp.create('wiederkehrend')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neues Intervall</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
           <div class="card kpi"><div class="ring"></div><div class="lab">Aktive Intervalle</div><div class="val num">7</div><div class="delta flat">monatlich & jährlich</div></div>
@@ -1716,7 +1737,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">Preisanpassung für 3 Verträge fällig</div><div class="d">Die Indexklausel greift zum 01.07. — der Agent hat die neuen Beträge berechnet.</div></div>
           <button class="cta" onclick="toast('Preisanpassung geöffnet.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="tbl-wiederkehrend" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;"><div>Kunde</div><div>Betrag</div><div>Intervall</div><div>Nächste</div><div>Status</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;"><div class="tname">Kanzlei Voss & Kollegen</div><div class="tname num">€ 380</div><div class="muted">monatlich</div><div class="muted">01.07.</div><div><span class="chip ver"><span class="cdot"></span>Aktiv</span></div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;"><div class="tname">Continental AG</div><div class="tname num">€ 1.200</div><div class="muted">monatlich</div><div class="muted">01.07.</div><div><span class="chip ver"><span class="cdot"></span>Aktiv</span></div></div>
@@ -1733,7 +1754,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Gutschriften & Storno</div>
             <div class="sub">Korrekturen GoBD-konform: Rechnungen werden nie gelöscht, sondern sauber storniert oder gutgeschrieben.</div>
           </div>
-          <button class="btn btn-primary" onclick="toast('Neue Gutschrift — Entwurf angelegt.')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neue Gutschrift</button>
+          <button class="btn btn-primary" onclick="MiseApp.create('gutschriften')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neue Gutschrift</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
           <div class="card kpi"><div class="ring"></div><div class="lab">Gutschriften (Juni)</div><div class="val num">€ 640</div><div class="delta flat">3 Vorgänge</div></div>
@@ -1746,7 +1767,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">Jede Korrektur bleibt im Journal nachvollziehbar</div><div class="d">Storno erzeugt einen Gegenbuchungssatz — die Ursprungsrechnung bleibt unverändert erhalten (GoBD).</div></div>
           <button class="cta" onclick="toast('Journal-Eintrag geöffnet.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="tbl-gutschriften" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1fr 1.4fr 1.2fr;"><div>Nr.</div><div>Kunde</div><div>Betrag</div><div>Bezug</div><div>Status</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1.4fr 1.2fr;"><div class="muted">2026-G007</div><div class="tname">Eventhaus Lux</div><div class="tname num">− € 240</div><div class="muted">Rg. 2026-0144</div><div><span class="chip sent"><span class="cdot"></span>Versendet</span></div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1.4fr 1.2fr;"><div class="muted">2026-G006</div><div class="tname">Müller & Partner</div><div class="tname num">− € 180</div><div class="muted">Rg. 2026-0143</div><div><span class="chip ok"><span class="cdot"></span>Erstattet</span></div></div>
@@ -1762,7 +1783,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Mahnwesen</div>
             <div class="sub">Mehrstufig und automatisch: Zahlungserinnerung, 1. und 2. Mahnung — mit Fristen, Gebühren und Verzugszinsen.</div>
           </div>
-          <button class="btn btn-primary" onclick="toast('Mahnlauf starten — Entwurf angelegt.')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Mahnlauf starten</button>
+          <button class="btn btn-primary" onclick="MiseApp.create('mahnwesen')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Mahnlauf starten</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
           <div class="card kpi"><div class="ring"></div><div class="lab">Überfällig gesamt</div><div class="val num">€ 4.046</div><div class="delta warn">2 Rechnungen</div></div>
@@ -1775,7 +1796,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">1 Rechnung erreicht morgen Mahnstufe 1</div><div class="d">Eventhaus Lux · € 1.190 · 14 Tage überfällig. Der Agent hat den Entwurf inkl. Verzugszinsen vorbereitet.</div></div>
           <button class="cta" onclick="toast('Mahnung geprüft.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="tbl-mahnwesen" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div>Rechnung</div><div>Kunde</div><div>Betrag</div><div>Überfällig</div><div>Stufe</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-0144</div><div class="tname">Eventhaus Lux</div><div class="tname num">€ 1.190</div><div class="muted">14 Tage</div><div><span class="chip pruef"><span class="cdot"></span>Erinnerung</span></div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-0149</div><div class="tname">Galerie Nord</div><div class="tname num">€ 2.856</div><div class="muted">3 Tage</div><div><span class="chip neu"><span class="cdot"></span>Fällig</span></div></div>
@@ -1790,7 +1811,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Artikel & Leistungen</div>
             <div class="sub">Stammdaten für Produkte und Dienstleistungen — Preise, Steuersätze und Konten zentral gepflegt.</div>
           </div>
-          <button class="btn btn-primary" onclick="toast('Neuer Artikel — Entwurf angelegt.')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neuer Artikel</button>
+          <button class="btn btn-primary" onclick="MiseApp.create('artikel')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Neuer Artikel</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
           <div class="card kpi"><div class="ring"></div><div class="lab">Artikel gesamt</div><div class="val num">148</div><div class="delta flat">62 Leistungen</div></div>
@@ -1803,7 +1824,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">5 Artikel unter Mindestbestand</div><div class="d">Der Agent hat einen Sammel-Bestellvorschlag bei 2 Lieferanten erstellt.</div></div>
           <button class="cta" onclick="toast('Bestellvorschlag geöffnet.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="tbl-artikel" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:1fr 1.8fr 1fr .8fr 1fr 1fr;"><div>Nr.</div><div>Bezeichnung</div><div>VK netto</div><div>USt</div><div>Bestand</div><div>Konto</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.8fr 1fr .8fr 1fr 1fr;"><div class="muted">A-1001</div><div class="tname">Catering-Menü „Sommer"</div><div class="tname num">€ 35,00</div><div class="muted">7 %</div><div class="muted">—</div><div class="muted">REV_7</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.8fr 1fr .8fr 1fr 1fr;"><div class="muted">A-1002</div><div class="tname">Getränkepauschale</div><div class="tname num">€ 360,00</div><div class="muted">19 %</div><div class="muted">—</div><div class="muted">REV_19</div></div>
@@ -1945,7 +1966,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Anlagevermögen & AfA</div>
             <div class="sub">Anlagegüter mit automatischer Abschreibung — linear, GWG oder Sammelposten, inkl. Anlagenspiegel.</div>
           </div>
-          <button class="btn btn-primary" onclick="toast('Anlagegut erfassen — ausgeführt.')">Anlagegut erfassen</button>
+          <button class="btn btn-primary" onclick="MiseApp.create('anlagen')">Anlagegut erfassen</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
           <div class="card kpi"><div class="ring"></div><div class="lab">Buchwert gesamt</div><div class="val num">€ 42.180</div><div class="delta flat">14 Güter</div></div>
@@ -1958,7 +1979,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">Die AfA-Buchung läuft monatlich automatisch</div><div class="d">Der Agent bucht € 570 pro Monat und erstellt zum Jahresende den Anlagenspiegel für deinen Steuerberater.</div></div>
           <button class="cta" onclick="toast('Anlagenspiegel geöffnet.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="tbl-anlagen" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr 1fr;"><div>Anlagegut</div><div>Anschaffung</div><div>AHK</div><div>Nutzung</div><div>AfA/Jahr</div><div>Buchwert</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr 1fr;"><div class="tname">Kombidämpfer Rational</div><div class="muted">03/2024</div><div class="tname num">€ 18.900</div><div class="muted">10 J.</div><div class="tname num">€ 1.890</div><div class="tname num">€ 14.647</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr 1fr;"><div class="tname">Kühlzelle</div><div class="muted">07/2023</div><div class="tname num">€ 12.400</div><div class="muted">10 J.</div><div class="tname num">€ 1.240</div><div class="tname num">€ 8.780</div></div>
@@ -2067,7 +2088,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Bestellwesen</div>
             <div class="sub">Der Agent erkennt Bedarf aus Aufträgen und Mindestbeständen und bereitet Bestellungen bei deinen Lieferanten vor.</div>
           </div>
-          <button class="btn btn-primary" onclick="toast('Neue Bestellung — ausgeführt.')">Neue Bestellung</button>
+          <button class="btn btn-primary" onclick="MiseApp.create('bestellungen')">Neue Bestellung</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
           <div class="card kpi"><div class="ring"></div><div class="lab">Offene Bestellungen</div><div class="val num">4</div><div class="delta flat">€ 3.860</div></div>
@@ -2080,7 +2101,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">Bestellvorschlag aus 5 Artikeln unter Mindestbestand</div><div class="d">Der Agent hat bei 2 Lieferanten die Preise verglichen — Veltlin ist bei Wein € 0,80/Fl. günstiger.</div></div>
           <button class="cta" onclick="toast('Bestellvorschlag geöffnet.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="tbl-bestellungen" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div>Nr.</div><div>Lieferant</div><div>Betrag</div><div>Lieferung</div><div>Status</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-B112</div><div class="tname">Metro Großmarkt</div><div class="tname num">€ 1.840</div><div class="muted">26.06.</div><div><span class="chip sent"><span class="cdot"></span>Bestellt</span></div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1fr 1.6fr 1fr 1fr 1.2fr;"><div class="muted">2026-B111</div><div class="tname">Weinhandel Veltlin</div><div class="tname num">€ 960</div><div class="muted">27.06.</div><div><span class="chip draft"><span class="cdot"></span>Vorschlag</span></div></div>
@@ -2097,7 +2118,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Stücklisten</div>
             <div class="sub">Rezepturen und Baugruppen: Der Agent rechnet Wareneinsatz, Marge und Lagerabgang pro verkaufter Einheit aus.</div>
           </div>
-          <button class="btn btn-primary" onclick="toast('Neue Stückliste — ausgeführt.')">Neue Stückliste</button>
+          <button class="btn btn-primary" onclick="MiseApp.create('stuecklisten')">Neue Stückliste</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
           <div class="card kpi"><div class="ring"></div><div class="lab">Stücklisten</div><div class="val num">32</div><div class="delta flat">aktiv gepflegt</div></div>
@@ -2110,7 +2131,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">Wareneinsatz beim Menü „Sommer" um 4 % gestiegen</div><div class="d">Fischpreis +12 % seit Mai. Bei gleichem VK sinkt die Marge auf 58 % — der Agent schlägt € 37 statt € 35 vor.</div></div>
           <button class="cta" onclick="toast('Kalkulation geöffnet.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="tbl-stuecklisten" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr;"><div>Stückliste</div><div>Komponenten</div><div>Wareneinsatz</div><div>VK netto</div><div>Marge</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr;"><div class="tname">Catering-Menü „Sommer"</div><div class="tname num">9</div><div class="tname num">€ 14,70</div><div class="tname num">€ 35,00</div><div><span class="chip ok"><span class="cdot"></span>58 %</span></div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1fr;"><div class="tname">Getränkepauschale</div><div class="tname num">6</div><div class="tname num">€ 104,40</div><div class="tname num">€ 360,00</div><div><span class="chip ok"><span class="cdot"></span>71 %</span></div></div>
@@ -2127,7 +2148,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Inventur</div>
             <div class="sub">Stichtags- oder permanente Inventur — der Agent vergleicht Soll und Ist und bucht Differenzen sauber aus.</div>
           </div>
-          <button class="btn btn-primary" onclick="toast('Inventur starten — ausgeführt.')">Inventur starten</button>
+          <button class="btn btn-primary" onclick="MiseApp.create('inventur')">Inventur starten</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
           <div class="card kpi"><div class="ring"></div><div class="lab">Letzte Inventur</div><div class="val num">31.12.2025</div><div class="delta flat">Stichtag</div></div>
@@ -2140,7 +2161,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">Schwund liegt über deinem Branchenschnitt</div><div class="d">2,1 % gegenüber 1,3 % üblich in der Gastronomie. Größte Abweichung bei Wein — der Agent empfiehlt eine Zwischenzählung.</div></div>
           <button class="cta" onclick="toast('Analyse geöffnet.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="tbl-inventur" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1.2fr;"><div>Artikel</div><div>Soll</div><div>Ist</div><div>Differenz</div><div>Wert</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1.2fr;"><div class="tname">Weißwein Grüner Veltliner</div><div class="tname num">42 Fl.</div><div class="tname num">38 Fl.</div><div class="tname num">− 4</div><div><span class="chip esk"><span class="cdot"></span>− € 96</span></div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1.8fr 1fr 1fr 1fr 1.2fr;"><div class="tname">Kaffeebohnen 1 kg</div><div class="tname num">5 kg</div><div class="tname num">4 kg</div><div class="tname num">− 1</div><div><span class="chip pruef"><span class="cdot"></span>− € 18</span></div></div>
@@ -2157,7 +2178,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
             <div class="h1">Benutzer & Rollen</div>
             <div class="sub">Wer darf was — vom Inhaber über die Buchhaltung bis zum lesenden Steuerberater-Zugang.</div>
           </div>
-          <button class="btn btn-primary" onclick="toast('Nutzer einladen — ausgeführt.')">Nutzer einladen</button>
+          <button class="btn btn-primary" onclick="MiseApp.create('benutzer')">Nutzer einladen</button>
         </div>
         <div class="grid kpis anim" style="--d:.06s">
           <div class="card kpi"><div class="ring"></div><div class="lab">Aktive Nutzer</div><div class="val num">5</div><div class="delta flat">2 Rollen</div></div>
@@ -2170,7 +2191,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <div><div class="t">Vier-Augen-Prinzip für Zahlungen ab € 500 aktiv</div><div class="d">Der Agent bereitet vor, ein Mensch gibt frei. Jede Freigabe landet im Audit-Trail.</div></div>
           <button class="cta" onclick="toast('Regeln geöffnet.')">Ansehen →</button>
         </div>
-        <div class="card table anim" style="--d:.14s">
+        <div class="card table anim" id="tbl-benutzer" style="--d:.14s">
           <div class="dgrid dt-head" style="grid-template-columns:1.6fr 1.4fr 1.4fr 1fr 1.2fr;"><div>Name</div><div>Rolle</div><div>Bereich</div><div>2FA</div><div>Status</div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1.4fr 1.4fr 1fr 1.2fr;"><div class="tname">David Krause</div><div class="muted">Inhaber</div><div class="muted">Alle Bereiche</div><div class="muted">✓</div><div><span class="chip ver"><span class="cdot"></span>Aktiv</span></div></div>
           <div class="dgrid dt-row" style="grid-template-columns:1.6fr 1.4fr 1.4fr 1fr 1.2fr;"><div class="tname">Sabine Ott</div><div class="muted">Buchhaltung</div><div class="muted">Finanzen</div><div class="muted">✓</div><div><span class="chip ver"><span class="cdot"></span>Aktiv</span></div></div>
@@ -2212,6 +2233,19 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
       </section>
 
     </main>
+
+  <div class="mask" id="mask" hidden>
+    <div class="modal">
+      <h3 id="m-title">Titel</h3>
+      <div class="msub" id="m-sub"></div>
+      <div class="fgrid" id="m-fields"></div>
+      <div class="mact">
+        <button class="btn btn-ghost" onclick="MiseApp.close()">Abbrechen</button>
+        <button class="btn btn-primary" onclick="MiseApp.save()">Speichern</button>
+      </div>
+    </div>
+  </div>
+
   </div>
 </div>
 
@@ -2809,5 +2843,162 @@ window.openSca = openSca; window.closeSca = closeSca; window.confirmSca = confir
   .catch(function(){ /* API nicht erreichbar -> Mock-Werte bleiben */ });
 })();
 </script>
+<!-- ===== CRUD-Kern: schema-getrieben, lokal persistent ===== -->
+<script>
+var MiseApp = (function(){
+  var LS='mise_db_v2';
+  var T=function(x){return {k:x[0],h:x[1],cls:x[2]||'muted',fmt:x[3]||null};};
+  var F=function(x){return {k:x[0],l:x[1],t:x[2]||'text',opts:x[3]||null,req:!!x[4]};};
+  var CHIP={'Entwurf':'draft','Vorschlag':'draft','Versendet':'sent','Bestellt':'sent','Angenommen':'ver','Bestätigt':'ver','Aktiv':'ver','Gebucht':'ver','Dauerauftrag':'ver','Geliefert':'ok','Erstattet':'ok','Bezahlt':'ok','Abgelehnt':'esk','Überfällig':'pruef','In Arbeit':'pruef','Pausiert':'pruef','Erinnerung':'pruef','Offen':'neu','Fällig':'neu','Extern':'ok'};
+
+  var SCHEMA={
+    angebote:{label:'Angebot',pre:'2026-A',cols:[T(['nr','Nr.']),T(['kunde','Kunde','tname']),T(['betrag','Betrag','tname num','eur']),T(['datum','Datum']),T(['status','Status','','chip'])],
+      fields:[F(['kunde','Kunde','text',null,true]),F(['betrag','Betrag (€)','number',null,true]),F(['datum','Datum','date']),F(['status','Status','select',['Entwurf','Versendet','Angenommen','Abgelehnt']])],
+      cols_css:'1fr 1.6fr 1fr 1fr 1.2fr .8fr'},
+    auftraege:{label:'Auftrag',pre:'2026-AB',cols:[T(['nr','Nr.']),T(['kunde','Kunde','tname']),T(['betrag','Betrag','tname num','eur']),T(['termin','Liefertermin']),T(['status','Status','','chip'])],
+      fields:[F(['kunde','Kunde','text',null,true]),F(['betrag','Betrag (€)','number',null,true]),F(['termin','Liefertermin','date']),F(['status','Status','select',['Entwurf','Bestätigt','In Arbeit','Geliefert']])],
+      cols_css:'1fr 1.6fr 1fr 1fr 1.2fr .8fr'},
+    lieferscheine:{label:'Lieferschein',pre:'2026-LS',cols:[T(['nr','Nr.']),T(['empfaenger','Empfänger','tname']),T(['auftrag','Auftrag']),T(['datum','Datum']),T(['status','Status','','chip'])],
+      fields:[F(['empfaenger','Empfänger','text',null,true]),F(['auftrag','Auftrag (Nr.)','text']),F(['datum','Datum','date']),F(['status','Status','select',['Entwurf','Versendet','Geliefert']])],
+      cols_css:'1fr 1.6fr 1.2fr 1fr 1.2fr .8fr'},
+    wiederkehrend:{label:'Intervall',pre:'',cols:[T(['kunde','Kunde','tname']),T(['betrag','Betrag','tname num','eur']),T(['intervall','Intervall']),T(['naechste','Nächste']),T(['status','Status','','chip'])],
+      fields:[F(['kunde','Kunde','text',null,true]),F(['betrag','Betrag (€)','number',null,true]),F(['intervall','Intervall','select',['monatlich','quartalsweise','jährlich']]),F(['naechste','Nächste Ausführung','date']),F(['status','Status','select',['Aktiv','Pausiert']])],
+      cols_css:'1.6fr 1fr 1fr 1fr 1.2fr .8fr'},
+    gutschriften:{label:'Gutschrift',pre:'2026-G',cols:[T(['nr','Nr.']),T(['kunde','Kunde','tname']),T(['betrag','Betrag','tname num','eur']),T(['bezug','Bezug']),T(['status','Status','','chip'])],
+      fields:[F(['kunde','Kunde','text',null,true]),F(['betrag','Betrag (€)','number',null,true]),F(['bezug','Bezug (Rechnung)','text']),F(['status','Status','select',['Entwurf','Versendet','Erstattet','Gebucht']])],
+      cols_css:'1fr 1.6fr 1fr 1.4fr 1.2fr .8fr'},
+    mahnwesen:{label:'Mahnung',pre:'',cols:[T(['rechnung','Rechnung']),T(['kunde','Kunde','tname']),T(['betrag','Betrag','tname num','eur']),T(['ueberfaellig','Überfällig']),T(['status','Stufe','','chip'])],
+      fields:[F(['rechnung','Rechnung (Nr.)','text',null,true]),F(['kunde','Kunde','text',null,true]),F(['betrag','Betrag (€)','number',null,true]),F(['ueberfaellig','Überfällig seit','text']),F(['status','Stufe','select',['Fällig','Erinnerung','Überfällig']])],
+      cols_css:'1fr 1.6fr 1fr 1fr 1.2fr .8fr'},
+    artikel:{label:'Artikel',pre:'A-',cols:[T(['nr','Nr.']),T(['name','Bezeichnung','tname']),T(['preis','VK netto','tname num','eur']),T(['ust','USt']),T(['bestand','Bestand']),T(['konto','Konto'])],
+      fields:[F(['name','Bezeichnung','text',null,true]),F(['preis','VK netto (€)','number',null,true]),F(['ust','USt-Satz','select',['19 %','7 %','0 %']]),F(['bestand','Bestand','text']),F(['konto','Erlöskonto','select',['REV_19','REV_7','REV_0']])],
+      cols_css:'1fr 1.8fr 1fr .8fr 1fr 1fr .8fr'},
+    bestellungen:{label:'Bestellung',pre:'2026-B',cols:[T(['nr','Nr.']),T(['lieferant','Lieferant','tname']),T(['betrag','Betrag','tname num','eur']),T(['lieferung','Lieferung']),T(['status','Status','','chip'])],
+      fields:[F(['lieferant','Lieferant','text',null,true]),F(['betrag','Betrag (€)','number',null,true]),F(['lieferung','Liefertermin','date']),F(['status','Status','select',['Vorschlag','Bestellt','Geliefert','Dauerauftrag']])],
+      cols_css:'1fr 1.6fr 1fr 1fr 1.2fr .8fr'},
+    stuecklisten:{label:'Stückliste',pre:'',cols:[T(['name','Stückliste','tname']),T(['komponenten','Komponenten','tname num']),T(['einsatz','Wareneinsatz','tname num','eur']),T(['vk','VK netto','tname num','eur']),T(['marge','Marge','','chip'])],
+      fields:[F(['name','Bezeichnung','text',null,true]),F(['komponenten','Anzahl Komponenten','number']),F(['einsatz','Wareneinsatz (€)','number']),F(['vk','VK netto (€)','number'])],
+      cols_css:'1.8fr 1fr 1fr 1fr 1fr .8fr'},
+    inventur:{label:'Zählung',pre:'',cols:[T(['artikel','Artikel','tname']),T(['soll','Soll','tname num']),T(['ist','Ist','tname num']),T(['diff','Differenz','tname num']),T(['wert','Wert','','chip'])],
+      fields:[F(['artikel','Artikel','text',null,true]),F(['soll','Soll-Bestand','number']),F(['ist','Ist-Bestand','number'])],
+      cols_css:'1.8fr 1fr 1fr 1fr 1.2fr .8fr'},
+    benutzer:{label:'Nutzer',pre:'',cols:[T(['name','Name','tname']),T(['rolle','Rolle']),T(['bereich','Bereich']),T(['zfa','2FA']),T(['status','Status','','chip'])],
+      fields:[F(['name','Name','text',null,true]),F(['rolle','Rolle','select',['Inhaber','Buchhaltung','Betriebsleiter','Steuerberater']]),F(['bereich','Bereich','text']),F(['zfa','2FA','select',['✓','—']]),F(['status','Status','select',['Aktiv','Extern']])],
+      cols_css:'1.6fr 1.4fr 1.4fr 1fr 1.2fr .8fr'},
+    anlagen:{label:'Anlagegut',pre:'',cols:[T(['name','Anlagegut','tname']),T(['anschaffung','Anschaffung']),T(['ahk','AHK','tname num','eur']),T(['nutzung','Nutzung']),T(['afa','AfA/Jahr','tname num','eur']),T(['buchwert','Buchwert','tname num','eur'])],
+      fields:[F(['name','Bezeichnung','text',null,true]),F(['anschaffung','Anschaffung (MM/JJJJ)','text']),F(['ahk','Anschaffungskosten (€)','number',null,true]),F(['nutzung','Nutzungsdauer (Jahre)','number',null,true])],
+      cols_css:'1.8fr 1fr 1fr 1fr 1fr 1fr .8fr'},
+  };
+
+  var db=null, cur=null, editId=null;
+  function load(){ try{var r=localStorage.getItem(LS); if(r) return JSON.parse(r);}catch(e){} return null; }
+  function persist(){ try{localStorage.setItem(LS, JSON.stringify(db));}catch(e){} }
+  function eur(v){ var n=Number(v)||0; return n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+  function esc(x){ return String(x==null?'':x).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function nextNr(e){ var sc=SCHEMA[e]; if(!sc.pre) return ''; var n=(db[e]||[]).length+1; return sc.pre+String(n).padStart(3,'0'); }
+  function uid(){ return 'x'+Math.random().toString(36).slice(2,9); }
+
+  function seedFromDom(){
+    // Bestehende Beispielzeilen einmalig als Startdaten übernehmen
+    var out={};
+    Object.keys(SCHEMA).forEach(function(e){
+      out[e]=[];
+      var sec=document.querySelector('.screen[data-screen="'+e+'"]'); if(!sec) return;
+      var rows=sec.querySelectorAll('.card.table .dt-row');
+      rows.forEach(function(r){
+        var cells=[].slice.call(r.children).map(function(c){return c.textContent.trim();});
+        var rec={id:uid()};
+        SCHEMA[e].cols.forEach(function(c,i){
+          var v=cells[i]||'';
+          if(c.fmt==='eur') v=parseFloat(v.replace(/[^0-9,\-]/g,'').replace(',','.'))||0;
+          rec[c.k]=v;
+        });
+        out[e].push(rec);
+      });
+    });
+    return out;
+  }
+
+  function render(e){
+    var sc=SCHEMA[e]; if(!sc) return;
+    var host=document.getElementById('tbl-'+e); if(!host) return;
+    var g='grid-template-columns:'+sc.cols_css+';';
+    var h='<div class="dgrid dt-head" style="'+g+'">'+sc.cols.map(function(c){return '<div>'+c.h+'</div>';}).join('')+'<div></div></div>';
+    var list=db[e]||[];
+    if(!list.length){ host.innerHTML=h+'<div class="empty">Noch nichts angelegt — oben rechts auf „Neu" klicken.</div>'; return; }
+    var rows=list.map(function(r){
+      var tds=sc.cols.map(function(c){
+        var v=r[c.k];
+        if(c.fmt==='eur') return '<div class="'+c.cls+'">'+eur(v)+'</div>';
+        if(c.fmt==='chip'){ var cl=CHIP[v]||'neu'; return '<div><span class="chip '+cl+'"><span class="cdot"></span>'+esc(v||'—')+'</span></div>'; }
+        return '<div class="'+c.cls+'">'+esc(v)+'</div>';
+      }).join('');
+      return '<div class="dgrid dt-row" style="'+g+'">'+tds+
+        '<div class="row-act"><button class="mini" onclick="MiseApp.edit(\''+e+'\',\''+r.id+'\')">Bearbeiten</button>'+
+        '<button class="mini danger" onclick="MiseApp.del(\''+e+'\',\''+r.id+'\')">Löschen</button></div></div>';
+    }).join('');
+    host.innerHTML=h+rows;
+  }
+  function renderAll(){ Object.keys(SCHEMA).forEach(render); }
+
+  function openForm(e,rec){
+    cur=e; editId=rec?rec.id:null;
+    var sc=SCHEMA[e];
+    document.getElementById('m-title').textContent=(rec?sc.label+' bearbeiten':'Neuer '+sc.label);
+    document.getElementById('m-sub').textContent=(rec?'Änderungen werden sofort gespeichert.':'Der Datensatz erscheint direkt in der Liste.');
+    document.getElementById('m-fields').innerHTML=sc.fields.map(function(f){
+      var v=rec?(rec[f.k]==null?'':rec[f.k]):'';
+      var full=(f.t==='textarea')?' full':'';
+      var inp;
+      if(f.t==='select'){ inp='<select id="f-'+f.k+'">'+f.opts.map(function(o){return '<option'+(String(v)===o?' selected':'')+'>'+o+'</option>';}).join('')+'</select>'; }
+      else { inp='<input id="f-'+f.k+'" type="'+(f.t==='number'?'number':(f.t==='date'?'date':'text'))+'" value="'+esc(v)+'"'+(f.t==='number'?' step="0.01"':'')+'>'; }
+      return '<div class="fld'+full+'"><label>'+f.l+(f.req?' *':'')+'</label>'+inp+'<div class="err" id="e-'+f.k+'"></div></div>';
+    }).join('');
+    document.getElementById('mask').hidden=false;
+  }
+
+  return {
+    init:function(){
+      db=load();
+      if(!db){ db=seedFromDom(); persist(); }
+      renderAll();
+    },
+    create:function(e){ openForm(e,null); },
+    edit:function(e,id){ var r=(db[e]||[]).find(function(x){return x.id===id;}); if(r) openForm(e,r); },
+    del:function(e,id){ db[e]=(db[e]||[]).filter(function(x){return x.id!==id;}); persist(); render(e); if(window.toast) toast(SCHEMA[e].label+' gelöscht.'); },
+    close:function(){ document.getElementById('mask').hidden=true; cur=null; editId=null; },
+    save:function(){
+      var sc=SCHEMA[cur], rec={}, ok=true;
+      sc.fields.forEach(function(f){
+        var el=document.getElementById('f-'+f.k); var v=el?el.value.trim():'';
+        var e2=document.getElementById('e-'+f.k); if(e2) e2.textContent='';
+        if(f.req && !v){ ok=false; if(e2) e2.textContent='Pflichtfeld'; return; }
+        rec[f.k]=(f.t==='number')?(parseFloat(v)||0):v;
+      });
+      if(!ok) return;
+      if(editId){
+        var i=db[cur].findIndex(function(x){return x.id===editId;});
+        db[cur][i]=Object.assign({},db[cur][i],rec);
+      } else {
+        rec.id=uid();
+        if(sc.pre) rec.nr=nextNr(cur);
+        // abgeleitete Felder
+        if(cur==='stuecklisten'&&rec.vk) rec.marge=Math.round((1-(rec.einsatz||0)/rec.vk)*100)+' %';
+        if(cur==='inventur'){ rec.diff=(rec.ist||0)-(rec.soll||0); rec.wert=(rec.diff>=0?'':'')+rec.diff+' Stk.'; }
+        if(cur==='anlagen'&&rec.nutzung){ rec.afa=Math.round((rec.ahk||0)/rec.nutzung*100)/100; rec.buchwert=rec.ahk; }
+        db[cur].unshift(rec);
+      }
+      persist(); render(cur);
+      document.getElementById('mask').hidden=true;
+      if(window.toast) toast(sc.label+(editId?' aktualisiert.':' angelegt.'));
+      editId=null; cur=null;
+    },
+    reset:function(){ try{localStorage.removeItem(LS);}catch(e){} db=seedFromDom(); persist(); renderAll(); if(window.toast) toast('Beispieldaten wiederhergestellt.'); }
+  };
+})();
+document.addEventListener('DOMContentLoaded', function(){ MiseApp.init(); });
+if(document.readyState!=='loading') MiseApp.init();
+</script>
+
 </body>
 </html>
