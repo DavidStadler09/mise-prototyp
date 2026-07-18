@@ -2912,6 +2912,11 @@ var MiseApp = (function(){
   };
 
   var db=null, cur=null, editId=null;
+  var API_DB='https://mise-finanz-demo.vercel.app';
+  var online=false;
+  function apiList(entity){ return fetch(API_DB+'/api/records?entity='+encodeURIComponent(entity)+'&nc='+Date.now()).then(function(r){ if(!r.ok) throw 0; return r.json(); }); }
+  function apiSave(entity,rec){ return fetch(API_DB+'/api/records?entity='+encodeURIComponent(entity),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(rec)}).then(function(r){ if(!r.ok) throw 0; return r.json(); }); }
+  function apiDel(entity,id){ return fetch(API_DB+'/api/records?entity='+encodeURIComponent(entity)+'&id='+encodeURIComponent(id),{method:'DELETE'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }); }
   function load(){ try{var r=localStorage.getItem(LS); if(r) return JSON.parse(r);}catch(e){} return null; }
   function persist(){ try{localStorage.setItem(LS, JSON.stringify(db));}catch(e){} }
   function eur(v){ var n=Number(v)||0; return n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
@@ -3022,15 +3027,31 @@ var MiseApp = (function(){
 
   return {
     newBeleg:belegForm,
-    init:function(){
+    init:async function(){
       belegRestore();
-      db=load();
-      if(!db){ db=seedFromDom(); persist(); }
+      var ents=Object.keys(SCHEMA);
+      try{
+        var meta=await apiList('_meta');
+        online=true;
+        db={};
+        if(!meta.some(function(m){return m.id==='seeded';})){
+          var seed=seedFromDom(); var ps=[];
+          ents.forEach(function(e){ (seed[e]||[]).slice().reverse().forEach(function(row){ ps.push(apiSave(e,row).catch(function(){})); }); });
+          await Promise.all(ps);
+          try{ await apiSave('_meta',{id:'seeded',at:Date.now()}); }catch(_e){}
+        }
+        var lists=await Promise.all(ents.map(function(e){ return apiList(e).catch(function(){return [];}); }));
+        ents.forEach(function(e,i){ db[e]=lists[i]; });
+      }catch(err){
+        online=false;
+        db=load(); if(!db){ db=seedFromDom(); persist(); }
+      }
+      if(!db) db={};
       renderAll();
     },
     create:function(e){ openForm(e,null); },
     edit:function(e,id){ var r=(db[e]||[]).find(function(x){return x.id===id;}); if(r) openForm(e,r); },
-    del:function(e,id){ db[e]=(db[e]||[]).filter(function(x){return x.id!==id;}); persist(); render(e); if(window.toast) toast(SCHEMA[e].label+' gelöscht.'); },
+    del:function(e,id){ db[e]=(db[e]||[]).filter(function(x){return x.id!==id;}); render(e); if(window.toast) toast(SCHEMA[e].label+' gelöscht.'); if(online){ apiDel(e,id).catch(function(){ persist(); }); } else { persist(); } },
     close:function(){ document.getElementById('mask').hidden=true; cur=null; editId=null; },
     save:function(){
       if(cur==='__beleg') return belegSave();
@@ -3042,24 +3063,27 @@ var MiseApp = (function(){
         rec[f.k]=(f.t==='number')?(parseFloat(v)||0):v;
       });
       if(!ok) return;
+      var saved;
       if(editId){
-        var i=db[cur].findIndex(function(x){return x.id===editId;});
-        db[cur][i]=Object.assign({},db[cur][i],rec);
+        var old=(db[cur]||[]).find(function(x){return x.id===editId;})||{};
+        saved=Object.assign({},old,rec,{id:editId});
+        var i=(db[cur]||[]).findIndex(function(x){return x.id===editId;});
+        if(i>=0) db[cur][i]=saved;
       } else {
         rec.id=uid();
         if(sc.pre) rec.nr=nextNr(cur);
-        // abgeleitete Felder
         if(cur==='stuecklisten'&&rec.vk) rec.marge=Math.round((1-(rec.einsatz||0)/rec.vk)*100)+' %';
         if(cur==='inventur'){ rec.diff=(rec.ist||0)-(rec.soll||0); rec.wert=(rec.diff>=0?'':'')+rec.diff+' Stk.'; }
         if(cur==='anlagen'&&rec.nutzung){ rec.afa=Math.round((rec.ahk||0)/rec.nutzung*100)/100; rec.buchwert=rec.ahk; }
-        db[cur].unshift(rec);
+        saved=rec; (db[cur]=db[cur]||[]).unshift(rec);
       }
-      persist(); render(cur);
+      render(cur);
       document.getElementById('mask').hidden=true;
       if(window.toast) toast(sc.label+(editId?' aktualisiert.':' angelegt.'));
-      editId=null; cur=null;
+      var ent=cur; editId=null; cur=null;
+      if(online){ apiSave(ent,saved).catch(function(){ persist(); }); } else { persist(); }
     },
-    reset:function(){ try{localStorage.removeItem(LS);}catch(e){} db=seedFromDom(); persist(); renderAll(); if(window.toast) toast('Beispieldaten wiederhergestellt.'); }
+    reset:function(){ try{localStorage.removeItem(LS);}catch(e){} MiseApp.init(); if(window.toast) toast('Neu aus der Datenbank geladen.'); }
   };
 })();
 document.addEventListener('DOMContentLoaded', function(){ MiseApp.init(); });
